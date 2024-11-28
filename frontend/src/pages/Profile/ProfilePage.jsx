@@ -6,6 +6,7 @@ import NewNavbar from "../../components/NewNavBar";
 
 export function ProfilePage() {
     const [posts, setPosts] = useState([]);
+    const [updatePost, setUpdatePost] = useState(false);
     const navigate = useNavigate();
   
     useEffect(() => {
@@ -27,9 +28,10 @@ export function ProfilePage() {
     const token = localStorage.getItem("token");
     if (!token) {
       navigate("/login");
-      return;
+      return ;
     }
-    
+
+
     
     
     return (
@@ -44,6 +46,10 @@ export function ProfilePage() {
             user={post.user}
             message={post.message}
             timestamp={post.timestamp}
+            isLiked={post.hasLiked}
+            beans={post.beans}
+            updatePost={setUpdatePost}
+            isYours={post.isYours}
           />
         ))}
       </div>
