@@ -38,7 +38,7 @@ export function FeedPage() {
 
   return (
     <>
-      <NewNavbar/>
+      <NewNavbar />
       <h2>Posts</h2>
       <div>
         <NewPostForm token={token} setUpdatePost={setUpdatePost} />
