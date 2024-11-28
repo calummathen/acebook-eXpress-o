@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUsers } from "../services/users";
+import { Link } from "react-router-dom";
 
 export const Search = () => {
   const [query, setQuery] = useState("");
@@ -87,7 +88,7 @@ export const Search = () => {
         }}
       >
         {filteredUsers.map((el, index) => (
-          <li key={index}>{el.username}</li>
+          <li key={index}><Link to={`/profile/${el.username}`}>{el.username}</Link></li>
         ))}
       </ul>
     </div>

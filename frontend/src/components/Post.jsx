@@ -3,7 +3,7 @@ import {deletePostId, likePost, UpdatePost} from "../services/posts"
 import EditPostButton from "./EditPostButton";
 import { useState } from "react";
 import LikePostButton from "./LikePostButton";
-
+import { Link } from "react-router-dom";
 
 
 function Post(props) {
@@ -65,7 +65,7 @@ function Post(props) {
       </div>
       ) : (
       <div key="view mode">
-        <h2>{props.user}</h2>
+        <h2><Link to={(isYours) ? "/profile" : `/profile/${props.user}`}>{props.user}</Link></h2>
         <h3>{cleanDate}</h3>
         <article key={props._id}>{props.message}</article>
         <LikePostButton liked={liked} toggleLiked={toggleLiked} beanNumber={props.beans.length} />
