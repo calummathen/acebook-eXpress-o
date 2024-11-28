@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {SearchButton} from "./SearchButton"
 
 const NewNavbar = () => {
 const navigate = useNavigate();
@@ -14,6 +15,7 @@ function logout (){
             <p className="nav-title">BeanScene
             <Link className="nav-link" to="/posts">Feed</Link>
             <Link className="nav-link" to="/profile">Profile</Link>
+            <SearchButton/>
             <button onClick={() => logout()}
             type="submit">log Out
             </button>
