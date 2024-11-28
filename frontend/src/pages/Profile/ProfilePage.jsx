@@ -23,7 +23,7 @@ export function ProfilePage() {
             navigate("/login");
           });
       }
-    }, [navigate]);
+    }, [navigate, updatePost]);
   
     const token = localStorage.getItem("token");
     if (!token) {
