@@ -2,3 +2,29 @@
   display: flex;
   flex-direction: column;
 }
+
+.nav-link {
+  padding: 10px 20px; /* Adds padding inside the link */
+  font-size: 16px; /* Font size for readability */
+  color: #007bff; /* Default text color */
+  text-decoration: none; /* Removes underline from links */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+}
+/* Hover effect */
+.nav-link:hover {
+  background-color: #0056b3; /* Darker blue background on hover */
+  color: white; /* Change text color to white when hovered */
+}
+
+/* Active state */
+.nav-link.active {
+  background-color: #0056b3; /* Keep the background blue when active */
+  color: white; /* Change text color to white for active state */
+}
+
+/* Focus state (for keyboard navigation) */
+.nav-link:focus {
+  outline: none; /* Remove outline */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add blue focus outline for accessibility */
+}

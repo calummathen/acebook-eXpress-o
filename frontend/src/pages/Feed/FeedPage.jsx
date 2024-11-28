@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import { getPosts } from "../../services/posts";
 import Post from "../../components/Post";
-import LogoutButton from "../../components/LogoutButton";
 import NewPostForm from "../../components/NewPostForm";
-import { ThemeToggle } from "../../components/ThemeToggle";
+
 import { useBeanScene } from "../../context/BeanSceneContext";
-import { SearchButton } from "../../components/SearchButton";
+
+import NewNavbar from "../../components/NewNavBar";
 
 export function FeedPage() {
   const { theme } = useBeanScene();
@@ -44,8 +44,8 @@ export function FeedPage() {
         color: theme === "light" ? "#333333" : "white",
       }}
     >
-      <SearchButton />
-      <ThemeToggle />
+      <NewNavbar />
+
       <h2>Posts</h2>
       <div>
         <NewPostForm token={token} setUpdatePost={setUpdatePost} />
@@ -58,11 +58,13 @@ export function FeedPage() {
             user={post.user}
             message={post.message}
             timestamp={post.timestamp}
+            isLiked={post.hasLiked}
+            beans={post.beans}
             updatePost={setUpdatePost}
+            isYours={post.isYours}
           />
         ))}
       </div>
-      <LogoutButton />
     </div>
   );
 }

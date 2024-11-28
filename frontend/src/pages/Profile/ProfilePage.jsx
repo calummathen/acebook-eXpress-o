@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getYourPosts } from "../../services/posts";
 import Post from "../../components/Post";
-
+import NewNavbar from "../../components/NewNavBar";
 
 export function ProfilePage() {
     const [posts, setPosts] = useState([]);
@@ -36,6 +36,7 @@ export function ProfilePage() {
       <div className="profile">
         <h1>Welcome to your COFFEE COUNTER!</h1>
         <div className="feed" role="feed">
+          <NewNavbar/>
         {posts.map((post) => (
           <Post
             post={post}
