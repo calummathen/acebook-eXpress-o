@@ -52,7 +52,7 @@ export const Search = () => {
         flexDirection: "column",
         padding: "20px",
         boxSizing: "border-box",
-        marginTop: "40px",
+        marginTop: "70px",
         background: "black",
         opacity: "90%",
         overflow: "hidden",
