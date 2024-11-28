@@ -49,7 +49,7 @@ export function ProfilePage() {
             isLiked={post.hasLiked}
             beans={post.beans}
             updatePost={setUpdatePost}
-            isYours={post.isYours}
+            isYours={true}
           />
         ))}
       </div>
