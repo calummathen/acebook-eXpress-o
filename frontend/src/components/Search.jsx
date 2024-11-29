@@ -40,26 +40,7 @@ export const Search = () => {
   }, [query]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "start",
-        alignItems: "center",
-        height: "50vh",
-        width: "50vw",
-        position: "absolute",
-        top: 0,
-        right: 0,
-        flexDirection: "column",
-        padding: "20px",
-        boxSizing: "border-box",
-        marginTop: "70px",
-        background: "black",
-        opacity: "90%",
-        overflow: "hidden",
-        borderBottomLeftRadius: "5%",
-      }}
-    >
+    <div>
       <input
         style={{
           padding: "10px",
@@ -89,7 +70,9 @@ export const Search = () => {
         }}
       >
         {filteredUsers.map((el, index) => (
-          <li key={index}><Link to={`/profile/${el.username}`}>{el.username}</Link></li>
+          <li key={index}>
+            <Link to={`/profile/${el.username}`}>{el.username}</Link>
+          </li>
         ))}
       </ul>
     </div>
