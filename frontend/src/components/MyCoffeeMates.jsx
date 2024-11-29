@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 export default function MyCoffeeMates({
-  confirmedFriends,
+  filteredConfirmedFriends,
   coffeeMateQuery,
   setCoffeeMateQuery,
 }) {
@@ -26,13 +26,20 @@ export default function MyCoffeeMates({
         </AccordionSummary>
         <input
           type="text"
-          placeholder="search fellow coffee snobs"
+          placeholder="filter fellow coffee snobs"
           value={coffeeMateQuery}
           onChange={(e) => setCoffeeMateQuery(e.target.value)}
         />
-        <AccordionDetails style={{ display: "flex" }}>
-          {confirmedFriends.length > 0 ? (
-            confirmedFriends.map((friend, index) => (
+        <AccordionDetails
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "start",
+            gap: "10px",
+          }}
+        >
+          {filteredConfirmedFriends.length > 0 ? (
+            filteredConfirmedFriends.map((friend, index) => (
               <a href={`/profile/${friend}`} key={index}>
                 ~ {friend}
               </a>

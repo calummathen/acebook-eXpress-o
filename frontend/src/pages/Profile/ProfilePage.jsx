@@ -14,8 +14,7 @@ export function ProfilePage() {
   const navigate = useNavigate();
 
   const [coffeeMateQuery, setCoffeeMateQuery] = useState("");
-
-  console.log(coffeeMateQuery);
+  const [filteredConfirmedFriends, setFilteredConfirmedFriends] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -53,15 +52,32 @@ export function ProfilePage() {
     fetchFriends();
   }, [navigate, updatePost]);
 
-  const confirmedFriends = friends.map((friend) =>
-    friend.sender == friend.user ? friend.receiver : friend.sender
-  );
+  const getConfirmedFriends = () => {
+    return friends.map((friend) =>
+      friend.sender == friend.user ? friend.receiver : friend.sender
+    );
+  };
 
-  const timestamps = friends.map((friend) => friend.timestamp);
+  const createFilteredConfirmedFriends = (query, allFriends) => {
+    if (query.trim() === "") {
+      return allFriends;
+    }
+    return allFriends.filter((el) => {
+      return el.toLowerCase().includes(query.toLowerCase());
+    });
+  };
 
-  console.log("friends state:  ", friends);
-  console.log("confirmed Friend array:", confirmedFriends);
-  console.log("timestamps array", timestamps);
+  useEffect(() => {
+    const confirmedFriends = getConfirmedFriends(friends);
+    const result = createFilteredConfirmedFriends(
+      coffeeMateQuery,
+      confirmedFriends
+    );
+    setFilteredConfirmedFriends(result);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [coffeeMateQuery, friends]);
+
+  // const timestamps = friends.map((friend) => friend.timestamp);
 
   return (
     <div className="profile">
@@ -76,9 +92,10 @@ export function ProfilePage() {
         role="feed"
       >
         <div style={{ width: "30%" }}>
-          <h1>dynamic user name</h1>
+          {/* we need to make this better!! */}
+          {(posts.length > 0) && (<h1>{posts[0].user}</h1>)}
           <MyCoffeeMates
-            confirmedFriends={confirmedFriends}
+            filteredConfirmedFriends={filteredConfirmedFriends}
             coffeeMateQuery={coffeeMateQuery}
             setCoffeeMateQuery={setCoffeeMateQuery}
           />
