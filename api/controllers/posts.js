@@ -60,6 +60,7 @@ async function deletePostId(req, res) {
     res.status(200).json({ message: "Post deleted", token: newToken });
   } else {
     console.error("Not your post can't delete")
+    res.status(401).json({ message: "Not your post can't delete" })
   }
 }
 
