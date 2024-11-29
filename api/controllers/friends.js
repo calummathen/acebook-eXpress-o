@@ -14,10 +14,27 @@ async function getFriendsForUser(req, res) {
     friendObject.user = req.username; 
     return friendObject;
   });
-
+  
   const token = generateToken(req.user_id, req.username);
   res.status(200).json({ friends: updatedFriends, token: token });
-// console.log(req.username)
+}
+
+async function getFriendsForAnotherUser(req, res) {
+  const friends = await Friend.find({
+    $or: [
+      { sender: req.params.username, approved: true },
+      { receiver: req.params.username, approved: true },
+    ]
+  });  
+  friends.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const updatedFriends = friends.map((friend) => {
+    const friendObject = friend.toObject(); 
+    friendObject.user = req.username; 
+    return friendObject;
+  });
+  
+  const token = generateToken(req.user_id, req.username);
+  res.status(200).json({ friends: updatedFriends, token: token });
 }
 
 async function sendFriendRequest(req, res) {
@@ -32,6 +49,7 @@ async function sendFriendRequest(req, res) {
 
 const FriendsController = {
   getFriendsForUser: getFriendsForUser,
+  getFriendsForAnotherUser: getFriendsForAnotherUser,
   sendFriendRequest: sendFriendRequest
 };
 
