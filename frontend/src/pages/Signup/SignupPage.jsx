@@ -35,11 +35,11 @@ export function SignupPage() {
         const errorMessage = err.message;
 
         if (errorMessage === "username") {
-          toast.error("pleaser enter a different username, already taken!");
+          toast.error("That username is taken, please try something else.");
         } else {
           if (errorMessage === "email") {
             toast.error(
-              "there is already an account with that email, please login"
+              "An account with that email already exists, please login."
             );
           }
         }
