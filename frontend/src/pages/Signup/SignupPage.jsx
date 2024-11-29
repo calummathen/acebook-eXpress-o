@@ -24,9 +24,54 @@ export function SignupPage() {
     }
   };
 
+  const validateUsername = (username) => {
+    if (!username) {
+      toast.error("Input Username.");
+      return false;
+    }
+    return true;
+  };
+
+  const validateEmail = (email) => {
+    // Check if email contains "@" and "."  
+     // "||" MEANS "OR"
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      toast.error("Please enter a valid email address with '@' and '.'");
+      return false;
+    }
+    return true;
+  };
+
+  const validateBirthday = (birthday) => {
+    if (!birthday) {
+      toast.error("Birthday is required.");
+      return false;
+    }
+    return true;
+  };
+  
+  const validateName = (name) => {
+    if (!name) {
+      toast.error("Input Name.");
+      return false;
+    }
+    return true;
+  };
+
+  
+
   async function handleSubmit(event) {
     event.preventDefault();
-    if (validatePassword(password)) {
+    if (
+      validatePassword(password) &&
+      validateUsername(username) &&
+      validateEmail(email) &&
+      validateBirthday(birthday) &&
+      validateName(name)
+    
+    
+    
+    ) {
       try {
         await signup(name, birthday, email, username, password);
         navigate("/login");
@@ -36,17 +81,21 @@ export function SignupPage() {
 
         if (errorMessage === "username") {
           toast.error("That username is taken, please try something else.");
+        } else if (errorMessage === "email") {
+          toast.error("An account with that email already exists, please login.");
+        } else if (errorMessage === "password") {
+          toast.error("Password required");
+        } else if (errorMessage === "birthday") {
+          toast.error("Birthday required");
+        } else if (errorMessage === "name") {
+          toast.error("Missing Name");
         } else {
-          if (errorMessage === "email") {
-            toast.error(
-              "An account with that email already exists, please login."
-            );
-          }
+          toast.error("An unexpected error occurred. Please try again.");
         }
         navigate("/signup");
       }
     }
-  }
+   }
 
   function handleNameChange(event) {
     setName(event.target.value);
