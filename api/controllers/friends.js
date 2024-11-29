@@ -8,7 +8,34 @@ async function getFriendsForUser(req, res) {
       { receiver: req.username, approved: true },
     ]
   });  
+  if (friends.length === 0) {
+    return res.status(200).json({
+      friends: [{
+        sender: "",
+        receiver: "",
+        user: req.username, 
+        timestamp: ""
+      }],
+      token: generateToken(req.user_id, req.username),
+    });
+  }
   friends.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const updatedFriends = friends.map((friend) => {
+    const friendObject = friend.toObject(); 
+    friendObject.user = req.username; 
+    return friendObject;
+  });
+  
+  const token = generateToken(req.user_id, req.username);
+  res.status(200).json({ friends: updatedFriends, token: token });
+}
+
+async function getUnapprovedFriendsForUser(req, res) {
+  const friends = await Friend.find({
+    receiver: req.username,
+    approved: false
+  });
+  console.log(friends)
   const updatedFriends = friends.map((friend) => {
     const friendObject = friend.toObject(); 
     friendObject.user = req.username; 
@@ -26,6 +53,7 @@ async function getFriendsForAnotherUser(req, res) {
       { receiver: req.params.username, approved: true },
     ]
   });  
+
   friends.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   const updatedFriends = friends.map((friend) => {
     const friendObject = friend.toObject(); 
@@ -50,7 +78,8 @@ async function sendFriendRequest(req, res) {
 const FriendsController = {
   getFriendsForUser: getFriendsForUser,
   getFriendsForAnotherUser: getFriendsForAnotherUser,
-  sendFriendRequest: sendFriendRequest
+  sendFriendRequest: sendFriendRequest, 
+  getUnapprovedFriendsForUser: getUnapprovedFriendsForUser
 };
 
 module.exports = FriendsController;

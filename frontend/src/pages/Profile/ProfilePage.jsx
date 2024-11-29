@@ -4,12 +4,14 @@ import { getYourPosts } from "../../services/posts";
 import Post from "../../components/Post";
 import NewNavbar from "../../components/NewNavBar";
 import "./ProfilePage.css";
-import { getFriendsForUser } from "../../services/friends";
+import { getFriendsForUser, getUnapprovedFriendsForUser } from "../../services/friends";
 
 export function ProfilePage() {
     const [posts, setPosts] = useState([]);
     const [updatePost, setUpdatePost] = useState(false);
     const [friends, setFriends] = useState([]);
+    const [requests, setRequests] = useState([]);
+
     const navigate = useNavigate();
   
     useEffect(() => {
@@ -39,18 +41,25 @@ export function ProfilePage() {
   
         try {
           const fetchedFriends = await getFriendsForUser(token);
+          const fetchedRequests = await getUnapprovedFriendsForUser(token)
           setFriends(fetchedFriends.friends); 
+          setRequests(fetchedRequests.friends)
         } catch (error) {
           console.error("Error fetching friends:", error.message);
         }
       };
   
       fetchFriends();
+
+
     }, [navigate, updatePost]); 
 
-    const users = friends.map(friend => friend.sender == friend.user ? friend.receiver : friend.sender);
+    console.log(requests)
+    // const user = friends[0].user
+    // console.log(user)
+    // const users = friends.map(friend => friend.sender == friend.user ? friend.receiver : friend.sender);
     // console.log(users)
-    const timestamps = friends.map(friend => friend.timestamp);
+    // const timestamps = friends.map(friend => friend.timestamp);
     // console.log(timestamps)
 
     return (

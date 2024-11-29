@@ -18,6 +18,24 @@ export async function getFriendsForUser(token) {
   return data;
 }
 
+export async function getUnapprovedFriendsForUser(token) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(`${BACKEND_URL}/friends/requests`, requestOptions);
+
+  if (response.status !== 200) {
+    throw new Error("Unable to get friends");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
 export async function sendFriendRequest(token, username) {
   const requestOptions = {
     method: "POST",
