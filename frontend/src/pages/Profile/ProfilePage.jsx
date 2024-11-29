@@ -58,9 +58,6 @@ export function ProfilePage() {
         <div className="feed" role="feed">
           <NewNavbar/>
         <div>
-      {/* <div>
-        {users}
-      </div> */}
       </div>
         {posts.map((post) => (
           <Post
