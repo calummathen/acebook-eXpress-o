@@ -17,7 +17,7 @@ export const ThemeToggle = () => {
     // the theme variable will let your component know whether it should be styled with milk or not!
     setTheme(userChange ? "light" : "dark");
   };
-  console.log(enabled);
+
   return (
     <div
       style={{
@@ -26,7 +26,10 @@ export const ThemeToggle = () => {
         alignItems: "center",
       }}
     >
-      <PiCoffeeFill size={30} style={{ paddingRight: "10px" }} />
+      <PiCoffeeFill
+        size={30}
+        style={{ paddingRight: "10px", color: enabled ? "black" : "white" }}
+      />
       <Switch
         //   our default theme is dark (ie, no milk!) so if the toggle is checked theme = light (ie, add milk!)
         checked={theme === "light"}

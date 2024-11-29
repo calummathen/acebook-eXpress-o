@@ -22,7 +22,10 @@ export const SearchButton = () => {
       {slider ? (
         <div>
           <button
-            style={{ width: "110px", marginRight: "10px" }}
+            style={{
+              width: "110px",
+              marginRight: "10px",
+            }}
             onClick={toggleSlider}
           >
             Snob Search <FaChevronUp />{" "}

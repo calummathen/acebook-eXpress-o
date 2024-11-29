@@ -24,17 +24,48 @@ h1 {
   line-height: 1.1;
 }
 
-.nav-link {
-  padding: 10px 20px; /* Adds padding inside the link */
+.nav-bar-dark {
+  height: 70px;
   font-size: 16px; /* Font size for readability */
   color: white; /* White text color */
   background-color: #007bff; /* Static blue background */
   text-decoration: none; /* Removes underline from links */
-  border-radius: 5px; /* Rounded corners */
-  background-color: #0056b3; /* Darker blue background on hover */
+  background-color: #404041; /* Darker blue background on hover */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-bar-light {
+  height: 70px;
+  font-size: 16px; /* Font size for readability */
+  color: white; /* White text color */
+  text-decoration: none; /* Removes underline from links */
+  background-color: #bbbbbb; /* Darker blue background on hover */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-title {
+  padding-left: 10px;
+  text-decoration: none;
   color: white;
 }
 
+.nav-title:hover {
+  color: #9c9c9e;
+}
 
+.profile-link {
+  color: white;
+}
 
-
+.nav-buttons-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  padding-right: 10px;
+}
