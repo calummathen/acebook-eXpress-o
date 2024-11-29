@@ -15,7 +15,7 @@ async function seedData() {
     // Seed Users
     const users = [
       {
-        username: "JavaJunkie",
+        username: "javajunkie",
         name: "Charles",
         email: "javajunkie@coffee.com",
         password:
@@ -23,7 +23,7 @@ async function seedData() {
         birthday: new Date("2000-01-01"),
       },
       {
-        username: "BeanBlogger",
+        username: "beanblogger",
         name: "Bob",
         email: "beanblogger@coffee.com",
         password:
@@ -31,7 +31,7 @@ async function seedData() {
         birthday: new Date("1991-03-18"),
       },
       {
-        username: "LatteLover",
+        username: "lattelover",
         name: "Leticia",
         email: "lattelover@latte.com",
         password:
@@ -49,35 +49,35 @@ async function seedData() {
     // Seed Posts
     const posts = [
       {
-        user: "JavaJunkie",
+        user: "javajunkie",
         message:
           "Just enjoyed a cup of the most amazing cold brew coffee! ☕️ The rich, smooth flavor with a hint of chocolate notes made my morning. Who else can't start their day without their favorite brew?",
         beans: ["BeanBlogger"],
         timestamp: new Date("2023-11-26 18:17"),
       },
       {
-        user: "BeanBlogger",
+        user: "beanblogger",
         message:
           "Just discovered a cozy little café tucked away on Elm Street! ☕️ Their hazelnut cappuccino is the perfect blend of rich and smooth—absolutely made my morning. Can't wait to become a regular there! Has anyone else been? #CoffeeAdventures #CafeHopping",
         beans: ["JavaJunkie"],
         timestamp: new Date("2024-10-10 08:14"),
       },
       {
-        user: "BeanBlogger",
+        user: "beanblogger",
         message:
           "Just tried a new coffee blend this morning, and it's absolutely amazing! The rich aroma filled my kitchen, and the first sip was like a warm hug in a mug. Can't wait to share it with friends. ☕️😍 #CoffeeLove #MorningPerk #NewBlend",
         beans: [],
         timestamp: new Date("2023-10-13 07:27"),
       },
       {
-        user: "JavaJunkie",
+        user: "javajunkie",
         message:
           "Just enjoyed the most incredible cup of Ethiopian roast this morning! ☕️ The fruity notes and smooth finish were absolutely delightful. Anyone else have a favorite coffee origin they swear by?",
         beans: ["LatteLover", "BeanBlogger"],
         timestamp: new Date("2024-08-01 15:33"),
       },
       {
-        user: "LatteLover",
+        user: "lattelover",
         message:
           "Just treated myself to a caramel latte from the new café down the street! ☕️😍 The perfect blend of sweet and creamy. Has anyone else discovered a new favorite coffee spot lately?",
         beans: ["JavaJunkie"],
@@ -93,14 +93,14 @@ async function seedData() {
 
     const friends = [
       {
-        sender: "JavaJunkie",
-        receiver: "LatteLover",
+        sender: "javajunkie",
+        receiver: "lattelover",
         approved: true,
         timestamp: new Date("2024-11-25 10:44"),
       },
       {
-        sender: "BeanBlogger",
-        receiver: "JavaJunkie",
+        sender: "beanblogger",
+        receiver: "javajunkie",
       },
     ];
 
