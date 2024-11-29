@@ -15,6 +15,31 @@ function create(req, res) {
   const username = req.body.username;
   const password = Bcrypt.hashSync(req.body.password, 10);
 
+  if (!Object.keys(req.body).includes('birthday') || !req.body.birthday) {
+    return res
+      .status(400)
+      .json({ message: "Missing birthday." });
+  }
+  if (!Object.keys(req.body).includes('name') || !req.body.name) {
+    return res
+      .status(400)
+      .json({ message: "Name required." });
+  }
+  if (!Object.keys(req.body).includes('email') || !req.body.email) {
+    return res
+      .status(400)
+      .json({ message: "Missing email." });
+  }
+  if (!Object.keys(req.body).includes('username') || !req.body.username) {
+    return res
+      .status(400)
+      .json({ message: "Missing username." });
+  }
+  if (!Object.keys(req.body).includes('password') || !req.body.password) {
+    return res
+      .status(400)
+      .json({ message: "Password required." });
+  }
   // console.log(`Name: ${name}, Birthday: ${birthday}, Email: ${email}, Username: ${username}, Password: ${password}`)
 
   const user = new User({ name, birthday, email, username, password });
