@@ -41,7 +41,7 @@ export const SearchButton = () => {
                 justifyContent: "start",
                 alignItems: "center",
                 height: "50vh",
-                width: "50vw",
+                width: "40vw",
                 position: "absolute",
                 top: 70,
                 right: 0,

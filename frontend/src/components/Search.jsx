@@ -67,6 +67,9 @@ export const Search = () => {
           width: "100%",
           maxWidth: "400px",
           color: "white",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
         }}
       >
         {filteredUsers.map((el, index) => (
