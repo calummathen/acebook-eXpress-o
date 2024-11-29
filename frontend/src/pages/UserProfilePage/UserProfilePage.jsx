@@ -5,6 +5,8 @@ import { getUserPosts } from "../../services/posts";
 import Post from "../../components/Post";
 import NewNavbar from "../../components/NewNavBar";
 import { getFriendsForAnotherUser } from "../../services/friends";
+import AddFriendButton from "../../components/AddFriendButton";
+import { sendFriendRequest } from "../../services/friends";
 
 export async function loader({ params }) {
     const username = params.username
@@ -66,11 +68,16 @@ export function UserProfilePage() {
       return ;
     }
 
+    async function addFriend() {
+      await sendFriendRequest(token, username);
+    }
+
     return (
       <div className="profile">
         <h1>Welcome to your COFFEE COUNTER!</h1>
         <div className="feed" role="feed">
           <NewNavbar/>
+          <AddFriendButton sendFriendRequest={addFriend}/>
         {posts.map((post) => (
           <Post
             post={post}
