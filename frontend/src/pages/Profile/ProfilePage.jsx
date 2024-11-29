@@ -5,12 +5,17 @@ import Post from "../../components/Post";
 import NewNavbar from "../../components/NewNavBar";
 import "./ProfilePage.css";
 import { getFriendsForUser } from "../../services/friends";
+import MyCoffeeMates from "../../components/MyCoffeeMates";
 
 export function ProfilePage() {
   const [posts, setPosts] = useState([]);
   const [updatePost, setUpdatePost] = useState(false);
   const [friends, setFriends] = useState([]);
   const navigate = useNavigate();
+
+  const [coffeeMateQuery, setCoffeeMateQuery] = useState("");
+
+  console.log(coffeeMateQuery);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -39,7 +44,7 @@ export function ProfilePage() {
 
       try {
         const fetchedFriends = await getFriendsForUser(token);
-        setFriends(fetchedFriends);
+        setFriends(fetchedFriends.friends);
       } catch (error) {
         console.error("Error fetching friends:", error.message);
       }
@@ -48,14 +53,37 @@ export function ProfilePage() {
     fetchFriends();
   }, [navigate, updatePost]);
 
+  const confirmedFriends = friends.map((friend) =>
+    friend.sender == friend.user ? friend.receiver : friend.sender
+  );
+
+  const timestamps = friends.map((friend) => friend.timestamp);
+
+  console.log("friends state:  ", friends);
+  console.log("confirmed Friend array:", confirmedFriends);
+  console.log("timestamps array", timestamps);
+
   return (
     <div className="profile">
       <NewNavbar />
-      <div style={{ display: "flex", flexDirection: "row" }} role="feed">
-        <div style={{ border: "solid", width: "30%" }}>
-          <h1>add calums user route here</h1>
+      <div
+        style={{
+          display: "flex",
+          gap: "30px",
+          flexDirection: "row",
+          height: "100vh",
+        }}
+        role="feed"
+      >
+        <div style={{ width: "30%" }}>
+          <h1>dynamic user name</h1>
+          <MyCoffeeMates
+            confirmedFriends={confirmedFriends}
+            coffeeMateQuery={coffeeMateQuery}
+            setCoffeeMateQuery={setCoffeeMateQuery}
+          />
         </div>
-        <div style={{ border: "solid", width: "70%" }}>
+        <div style={{ width: "70%" }}>
           {posts.map((post) => (
             <Post
               post={post}

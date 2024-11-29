@@ -38,6 +38,55 @@ async function seedData() {
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1989-09-25"),
       },
+      {
+        username: "coldbrewfanatic",
+        name: "Chris",
+        email: "coldbrewfanatic@coffee.com",
+        password:
+          "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
+        birthday: new Date("1993-12-12"),
+      },
+      {
+        username: "capuccinoking",
+        name: "Carl",
+        email: "capuccinoking@coffee.com",
+        password:
+          "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
+        birthday: new Date("1987-07-07"),
+      },
+      {
+        username: "dripking",
+        name: "Daniel",
+        email: "dripking@javaworld.com",
+        password:
+          "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
+        birthday: new Date("1997-02-16"),
+      },
+      {
+        username: "darkroastdevotee",
+        name: "Derek",
+        email: "darkroastdevotee@coffeecrew.com",
+        password:
+          "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
+        birthday: new Date("2004-12-16"),
+      },
+      {
+        username: "cafecraver",
+        name: "Chloe",
+        email: "cafecraver@latteplace.com",
+        password:
+          "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
+        birthday: new Date("2000-03-27"),
+      },
+      {
+        username: "sipandsavor",
+        name: "Sophie",
+        email: "sipandsavor@latteplace.com",
+        password:
+          "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
+        birthday: new Date("1995-10-03"),
+      },
+      
     ];
 
     for (const userData of users) {
@@ -83,8 +132,50 @@ async function seedData() {
         beans: ["JavaJunkie"],
         timestamp: new Date("2022-06-07 11:12"),
       },
+      {
+        user: "sipandsavor",
+        message:
+          "Tried a new coffee blend today: Ethiopian Yirgacheffe. The floral aroma and bright citrus notes are incredible! 🌼🍋 What's your go-to single-origin coffee?",
+        beans: ["cafecraver", "coldbrewfanatic"],
+        timestamp: new Date("2023-11-29 10:15"),
+      },
+      {
+        user: "cafecraver",
+        message:
+          "Nothing beats the comfort of a cappuccino on a rainy day. ☔️ Frothy, creamy, and perfect with a good book. What's your rainy-day coffee ritual?",
+        beans: ["sipandsavor", "darkroastdevotee"],
+        timestamp: new Date("2023-11-29 14:30"),
+      },
+      {
+        user: "darkroastdevotee",
+        message:
+          "Bold, smoky, and full-bodied — that's how I like my coffee! Tried French Roast today, and I'm hooked. Who's into the dark side? ☕️",
+        beans: ["dripking", "capuccinoking"],
+        timestamp: new Date("2023-11-29 09:45"),
+      },
+      {
+        user: "dripking",
+        message:
+          "Drip coffee is underrated! It's simple, but when done right, it can bring out the cleanest flavors. Tried it with a Kenyan roast today — fantastic! 🌍",
+        beans: ["sipandsavor", "coldbrewfanatic"],
+        timestamp: new Date("2023-11-29 08:20"),
+      },
+      {
+        user: "capuccinoking",
+        message:
+          "The foam art on my cappuccino today was a little heart. ❤️ It's the little things that make coffee moments special. Do you take time to enjoy the artistry?",
+        beans: ["darkroastdevotee", "dripking"],
+        timestamp: new Date("2023-11-29 11:10"),
+      },
+      {
+        user: "coldbrewfanatic",
+        message:
+          "Cold brew with a splash of vanilla almond milk = perfection! 🥶☕️ Smooth, sweet, and refreshing. What's your favorite cold coffee combo?",
+        beans: ["sipandsavor", "cafecraver"],
+        timestamp: new Date("2023-11-29 13:05"),
+      },
     ];
-
+    
     for (const postData of posts) {
       const post = new Post(postData);
       await post.save();
@@ -102,7 +193,50 @@ async function seedData() {
         sender: "beanblogger",
         receiver: "javajunkie",
       },
+      {
+        sender: "sipandsavor",
+        receiver: "cafecraver",
+        approved: true,
+        timestamp: new Date("2023-09-25 09:15"),
+      },
+      {
+        sender: "cafecraver",
+        receiver: "darkroastdevotee",
+      },
+      {
+        sender: "darkroastdevotee",
+        receiver: "dripking",
+        approved: true,
+        timestamp: new Date("2023-01-27 16:45"),
+      },
+      {
+        sender: "dripking",
+        receiver: "coldbrewfanatic",
+        approved: true,
+        timestamp: new Date("2024-01-01 12:30"),
+      },
+      {
+        sender: "capuccinoking",
+        receiver: "sipandsavor",
+      },
+      {
+        sender: "coldbrewfanatic",
+        receiver: "javajunkie",
+        approved: true,
+        timestamp: new Date("2024-02-14 14:00"),
+      },
+      {
+        sender: "beanblogger",
+        receiver: "capuccinoking",
+      },
+      {
+        sender: "lattelover",
+        receiver: "darkroastdevotee",
+        approved: true,
+        timestamp: new Date("2024-11-28 18:20"),
+      },
     ];
+    
 
     for (const friendData of friends) {
       const friend = new Friend(friendData);
