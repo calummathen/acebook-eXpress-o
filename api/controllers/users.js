@@ -2,6 +2,7 @@ const Bcrypt = require("bcrypt");
 const User = require("../models/user");
 const { generateToken } = require("../lib/token");
 
+
 function create(req, res) {
   if (Object.keys(req.body).length !== 5) {
     return res
@@ -36,10 +37,38 @@ async function getAllUsers(req, res) {
   const token = generateToken(req.user_id, req.username);
   res.status(200).json({ users: users, token: token });
 }
+ 
+async function getUserInfo(req, res) {
+  try {
+    const user = await User.findById(req.user_id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // User's information
+    res.status(200).json({
+      UserInfo: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        username: user.username,
+        birthday: user.birthday,
+        location: user.location,
+        work_place: user.work_place,
+        telephone_number: user.telephone_number,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "An error occurred fetching user info." });
+  }
+}
 
 const UsersController = {
   create: create,
   getAllUsers: getAllUsers,
+  getUserInfo: getUserInfo
 };
 
 module.exports = UsersController;

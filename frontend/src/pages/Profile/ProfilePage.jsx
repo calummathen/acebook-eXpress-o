@@ -4,6 +4,7 @@ import { getYourPosts } from "../../services/posts";
 import Post from "../../components/Post";
 import NewNavbar from "../../components/NewNavBar";
 
+
 export function ProfilePage() {
     const [posts, setPosts] = useState([]);
     const [updatePost, setUpdatePost] = useState(false);

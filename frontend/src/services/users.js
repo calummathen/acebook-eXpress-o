@@ -18,3 +18,33 @@ export async function getUsers(token) {
   const data = await response.json();
   return data;
 }
+
+export async function getUserInfo(token, user_Id) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(`${BACKEND_URL}/users/${user_Id}`, requestOptions);
+
+  if (response.status !== 200) {
+    throw new Error("Unable to fetch users");
+  }
+
+  return await response.json();
+}
+
+export const updateUserInfo = async (token, userData) => {
+  const response = await fetch("/api/user", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+    body: JSON.stringify(userData),  
+  });
+
+  return await response.json();
+};

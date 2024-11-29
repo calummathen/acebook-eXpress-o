@@ -21,6 +21,9 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("2000-01-01"),
+        location: "Sttutgart",
+        work_place: "BMW",
+        telephone_number:"07856456765"
       },
       {
         username: "BeanBlogger",
@@ -29,6 +32,9 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1991-03-18"),
+        location: "London",
+        work_place: "Trainline",
+        telephone_number:"07856456765"
       },
       {
         username: "LatteLover",
@@ -37,6 +43,9 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1989-09-25"),
+        location: "London",
+        work_place: "Makers",
+        telephone_number:"078564569875"
       },
     ];
 
