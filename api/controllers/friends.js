@@ -8,9 +8,15 @@ async function getFriendsForUser(req, res) {
       { receiver: req.username, approved: true },
     ]
   });  
-  // friends.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  friends.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const updatedFriends = friends.map((friend) => {
+    const friendObject = friend.toObject(); 
+    friendObject.user = req.username; 
+    return friendObject;
+  });
+
   const token = generateToken(req.user_id, req.username);
-  res.status(200).json({ friends: friends, token: token });
+  res.status(200).json({ friends: updatedFriends, token: token });
 // console.log(req.username)
 }
 
