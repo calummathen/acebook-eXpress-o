@@ -46,9 +46,7 @@ export function ProfilePage() {
   
       fetchFriends();
     }, [navigate, updatePost]); 
-  
-    console.log(friends)
-    
+      
     return (
       <div className="profile">
         <h1>Welcome to your COFFEE COUNTER!</h1>
