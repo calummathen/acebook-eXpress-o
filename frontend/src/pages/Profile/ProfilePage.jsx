@@ -46,9 +46,19 @@ export function ProfilePage() {
         .catch((err) => {
           console.error(err);
           navigate("/login");
+        });
+    }
+  }, [navigate, updatePost]);
+
+    useEffect(() => {
+      const fetchFriends = async () => {
+        const token = localStorage.getItem("token");
+  
+        if (!token) {
+          navigate("/login");
           return;
         }
-  
+
         try {
           const fetchedFriends = await getFriendsForUser(token);
           const fetchedRequests = await getUnapprovedFriendsForUser(token)
