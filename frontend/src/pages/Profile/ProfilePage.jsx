@@ -39,7 +39,7 @@ export function ProfilePage() {
   
         try {
           const fetchedFriends = await getFriendsForUser(token);
-          setFriends(fetchedFriends); 
+          setFriends(fetchedFriends.friends); 
         } catch (error) {
           console.error("Error fetching friends:", error.message);
         }
@@ -47,12 +47,20 @@ export function ProfilePage() {
   
       fetchFriends();
     }, [navigate, updatePost]); 
-      
+
+    const users = friends.map(friend => friend.sender == friend.user ? friend.receiver : friend.sender);
+    // console.log(users)
+    const timestamps = friends.map(friend => friend.timestamp);
+    // console.log(timestamps)
+
     return (
       <div className="profile">
         <div className="feed" role="feed">
           <NewNavbar/>
         <div>
+      {/* <div>
+        {users}
+      </div> */}
       </div>
         {posts.map((post) => (
           <Post
