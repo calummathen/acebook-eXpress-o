@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getYourPosts } from "../../services/posts";
 import Post from "../../components/Post";
 import NewNavbar from "../../components/NewNavBar";
+import "./ProfilePage.css";
 import { getFriendsForUser } from "../../services/friends";
 
 export function ProfilePage() {
@@ -49,11 +50,10 @@ export function ProfilePage() {
       
     return (
       <div className="profile">
-        <h1>Welcome to your COFFEE COUNTER!</h1>
         <div className="feed" role="feed">
           <NewNavbar/>
         <div>
-        </div>
+      </div>
         {posts.map((post) => (
           <Post
             post={post}
@@ -68,7 +68,6 @@ export function ProfilePage() {
           />
         ))}
       </div>
-      </div>
-    );
-  }
-  
+    </div>
+  );
+}

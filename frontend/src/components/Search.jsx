@@ -22,7 +22,7 @@ export const Search = () => {
     }
   }, []);
 
-  console.log("filtered users:  ", filteredUsers);
+  // console.log("filtered users:  ", filteredUsers);
 
   const createFilterUsers = (query, users) => {
     if (query.trim() === "") {
@@ -45,7 +45,7 @@ export const Search = () => {
         display: "flex",
         justifyContent: "start",
         alignItems: "center",
-        height: "100vh",
+        height: "50vh",
         width: "50vw",
         position: "absolute",
         top: 0,
@@ -57,6 +57,7 @@ export const Search = () => {
         background: "black",
         opacity: "90%",
         overflow: "hidden",
+        borderBottomLeftRadius: "5%",
       }}
     >
       <input

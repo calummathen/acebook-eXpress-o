@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 import { getPosts } from "../../services/posts";
 import Post from "../../components/Post";
-import LogoutButton from "../../components/LogoutButton";
 import NewPostForm from "../../components/NewPostForm";
+
+import { useBeanScene } from "../../context/BeanSceneContext";
+
 import NewNavbar from "../../components/NewNavBar";
 
 export function FeedPage() {
+  const { theme } = useBeanScene();
   const [posts, setPosts] = useState([]);
   const [updatePost, setUpdatePost] = useState(false);
   const navigate = useNavigate();
@@ -34,11 +37,14 @@ export function FeedPage() {
     return;
   }
 
-  //console.log(posts)
-
   return (
-    <>
-      <NewNavbar/>
+    <div
+      style={{
+        background: theme === "light" ? "white" : "#333333",
+        color: theme === "light" ? "#333333" : "white",
+      }}
+    >
+      <NewNavbar />
       <h2>Posts</h2>
       <div>
         <NewPostForm token={token} setUpdatePost={setUpdatePost} />
@@ -58,7 +64,6 @@ export function FeedPage() {
           />
         ))}
       </div>
-      <LogoutButton />
-    </>
+    </div>
   );
 }
