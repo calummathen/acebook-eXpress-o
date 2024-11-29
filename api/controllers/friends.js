@@ -37,9 +37,20 @@ async function getFriendsForAnotherUser(req, res) {
   res.status(200).json({ friends: updatedFriends, token: token });
 }
 
+async function sendFriendRequest(req, res) {
+  req.body.sender = req.username
+  const friend = new Friend(req.body)
+
+  await friend.save()
+
+  const newToken = generateToken(req.user_id, req.username);
+  res.status(201).json({ message: "Friend request sent", token: newToken });
+}
+
 const FriendsController = {
   getFriendsForUser: getFriendsForUser,
-  getFriendsForAnotherUser: getFriendsForAnotherUser
+  getFriendsForAnotherUser: getFriendsForAnotherUser,
+  sendFriendRequest: sendFriendRequest
 };
 
 module.exports = FriendsController;
