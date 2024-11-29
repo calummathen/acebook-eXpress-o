@@ -34,11 +34,17 @@ export function ProfilePage() {
     }
   }, [navigate, updatePost]);
 
-    useEffect(() => {
-      const fetchFriends = async () => {
-        const token = localStorage.getItem("token");
-  
-        if (!token) {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const loggedIn = token !== null;
+    if (loggedIn) {
+      getYourPosts(token)
+        .then((data) => {
+          setPosts(data.posts);
+          localStorage.setItem("token", data.token);
+        })
+        .catch((err) => {
+          console.error(err);
           navigate("/login");
           return;
         }
@@ -90,8 +96,6 @@ export function ProfilePage() {
     setFilteredConfirmedFriends(result);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coffeeMateQuery, friends]);
-
-  // const timestamps = friends.map((friend) => friend.timestamp);
 
   return (
     <div className="profile">
