@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserPosts } from "../../services/posts";
 import Post from "../../components/Post";
 import NewNavbar from "../../components/NewNavBar";
+import { getFriendsForAnotherUser } from "../../services/friends";
 
 export async function loader({ params }) {
     const username = params.username
@@ -15,6 +16,7 @@ export function UserProfilePage() {
 
     const [posts, setPosts] = useState([]);
     const [updatePost, setUpdatePost] = useState(false);
+    const [friends, setFriends] = useState([]);
     const navigate = useNavigate();
   
     useEffect(() => {
@@ -32,6 +34,31 @@ export function UserProfilePage() {
           });
       }
     }, [navigate, updatePost]);
+
+    useEffect(() => {
+      const fetchFriends = async () => {
+        const token = localStorage.getItem("token");
+  
+        if (!token) {
+          navigate("/login");
+          return;
+        }
+  
+        try {
+          const fetchedFriends = await getFriendsForAnotherUser(token, username);
+          setFriends(fetchedFriends.friends); 
+        } catch (error) {
+          console.error("Error fetching friends:", error.message);
+        }
+      };
+  
+      fetchFriends();
+    }, [navigate, updatePost]); 
+
+    const friendsUsernames = friends.map(friend => friend.sender == username ? friend.receiver : friend.sender);
+    // console.log(friendsUsernames)
+    const timestamps = friends.map(friend => friend.timestamp);
+    // console.log(timestamps)
   
     const token = localStorage.getItem("token");
     if (!token) {
