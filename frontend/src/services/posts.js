@@ -30,7 +30,7 @@ export async function CreatePost(token, body) {
   };
 
   const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);
-  // console.log(response)
+
   if (response.status !== 201) {
     throw new Error("Unable to create post");
   }
@@ -66,7 +66,7 @@ export async function deletePostId(token, post_id, body) {
     body: JSON.stringify({isYours: body})
   };
   const response = await fetch(`${BACKEND_URL}/posts/${post_id}`, requestOptions);
-  // console.log(response)
+
   if (response.status !== 200) {
     throw new Error("Unable to delete post");
   }
@@ -95,6 +95,24 @@ export async function getYourPosts(token) {
   };
 
   const response = await fetch(`${BACKEND_URL}/posts/mine`, requestOptions);
+
+  if (response.status !== 200) {
+    throw new Error("Unable to fetch posts");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export async function getUserPosts(token, username) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(`${BACKEND_URL}/posts/${username}`, requestOptions);
 
   if (response.status !== 200) {
     throw new Error("Unable to fetch posts");

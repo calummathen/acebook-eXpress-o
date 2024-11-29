@@ -1,22 +1,27 @@
+import { useLoaderData } from "react-router-dom"
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getYourPosts } from "../../services/posts";
+import { getUserPosts } from "../../services/posts";
 import Post from "../../components/Post";
 import NewNavbar from "../../components/NewNavBar";
-import "./ProfilePage.css";
-import { getFriendsForUser } from "../../services/friends";
 
-export function ProfilePage() {
+export async function loader({ params }) {
+    const username = params.username
+    return { username }
+}
+
+export function UserProfilePage() {
+    const { username } = useLoaderData()
+
     const [posts, setPosts] = useState([]);
     const [updatePost, setUpdatePost] = useState(false);
-    const [friends, setFriends] = useState([]);
     const navigate = useNavigate();
   
     useEffect(() => {
       const token = localStorage.getItem("token");
       const loggedIn = token !== null;
       if (loggedIn) {
-        getYourPosts(token)
+        getUserPosts(token, username)
           .then((data) => {
             setPosts(data.posts);
             localStorage.setItem("token", data.token);
@@ -27,33 +32,18 @@ export function ProfilePage() {
           });
       }
     }, [navigate, updatePost]);
+  
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return ;
+    }
 
-    useEffect(() => {
-      const fetchFriends = async () => {
-        const token = localStorage.getItem("token");
-  
-        if (!token) {
-          navigate("/login");
-          return;
-        }
-  
-        try {
-          const fetchedFriends = await getFriendsForUser(token);
-          setFriends(fetchedFriends); 
-        } catch (error) {
-          console.error("Error fetching friends:", error.message);
-        }
-      };
-  
-      fetchFriends();
-    }, [navigate, updatePost]); 
-      
     return (
       <div className="profile">
+        <h1>Welcome to your COFFEE COUNTER!</h1>
         <div className="feed" role="feed">
           <NewNavbar/>
-        <div>
-      </div>
         {posts.map((post) => (
           <Post
             post={post}
@@ -64,10 +54,10 @@ export function ProfilePage() {
             isLiked={post.hasLiked}
             beans={post.beans}
             updatePost={setUpdatePost}
-            isYours={true}
+            isYours={false}
           />
         ))}
       </div>
-    </div>
-  );
+      </div>
+    );
 }

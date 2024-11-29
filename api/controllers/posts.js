@@ -27,15 +27,29 @@ async function createPost(req, res) {
 async function getYourPosts(req, res) {
   const posts = await Post.find({user:req.username});
   posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+  const updatedPosts = posts.map((post) => {
+    post._doc.isYours = (post.user == req.username)
+    post._doc.hasLiked = (post.beans.includes(req.username))
+    return post
+  })
+
   const token = generateToken(req.user_id, req.username);
-  res.status(200).json({ posts: posts, token: token });
+  res.status(200).json({ posts: updatedPosts, token: token });
 }
 
 async function getUserPosts(req, res) {
   const posts = await Post.find({user:req.params.username});
   posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+  const updatedPosts = posts.map((post) => {
+    post._doc.isYours = (post.user == req.username)
+    post._doc.hasLiked = (post.beans.includes(req.username))
+    return post
+  })
+
   const token = generateToken(req.user_id, req.username);
-  res.status(200).json({ posts: posts, token: token });
+  res.status(200).json({ posts: updatedPosts, token: token });
 }
 
 async function deletePostId(req, res) {
