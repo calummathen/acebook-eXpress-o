@@ -388,24 +388,27 @@ describe("/posts", () => {
 
       const response = await request(app)
         .delete(`/posts/${post1._id}`)
-        .set("Authorization", `Bearer ${token}`);
+        .set("Authorization", `Bearer ${token}`)
+        .send({ isYours: true });
 
       expect(response.status).toEqual(200);
     });
 
     test("returns every post in the collection minus the deleted one", async () => {
-      const post1 = new Post({ user: "post-test", message: "howdy!" });
-      const post2 = new Post({ user: "post-test-other", message: "hola!" });
+      const post1 = new Post({ user: "post-test", message: "howdy!", isYours: true });
+      const post2 = new Post({ user: "post-test-other", message: "hola!", isYours: false });
       await post1.save();
       await post2.save();
 
       await request(app)
         .delete(`/posts/${post1._id}`)
-        .set("Authorization", `Bearer ${token}`);
+        .set("Authorization", `Bearer ${token}`)
+        .send({ isYours: true });
       
       const response = await request(app)
         .get("/posts")
-        .set("Authorization", `Bearer ${token}`);
+        .set("Authorization", `Bearer ${token}`)
+        .send({ isYours: true });
 
       const posts = response.body.posts;
 
@@ -420,14 +423,15 @@ describe("/posts", () => {
     });
 
     test("returns a new token", async () => {
-      const post1 = new Post({ user: "post-test", message: "First Post!" });
-      const post2 = new Post({ user: "post-test-other", message: "Second Post!" });
+      const post1 = new Post({ user: "post-test", message: "First Post!", isYours: true });
+      const post2 = new Post({ user: "post-test-other", message: "Second Post!", isYours: false });
       await post1.save();
       await post2.save();
 
       const response = await request(app)
         .delete(`/posts/${post1._id}`)
-        .set("Authorization", `Bearer ${token}`);
+        .set("Authorization", `Bearer ${token}`)
+        .send({ isYours: true });
 
       const newToken = response.body.token;
       const newTokenDecoded = JWT.decode(newToken, process.env.JWT_SECRET);

@@ -68,8 +68,6 @@ describe("/users", () => {
         .post("/users")
         .send({ password: "1234" });
 
-      console.log(response)
-
       expect(response.statusCode).toBe(400);
     });
 
@@ -87,8 +85,6 @@ describe("/users", () => {
         .post("/users")
         .send({ username: "javajunkie" });
 
-      console.log(response)
-
       expect(response.statusCode).toBe(400);
     });
 
@@ -105,8 +101,6 @@ describe("/users", () => {
       const response = await request(app)
         .post("/users")
         .send({ email: "javajunkie@100.com" });
-
-      console.log(response)
 
       expect(response.statusCode).toBe(400);
     });
