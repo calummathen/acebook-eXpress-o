@@ -35,7 +35,6 @@ async function getUnapprovedFriendsForUser(req, res) {
     receiver: req.username,
     approved: false
   });
-  console.log(friends)
   const updatedFriends = friends.map((friend) => {
     const friendObject = friend.toObject(); 
     friendObject.user = req.username; 

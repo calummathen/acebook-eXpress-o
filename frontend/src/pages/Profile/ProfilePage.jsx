@@ -7,6 +7,7 @@ import "./ProfilePage.css";
 import { getFriendsForUser, getUnapprovedFriendsForUser } from "../../services/friends";
 import MyCoffeeMates from "../../components/MyCoffeeMates";
 
+
 export function ProfilePage() {
   const [posts, setPosts] = useState([]);
   const [updatePost, setUpdatePost] = useState(false);
