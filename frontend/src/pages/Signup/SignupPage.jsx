@@ -73,7 +73,6 @@ export function SignupPage() {
       } catch (err) {
         console.error(err);
         const errorMessage = err.message;
-        console.log("hey!", errorMessage);
 
         if (errorMessage === "username") {
           toast.error("That username is taken, please try something else.");
