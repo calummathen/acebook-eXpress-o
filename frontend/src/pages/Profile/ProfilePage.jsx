@@ -42,7 +42,7 @@ export function ProfilePage() {
           navigate("/login");
           return;
         }
-  
+
         try {
           const fetchedFriends = await getFriendsForUser(token);
           const fetchedRequests = await getUnapprovedFriendsForUser(token)
@@ -90,8 +90,6 @@ export function ProfilePage() {
     setFilteredConfirmedFriends(result);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coffeeMateQuery, friends]);
-
-  // const timestamps = friends.map((friend) => friend.timestamp);
 
   return (
     <div className="profile">
