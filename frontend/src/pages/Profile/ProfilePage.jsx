@@ -25,7 +25,6 @@ export function ProfilePage() {
   const [filteredConfirmedFriends, setFilteredConfirmedFriends] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     const loggedIn = token !== null;
     if (loggedIn) {
       getYourPosts(token)
@@ -42,7 +41,6 @@ export function ProfilePage() {
 
   useEffect(() => {
       const fetchFriends = async () => {
-      const token = localStorage.getItem("token");
 
       if (!token) {
         navigate("/login");
@@ -95,7 +93,7 @@ export function ProfilePage() {
       };
       fetchUserData();
     }
-  }, token);
+  }, [token]);
 
   return (
     <div className="profile">
