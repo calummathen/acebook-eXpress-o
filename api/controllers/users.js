@@ -2,7 +2,6 @@ const Bcrypt = require("bcrypt");
 const User = require("../models/user");
 const { generateToken } = require("../lib/token");
 
-
 function create(req, res) {
   if (Object.keys(req.body).length !== 5) {
     return res
@@ -16,31 +15,31 @@ function create(req, res) {
   const username = req.body.username;
   const password = Bcrypt.hashSync(req.body.password, 10);
 
-  if (!Object.keys(req.body).includes('birthday') || !req.body.birthday) {
-    return res
-      .status(400)
-      .json({ message: "Missing birthday." });
-  }
-  if (!Object.keys(req.body).includes('name') || !req.body.name) {
-    return res
-      .status(400)
-      .json({ message: "Name required." });
-  }
-  if (!Object.keys(req.body).includes('email') || !req.body.email) {
-    return res
-      .status(400)
-      .json({ message: "Missing email." });
-  }
-  if (!Object.keys(req.body).includes('username') || !req.body.username) {
-    return res
-      .status(400)
-      .json({ message: "Missing username." });
-  }
-  if (!Object.keys(req.body).includes('password') || !req.body.password) {
-    return res
-      .status(400)
-      .json({ message: "Password required." });
-  }
+  // if (!Object.keys(req.body).includes('birthday') || !req.body.birthday) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "Missing birthday." });
+  // }
+  // if (!Object.keys(req.body).includes('name') || !req.body.name) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "Name required." });
+  // }
+  // if (!Object.keys(req.body).includes('email') || !req.body.email) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "Missing email." });
+  // }
+  // if (!Object.keys(req.body).includes('username') || !req.body.username) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "Missing username." });
+  // }
+  // if (!Object.keys(req.body).includes('password') || !req.body.password) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "Password required." });
+  // }
   // console.log(`Name: ${name}, Birthday: ${birthday}, Email: ${email}, Username: ${username}, Password: ${password}`)
 
   const user = new User({ name, birthday, email, username, password });
@@ -62,7 +61,7 @@ async function getAllUsers(req, res) {
   const token = generateToken(req.user_id, req.username);
   res.status(200).json({ users: users, token: token });
 }
- 
+
 async function getUserInfo(req, res) {
   try {
     const user = await User.findById(req.user_id);
@@ -91,17 +90,13 @@ async function getUserInfo(req, res) {
 }
 
 async function updateUserInfo(req, res) {
-
   if (req.body.password == undefined) {
-    delete req.body.password
+    delete req.body.password;
   } else {
     req.body.password = Bcrypt.hashSync(req.body.password, 10);
   }
 
-  await User.findOneAndUpdate(
-    {_id: req.user_id},
-    {$set: req.body}
-  );
+  await User.findOneAndUpdate({ _id: req.user_id }, { $set: req.body });
 
   res.status(200).json({ message: "User info updated" });
 }
@@ -110,7 +105,7 @@ const UsersController = {
   create: create,
   getAllUsers: getAllUsers,
   getUserInfo: getUserInfo,
-  updateUserInfo: updateUserInfo
+  updateUserInfo: updateUserInfo,
 };
 
 module.exports = UsersController;

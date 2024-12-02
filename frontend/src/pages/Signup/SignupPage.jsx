@@ -33,9 +33,9 @@ export function SignupPage() {
   };
 
   const validateEmail = (email) => {
-    // Check if email contains "@" and "."  
-     // "||" MEANS "OR"
-    if (!email || !email.includes('@') || !email.includes('.')) {
+    // Check if email contains "@" and "."
+    // "||" MEANS "OR"
+    if (!email || !email.includes("@") || !email.includes(".")) {
       toast.error("Please enter a valid email address with '@' and '.'");
       return false;
     }
@@ -49,7 +49,7 @@ export function SignupPage() {
     }
     return true;
   };
-  
+
   const validateName = (name) => {
     if (!name) {
       toast.error("Input Name.");
@@ -57,8 +57,6 @@ export function SignupPage() {
     }
     return true;
   };
-
-  
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -68,9 +66,6 @@ export function SignupPage() {
       validateEmail(email) &&
       validateBirthday(birthday) &&
       validateName(name)
-    
-    
-    
     ) {
       try {
         await signup(name, birthday, email, username, password);
@@ -78,24 +73,27 @@ export function SignupPage() {
       } catch (err) {
         console.error(err);
         const errorMessage = err.message;
+        console.log("hey!", errorMessage);
 
         if (errorMessage === "username") {
           toast.error("That username is taken, please try something else.");
         } else if (errorMessage === "email") {
-          toast.error("An account with that email already exists, please login.");
-        } else if (errorMessage === "password") {
-          toast.error("Password required");
-        } else if (errorMessage === "birthday") {
-          toast.error("Birthday required");
-        } else if (errorMessage === "name") {
-          toast.error("Missing Name");
+          toast.error(
+            "An account with that email already exists, please login."
+          );
+          // } else if (errorMessage === "password") {
+          //   toast.error("Password required");
+          // } else if (errorMessage === "birthday") {
+          //   toast.error("Birthday required");
+          // } else if (errorMessage === "name") {
+          //   toast.error("Missing Name");
         } else {
           toast.error("An unexpected error occurred. Please try again.");
         }
         navigate("/signup");
       }
     }
-   }
+  }
 
   function handleNameChange(event) {
     setName(event.target.value);
@@ -119,9 +117,12 @@ export function SignupPage() {
 
   const date18YearsAgo = new Date();
   date18YearsAgo.setFullYear(date18YearsAgo.getFullYear() - 18);
-  const formattedDate = `${date18YearsAgo.getFullYear()}-${
+
+  const formattedDate = `${date18YearsAgo.getFullYear()}-${(
     date18YearsAgo.getMonth() + 1
-  }-${date18YearsAgo.getDate()}`;
+  )
+    .toString()
+    .padStart(2, "0")}-${date18YearsAgo.getDate().toString().padStart(2, "0")}`;
 
   return (
     <>
