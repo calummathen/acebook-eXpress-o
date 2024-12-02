@@ -5,10 +5,16 @@ import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 export default function MyCoffeeMates({
+  unfilteredFriends,
   filteredConfirmedFriends,
   coffeeMateQuery,
   setCoffeeMateQuery,
 }) {
+  let noFriendsMessage = null;
+
+  if (unfilteredFriends.length === 1 && coffeeMateQuery === "") {
+    noFriendsMessage = <p>You Have No Friends 😢</p>;
+  }
   return (
     <div>
       <Accordion
@@ -48,14 +54,15 @@ export default function MyCoffeeMates({
             gap: "10px",
           }}
         >
+          {noFriendsMessage}
           {filteredConfirmedFriends.length > 0 ? (
             filteredConfirmedFriends.map((friend, index) => (
               <a href={`/profile/${friend}`} key={index}>
-                ~ {friend}
+                {friend}
               </a>
             ))
           ) : (
-            <p>You Have No Friends 😢</p>
+            <p>Search All You Want...You Still Have No Friends 😢!!!</p>
           )}
         </AccordionDetails>
       </Accordion>
