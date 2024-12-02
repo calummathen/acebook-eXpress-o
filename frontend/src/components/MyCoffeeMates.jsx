@@ -13,7 +13,7 @@ export default function MyCoffeeMates({
 }) {
   let noFriendsMessage = null;
 
-  if (unfilteredFriends.length === 1 && coffeeMateQuery === "") {
+  if (unfilteredFriends.length < 1) {
     noFriendsMessage = <p>You Have No Friends 😢</p>;
   }
   return (
@@ -31,22 +31,24 @@ export default function MyCoffeeMates({
         >
           <Typography>My Coffee Mates</Typography>
         </AccordionSummary>
-        <input
-          type="text"
-          placeholder="filter fellow coffee snobs"
-          value={coffeeMateQuery}
-          onChange={(e) => setCoffeeMateQuery(e.target.value)}
-          style={{
-            padding: "10px",
-            fontSize: "16px",
-            width: "80%",
-            maxWidth: "400px",
-            marginBottom: "20px",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            justifySelf: "start",
-          }}
-        />
+        {unfilteredFriends.length > 1 && (
+          <input
+            type="text"
+            placeholder="filter fellow coffee snobs"
+            value={coffeeMateQuery}
+            onChange={(e) => setCoffeeMateQuery(e.target.value)}
+            style={{
+              padding: "10px",
+              fontSize: "16px",
+              width: "80%",
+              maxWidth: "400px",
+              marginBottom: "20px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              justifySelf: "start",
+            }}
+          />
+        )}
         <AccordionDetails
           style={{
             display: "flex",
@@ -56,15 +58,12 @@ export default function MyCoffeeMates({
           }}
         >
           {noFriendsMessage}
-          {filteredConfirmedFriends.length > 0 ? (
+          {filteredConfirmedFriends.length > 0 &&
             filteredConfirmedFriends.map((friend, index) => (
               <a href={`/profile/${friend}`} key={index}>
                 {friend}
               </a>
-            ))
-          ) : (
-            <p>Search All You Want...You Still Have No Friends 😢!!!</p>
-          )}
+            ))}
         </AccordionDetails>
       </Accordion>
       <Accordion>
