@@ -120,8 +120,6 @@ export function ProfilePage() {
             setCoffeeMateQuery={setCoffeeMateQuery}
           />
         </div>
-        <div>
-        </div>
         <div style={{ width: "70%" }}>
           {posts.map((post) => (
             <Post
