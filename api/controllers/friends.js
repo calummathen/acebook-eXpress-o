@@ -78,14 +78,51 @@ async function getFriendsForAnotherUser(req, res) {
   res.status(200).json({ friends: updatedFriends, token: token });
 }
 
-async function sendFriendRequest(req, res) {
-  req.body.sender = req.username
-  const friend = new Friend(req.body)
+async function getUnapprovedFriendsForAnotherUser(req, res) {
+  const friends = await Friend.find({
+    receiver: req.params.username,
+    approved: false
+  });
+  const updatedFriends = friends.map((friend) => {
+    const friendObject = friend.toObject(); 
+    friendObject.user = req.username; 
+    return friendObject;
+  });
+  
+  const token = generateToken(req.user_id, req.username);
+  res.status(200).json({ friends: updatedFriends, token: token });
+}
 
-  await friend.save()
+async function sendFriendRequest(req, res) {
+
+  const existingFriends = await Friend.find({
+    $or: [
+      { sender: req.username, receiver: req.body.receiver },
+      { sender: req.body.receiver, receiver: req.username },
+    ]
+  }); 
+
+  console.log(existingFriends)
+  
+  if (existingFriends.length == 0) {
+    req.body.sender = req.username
+    const friend = new Friend(req.body)
+
+    await friend.save()
+
+    const newToken = generateToken(req.user_id, req.username);
+    res.status(201).json({ message: "Friend request sent", token: newToken });
+  } else {
+    res.status(200).json({ message: "Friend already exists"})
+  }
+}
+
+async function deleteFriend(req, res) {
+  const requestId = req.params.request_id
+  await Friend.findByIdAndDelete(requestId)
 
   const newToken = generateToken(req.user_id, req.username);
-  res.status(201).json({ message: "Friend request sent", token: newToken });
+  res.status(200).json({ message: "Friendship deleted", token: newToken });
 }
 
 async function deleteFriend(req, res) {

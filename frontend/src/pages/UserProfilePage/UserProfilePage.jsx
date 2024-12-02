@@ -14,15 +14,17 @@ export async function loader({ params }) {
 }
 
 export function UserProfilePage() {
+    const token = localStorage.getItem("token");
     const { username } = useLoaderData()
-
+    const [name, setName] = useState();
     const [posts, setPosts] = useState([]);
     const [updatePost, setUpdatePost] = useState(false);
     const [friends, setFriends] = useState([]);
+    const [requests, setReque];
+    const [friendRequestStatus, setFriendRequestStats] = useState(0);
     const navigate = useNavigate();
   
     useEffect(() => {
-      const token = localStorage.getItem("token");
       const loggedIn = token !== null;
       if (loggedIn) {
         getUserPosts(token, username)
@@ -39,7 +41,6 @@ export function UserProfilePage() {
 
     useEffect(() => {
       const fetchFriends = async () => {
-        const token = localStorage.getItem("token");
   
         if (!token) {
           navigate("/login");
@@ -48,7 +49,9 @@ export function UserProfilePage() {
   
         try {
           const fetchedFriends = await getFriendsForAnotherUser(token, username);
-          setFriends(fetchedFriends.friends); 
+          setFriends(fetchedFriends.friends);
+          console.log(fetchedFriends.friends)
+
         } catch (error) {
           console.error("Error fetching friends:", error.message);
         }
@@ -62,7 +65,6 @@ export function UserProfilePage() {
     const timestamps = friends.map(friend => friend.timestamp);
     // console.log(timestamps)
   
-    const token = localStorage.getItem("token");
     if (!token) {
       navigate("/login");
       return ;

@@ -48,7 +48,7 @@ export async function sendFriendRequest(token, username) {
 
   const response = await fetch(`${BACKEND_URL}/friends/request`, requestOptions);
 
-  if (response.status !== 201) {
+  if (response.status !== 201 && response.status !== 200) {
     throw new Error("Unable to get friends");
   }
 
@@ -72,6 +72,25 @@ export async function getFriendsForAnotherUser(token, username) {
   const data = await response.json();
   return data;
 }
+
+export async function getUnapprovedFriendsForAnotherUser(token, username) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(`${BACKEND_URL}/friends/${username}/requests`, requestOptions);
+
+  if (response.status !== 200) {
+    throw new Error("Unable to get friends");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
 
 export async function deleteFriend(token, request_id) {
   const requestOptions = {
