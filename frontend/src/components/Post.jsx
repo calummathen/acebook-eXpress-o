@@ -11,6 +11,7 @@ function Post(props) {
   const [editState, setEditState] = useState(false);
   const [postMessage, setPostMessage] = useState(props.message);
   const [isYours, setIsYours] = useState(props.isYours);
+  const [friendsPosts, setFilter] = useState(false);
 
   const handleChange = (event) => {
     setPostMessage(event.target.value);
@@ -37,6 +38,10 @@ function Post(props) {
     .toLocaleString("en-gb")
     .slice(0, -3)
     .replaceAll(",", "");
+
+    const toggleFriendsPosts = () => {
+      setFilter((friendsPosts) => !friendsPosts);
+    };
 
   return editState ? (
     <div key="edit mode">
