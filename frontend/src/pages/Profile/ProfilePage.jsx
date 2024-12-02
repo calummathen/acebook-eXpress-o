@@ -4,11 +4,16 @@ import { getYourPosts } from "../../services/posts";
 import Post from "../../components/Post";
 import NewNavbar from "../../components/NewNavBar";
 import "./ProfilePage.css";
-import { getFriendsForUser, getUnapprovedFriendsForUser } from "../../services/friends";
+import {
+  getFriendsForUser,
+  getUnapprovedFriendsForUser,
+} from "../../services/friends";
 import MyCoffeeMates from "../../components/MyCoffeeMates";
-
+import { getUserInfo } from "../../services/users";
 
 export function ProfilePage() {
+  const token = localStorage.getItem("token");
+  const [name, setName] = useState();
   const [posts, setPosts] = useState([]);
   const [updatePost, setUpdatePost] = useState(false);
   const [friends, setFriends] = useState([]);
@@ -34,37 +39,35 @@ export function ProfilePage() {
     }
   }, [navigate, updatePost]);
 
-    useEffect(() => {
+  useEffect(() => {
       const fetchFriends = async () => {
-        const token = localStorage.getItem("token");
-  
-        if (!token) {
-          navigate("/login");
-          return;
-        }
+      const token = localStorage.getItem("token");
 
-        try {
-          const fetchedFriends = await getFriendsForUser(token);
-          const fetchedRequests = await getUnapprovedFriendsForUser(token)
-          setFriends(fetchedFriends.friends); 
-          setRequests(fetchedRequests.friends)
-        } catch (error) {
-          console.error("Error fetching friends:", error.message);
-        }
-      };
-  
-      fetchFriends();
+      if (!token) {
+        navigate("/login");
+        return;
+      }
 
+      try {
+        const fetchedFriends = await getFriendsForUser(token);
+        const fetchedRequests = await getUnapprovedFriendsForUser(token);
+        setFriends(fetchedFriends.friends);
+        setRequests(fetchedRequests.friends);
+      } catch (error) {
+        console.error("Error fetching friends:", error.message);
+      }
+    };
 
-    }, [navigate, updatePost]); 
+    fetchFriends();
+  }, [navigate, updatePost]);
 
-    // console.log(requests)
-    // const user = friends[0].user
-    // console.log(user)
-    // const users = friends.map(friend => friend.sender == friend.user ? friend.receiver : friend.sender);
-    // console.log(users)
-    // const timestamps = friends.map(friend => friend.timestamp);
-    // console.log(timestamps)
+  // console.log(requests)
+  // const user = friends[0].user
+  // console.log(user)
+  // const users = friends.map(friend => friend.sender == friend.user ? friend.receiver : friend.sender);
+  // console.log(users)
+  // const timestamps = friends.map(friend => friend.timestamp);
+  // console.log(timestamps)
 
   const getConfirmedFriends = () => {
     return friends.map((friend) =>
@@ -91,6 +94,18 @@ export function ProfilePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coffeeMateQuery, friends]);
 
+  // const timestamps = friends.map((friend) => friend.timestamp);
+  // console.log(friends);
+  useEffect(() => {
+    if (token) {
+      const fetchUserData = async () => {
+        const data = await getUserInfo(token);
+        setName(data.UserInfo.name);
+      };
+      fetchUserData();
+    }
+  }, token);
+
   return (
     <div className="profile">
       <NewNavbar />
@@ -104,9 +119,9 @@ export function ProfilePage() {
         role="feed"
       >
         <div style={{ width: "30%" }}>
-          {/* we need to make this better!! */}
-          {(posts.length > 0) && (<h1>{posts[0].user}</h1>)}
+          <h1>{name}</h1>
           <MyCoffeeMates
+            unfilteredFriends={friends}
             filteredConfirmedFriends={filteredConfirmedFriends}
             coffeeMateQuery={coffeeMateQuery}
             setCoffeeMateQuery={setCoffeeMateQuery}
