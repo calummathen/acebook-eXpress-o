@@ -10,6 +10,7 @@ import {
 } from "../../services/friends";
 import MyCoffeeMates from "../../components/MyCoffeeMates";
 
+
 export function ProfilePage() {
   const [posts, setPosts] = useState([]);
   const [updatePost, setUpdatePost] = useState(false);

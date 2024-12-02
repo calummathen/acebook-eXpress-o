@@ -1,13 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { SearchButton } from "./SearchButton";
 import { ThemeToggle } from "./ThemeToggle";
 import { useBeanScene } from "../context/BeanSceneContext";
 
+
+
 const NewNavbar = () => {
   const { theme } = useBeanScene();
   const navigate = useNavigate();
-  function logout() {
+  const location = useLocation();
+
+    function logout() {
     localStorage.removeItem("token");
     navigate("/");
   }
@@ -20,9 +24,11 @@ const NewNavbar = () => {
           </Link>
         </div>
         <div className="nav-buttons-wrapper">
-          <Link className="profile-link" to="/profile">
+          {location.pathname !== "/profile" && (
+            <Link className="profile-link" to="/profile">
             Profile
           </Link>
+          )}
           <SearchButton />
           <button onClick={() => logout()} type="submit">
             log Out

@@ -3,6 +3,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import UserInfoTable from "./UserInfo";
 
 export default function MyCoffeeMates({
   unfilteredFriends,
@@ -75,7 +76,7 @@ export default function MyCoffeeMates({
           <Typography>About Me</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>about me form</Typography>
+          <UserInfoTable />
         </AccordionDetails>
       </Accordion>
     </div>
