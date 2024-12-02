@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserPosts } from "../../services/posts";
 import Post from "../../components/Post";
 import NewNavbar from "../../components/NewNavBar";
-import { getFriendsForAnotherUser, getUnapprovedFriendsForAnotherUser } from "../../services/friends";
+import { deleteFriend, getFriendsForAnotherUser, getUnapprovedFriendsForAnotherUser } from "../../services/friends";
 import AddFriendButton from "../../components/AddFriendButton";
 import { sendFriendRequest } from "../../services/friends";
 import { getAnotherUserInfo } from "../../services/users";
@@ -23,7 +23,8 @@ export function UserProfilePage() {
     const [updatePost, setUpdatePost] = useState(false);
     const [friends, setFriends] = useState([]);
     const [requests, setRequests] = useState([]);
-    const [friendRequestStatus, setFriendRequestStats] = useState(0);
+    const [loadedFriendsAndRequests, setLoadedFriendsAndRequests] = useState(false);
+    const [friendRequestStatus, setFriendRequestStatus] = useState(0);
 
     const navigate = useNavigate();
 
@@ -58,12 +59,7 @@ export function UserProfilePage() {
           const fetchedRequests = await getUnapprovedFriendsForAnotherUser(token, username);
           setFriends(fetchedFriends.friends);
           setRequests(fetchedRequests.friends);
-          
-          // todo - usually in a different effect
-          // if (fetchedFriends.friends.filter((request) => request.sender == request.user || request.receiver == request.user).length > 0) setFriendRequestStats(2)
-          // if (fetchedRequests.friends.filter((request) => request.sender == request.user).length > 0) setFriendRequestStats(1)
-
-          // console.log(friendRequestStatus)
+          setLoadedFriendsAndRequests(true);
 
         } catch (error) {
           console.error("Error fetching friends:", error.message);
@@ -72,6 +68,18 @@ export function UserProfilePage() {
   
       fetchFriends();
     }, [navigate, updatePost]); 
+
+    useEffect(() => {
+      if (!loadedFriendsAndRequests) {
+        setFriendRequestStatus(0)
+      } else if (friends.filter((request) => request.sender == request.user || request.receiver == request.user).length > 0) {
+        setFriendRequestStatus(3)
+      } else if (requests.filter((request) => request.sender == request.user).length > 0) {
+        setFriendRequestStatus(2)
+      } else {
+        setFriendRequestStatus(1)
+      }
+    }, [friends, requests, updatePost])
 
     const getConfirmedFriends = () => {
       return friends.map((friend) =>
@@ -110,6 +118,13 @@ export function UserProfilePage() {
 
     async function addFriend() {
       await sendFriendRequest(token, username);
+      setUpdatePost(Math.random())
+    }
+    
+    async function deleteFriendAction() {
+      const requestId = friends.find((friend) => friend.user === friend.sender)._id
+      await deleteFriend(token, requestId)
+      setUpdatePost(Math.random())
     }
 
     return (
@@ -126,7 +141,11 @@ export function UserProfilePage() {
         >
           <div style={{ width: "30%" }}>
             <h1>{name}</h1>
-            <AddFriendButton sendFriendRequest={addFriend}/>
+            <AddFriendButton
+              friendRequestStatus={friendRequestStatus}
+              sendFriendRequest={addFriend}
+              deleteFriend={deleteFriendAction}
+            />
             <UserCoffeeMates
               unfilteredFriends={friends}
               filteredConfirmedFriends={filteredConfirmedFriends}
