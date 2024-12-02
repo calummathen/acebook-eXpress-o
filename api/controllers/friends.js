@@ -138,6 +138,7 @@ const FriendsController = {
   getFriendsForAnotherUser: getFriendsForAnotherUser,
   sendFriendRequest: sendFriendRequest, 
   getUnapprovedFriendsForUser: getUnapprovedFriendsForUser,
+  getUnapprovedFriendsForAnotherUser: getUnapprovedFriendsForAnotherUser,
   deleteFriend: deleteFriend,
   approveFriendRequest: approveFriendRequest,
 };

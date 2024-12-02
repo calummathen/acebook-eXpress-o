@@ -89,6 +89,33 @@ async function getUserInfo(req, res) {
   }
 }
 
+async function getAnotherUserInfo(req, res) {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // User's information
+    res.status(200).json({
+      UserInfo: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        username: user.username,
+        birthday: user.birthday,
+        location: user.location,
+        work_place: user.work_place,
+        telephone_number: user.telephone_number,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "An error occurred fetching user info." });
+  }
+}
+
 async function updateUserInfo(req, res) {
   if (req.body.password == undefined) {
     delete req.body.password;
@@ -105,6 +132,7 @@ const UsersController = {
   create: create,
   getAllUsers: getAllUsers,
   getUserInfo: getUserInfo,
+  getAnotherUserInfo: getAnotherUserInfo,
   updateUserInfo: updateUserInfo,
 };
 
