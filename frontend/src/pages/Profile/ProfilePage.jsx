@@ -9,9 +9,11 @@ import {
   getUnapprovedFriendsForUser,
 } from "../../services/friends";
 import MyCoffeeMates from "../../components/MyCoffeeMates";
-
+import { getUserInfo } from "../../services/users";
 
 export function ProfilePage() {
+  const token = localStorage.getItem("token");
+  const [name, setName] = useState();
   const [posts, setPosts] = useState([]);
   const [updatePost, setUpdatePost] = useState(false);
   const [friends, setFriends] = useState([]);
@@ -93,7 +95,16 @@ export function ProfilePage() {
   }, [coffeeMateQuery, friends]);
 
   // const timestamps = friends.map((friend) => friend.timestamp);
-  console.log(friends);
+  // console.log(friends);
+  useEffect(() => {
+    if (token) {
+      const fetchUserData = async () => {
+        const data = await getUserInfo(token);
+        setName(data.UserInfo.name);
+      };
+      fetchUserData();
+    }
+  }, token);
 
   return (
     <div className="profile">
@@ -108,8 +119,7 @@ export function ProfilePage() {
         role="feed"
       >
         <div style={{ width: "30%" }}>
-          {/* we need to make this better!! */}
-          {posts.length > 0 && <h1>{posts[0].user}</h1>}
+          <h1>{name}</h1>
           <MyCoffeeMates
             unfilteredFriends={friends}
             filteredConfirmedFriends={filteredConfirmedFriends}
