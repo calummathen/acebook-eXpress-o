@@ -34,22 +34,6 @@ export function ProfilePage() {
     }
   }, [navigate, updatePost]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const loggedIn = token !== null;
-    if (loggedIn) {
-      getYourPosts(token)
-        .then((data) => {
-          setPosts(data.posts);
-          localStorage.setItem("token", data.token);
-        })
-        .catch((err) => {
-          console.error(err);
-          navigate("/login");
-        });
-    }
-  }, [navigate, updatePost]);
-
     useEffect(() => {
       const fetchFriends = async () => {
         const token = localStorage.getItem("token");
