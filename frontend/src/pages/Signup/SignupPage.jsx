@@ -14,7 +14,7 @@ export function SignupPage() {
   const navigate = useNavigate();
 
   const validatePassword = (password) => {
-    const chars = /[!@£$%]/;
+    const chars = /[!#$%&'()*+,\-:;<=>?@£÷]/;
     if (password.length < 8) {
       toast.error("Password must be 8 or more characters long");
     } else if (!chars.test(password)) {

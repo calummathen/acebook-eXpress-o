@@ -67,15 +67,19 @@ async function deletePostId(req, res) {
 
 async function updatePost(req, res) {
   const postId = req.params.post_id
-  if(req.body.isYours){
-  await Post.findOneAndUpdate(
-    {_id: postId},
-    {$set: {message: req.body.message}},
-  );
-  
-  const newToken = generateToken(req.user_id, req.username);
-  res.status(200).json({ message: "Post updated", token: newToken });
-}else {console.error("Not your post, can't edit")}} 
+  if (req.body.isYours) {
+    await Post.findOneAndUpdate(
+      {_id: postId},
+      {$set: {message: req.body.message}},
+    );
+    
+    const newToken = generateToken(req.user_id, req.username);
+    res.status(200).json({ message: "Post updated", token: newToken });
+  } else {
+    console.error("Not your post, can't edit")
+    res.status(401).json({ message: "Not your post can't edit" })
+  }
+} 
 
 async function likePost(req, res) {
   const postId = req.params.post_id

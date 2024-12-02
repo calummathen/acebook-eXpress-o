@@ -5,9 +5,7 @@ const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, lowercase: true, unique: true},
   password: { type: String, required: true },
-  birthday: {
-    type: Date,
-    required: true,
+  birthday: {type: Date,required: true},
     // validate: {
     //   validator: function(value) {
 
@@ -26,9 +24,7 @@ const UserSchema = new mongoose.Schema({
     //   },
     //   message: 'You must be at least 18 years old.',
     // },
-  }
 });
 
 const User = mongoose.model("User", UserSchema);
-
 module.exports = User;
