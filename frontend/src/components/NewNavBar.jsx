@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { SearchButton } from "./SearchButton";
+import { ThemeToggle } from "./ThemeToggle";
+import { useBeanScene } from "../context/BeanSceneContext";
 
 const NewNavbar = () => {
+  const { theme } = useBeanScene();
   const navigate = useNavigate();
   function logout() {
     localStorage.removeItem("token");
@@ -10,7 +13,7 @@ const NewNavbar = () => {
   }
   return (
     <div>
-      <div className="nav-bar">
+      <div className={theme === "light" ? "nav-bar-light" : "nav-bar-dark"}>
         <div>
           <Link to="/posts" className="nav-title">
             BeanScene
@@ -24,6 +27,7 @@ const NewNavbar = () => {
           <button onClick={() => logout()} type="submit">
             log Out
           </button>
+          <ThemeToggle />
         </div>
       </div>
     </div>

@@ -1,17 +1,16 @@
 import DeletePostId from "./DeletePostButton";
-import {deletePostId, likePost, UpdatePost} from "../services/posts"
+import { deletePostId, likePost, UpdatePost } from "../services/posts";
 import EditPostButton from "./EditPostButton";
 import { useState } from "react";
 import LikePostButton from "./LikePostButton";
 import { Link } from "react-router-dom";
 
-
 function Post(props) {
   const token = localStorage.getItem("token");
-  const [ liked, setLiked ] = useState(props.isLiked);
-  const [editState, setEditState] = useState(false)
+  const [liked, setLiked] = useState(props.isLiked);
+  const [editState, setEditState] = useState(false);
   const [postMessage, setPostMessage] = useState(props.message);
-  const [isYours, setIsYours] = useState(props.isYours)
+  const [isYours, setIsYours] = useState(props.isYours);
 
   const handleChange = (event) => {
     setPostMessage(event.target.value);
@@ -19,69 +18,95 @@ function Post(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await UpdatePost(token, postMessage, props.post._id, props.isYours)
-    props.updatePost(Math.random()) //change state to rerender page
-    toggleEditState()
-  }
+    await UpdatePost(token, postMessage, props.post._id, props.isYours);
+    props.updatePost(Math.random()); //change state to rerender page
+    toggleEditState();
+  };
 
   const toggleEditState = () => {
-    setEditState((editState) => !editState)
-  }
+    setEditState((editState) => !editState);
+  };
 
   const toggleLiked = async () => {
-    await likePost(token, props.post._id)
-    props.updatePost(Math.random())
-    setLiked(() => !liked)
-  }
+    await likePost(token, props.post._id);
+    props.updatePost(Math.random());
+    setLiked(() => !liked);
+  };
 
   const cleanDate = new Date(props.timestamp)
     .toLocaleString("en-gb")
     .slice(0, -3)
     .replaceAll(",", "");
-    
-  return (
-    editState ? (
-      <div key="edit mode">
-        <h2>{props.user}</h2>
-        <h3>{cleanDate}</h3>
-          <form onSubmit={handleSubmit}>
-              <textarea
-                value={postMessage}
-                onChange={handleChange}
-                rows="5" 
-                cols="40" 
-                style={{ width: '60%', height: '80px', resize: 'vertical' }} 
-              />
-              <div>
-                <button type="submit">Confirm Edit</button>
-              </div>
-          </form>
-        <DeletePostId 
-        isYours = {props.isYours}
-        post_id = {props.post._id}
-        DeletePostId = {deletePostId}
-        UpdatePost = {props.updatePost}
+
+  return editState ? (
+    <div key="edit mode">
+      <h2>{props.user}</h2>
+      <h3>{cleanDate}</h3>
+      <form onSubmit={handleSubmit}>
+        <textarea
+          value={postMessage}
+          onChange={handleChange}
+          rows="5"
+          cols="40"
+          style={{
+            width: "60%",
+            height: "80px",
+            resize: "vertical",
+          }}
         />
-      </div>
-      ) : (
-      <div key="view mode">
-        <h2><Link to={(isYours) ? "/profile" : `/profile/${props.user}`}>{props.user}</Link></h2>
+        <div>
+          <button type="submit">Confirm Edit</button>
+        </div>
+      </form>
+      <DeletePostId
+        isYours={props.isYours}
+        post_id={props.post._id}
+        DeletePostId={deletePostId}
+        UpdatePost={props.updatePost}
+      />
+    </div>
+  ) : (
+    <div key="view mode" style={{ margin: "30px" }}>
+      <div style={{ display: "flex", gap: "10px" }}>
+        <h2>
+          <Link to={isYours ? "/profile" : `/profile/${props.user}`}>
+            {props.user}
+          </Link>
+        </h2>
         <h3>{cleanDate}</h3>
-        <article key={props._id}>{props.message}</article>
-        <LikePostButton liked={liked} toggleLiked={toggleLiked} beanNumber={props.beans.length} />
+      </div>
+      <article
+        style={{ border: "solid 1px", borderRadius: "10px", padding: "10px" }}
+        key={props._id}
+      >
+        {props.message}
+      </article>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>
+          <LikePostButton
+            liked={liked}
+            toggleLiked={toggleLiked}
+            beanNumber={props.beans.length}
+          />
+        </div>
         {isYours && (
           <div>
-          <EditPostButton toggleEditState = {toggleEditState}/>
-                  <DeletePostId 
+            <EditPostButton toggleEditState={toggleEditState} />
+            <DeletePostId
               isYours={props.isYours}
-              post_id = {props.post._id}
-              DeletePostId = {deletePostId}
-              UpdatePost = {props.updatePost}
-            />   
+              post_id={props.post._id}
+              DeletePostId={deletePostId}
+              UpdatePost={props.updatePost}
+            />
           </div>
         )}
       </div>
-    )
+    </div>
   );
 }
 

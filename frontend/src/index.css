@@ -24,13 +24,25 @@ h1 {
   line-height: 1.1;
 }
 
-.nav-bar {
+.nav-bar-dark {
   height: 70px;
   font-size: 16px; /* Font size for readability */
   color: white; /* White text color */
   background-color: #007bff; /* Static blue background */
   text-decoration: none; /* Removes underline from links */
   background-color: #404041; /* Darker blue background on hover */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-bar-light {
+  height: 70px;
+  font-size: 16px; /* Font size for readability */
+  color: white; /* White text color */
+  text-decoration: none; /* Removes underline from links */
+  background-color: #bbbbbb; /* Darker blue background on hover */
   color: white;
   display: flex;
   justify-content: space-between;

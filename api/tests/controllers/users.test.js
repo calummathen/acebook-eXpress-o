@@ -68,13 +68,45 @@ describe("/users", () => {
         .post("/users")
         .send({ password: "1234" });
 
-      console.log(response)
-
       expect(response.statusCode).toBe(400);
     });
 
     test("does not create a user", async () => {
       await request(app).post("/users").send({ password: "1234" });
+
+      const users = await User.find();
+      expect(users.length).toEqual(0);
+    });
+  });
+
+  describe("POST, when username is not unique because of case check", () => {
+    test("response code is 400", async () => {
+      const response = await request(app)
+        .post("/users")
+        .send({ username: "javajunkie" });
+
+      expect(response.statusCode).toBe(400);
+    });
+
+    test("does not create a user", async () => {
+      await request(app).post("/users").send({ username: "javajunkie" });
+
+      const users = await User.find();
+      expect(users.length).toEqual(0);
+    });
+  });
+
+  describe("POST, when email is not unique because of case check", () => {
+    test("response code is 400", async () => {
+      const response = await request(app)
+        .post("/users")
+        .send({ email: "javajunkie@100.com" });
+
+      expect(response.statusCode).toBe(400);
+    });
+
+    test("does not create a user", async () => {
+      await request(app).post("/users").send({ username: "javajunkie" });
 
       const users = await User.find();
       expect(users.length).toEqual(0);
