@@ -40,7 +40,7 @@ export function ProfilePage() {
   }, [navigate, updatePost]);
 
   useEffect(() => {
-    const fetchFriends = async () => {
+      const fetchFriends = async () => {
       const token = localStorage.getItem("token");
 
       if (!token) {
