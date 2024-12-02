@@ -30,6 +30,20 @@ async function getFriendsForUser(req, res) {
   res.status(200).json({ friends: updatedFriends, token: token });
 }
 
+async function approveFriendRequest(req, res) {
+  const friendRequest = await Friend.findOneAndUpdate(
+    {_id: req.body.request_id},
+    {$set: {approved: true, timestamp: new Date()},
+  });
+
+  if (!friendRequest) {
+    return res.status(404).json({ message: "Friend request not found" });
+  }
+
+const token = generateToken(req.user_id, req.username);
+res.status(200).json({ friendRequest: friendRequest, token: token });
+}
+
 async function getUnapprovedFriendsForUser(req, res) {
   const friends = await Friend.find({
     receiver: req.username,
@@ -75,11 +89,22 @@ async function sendFriendRequest(req, res) {
   res.status(201).json({ message: "Friend request sent", token: newToken });
 }
 
+async function deleteFriend(req, res) {
+  const requestId = req.params.request_id
+  console.log(requestId)
+  await Friend.findByIdAndDelete(requestId)
+
+  const newToken = generateToken(req.user_id, req.username);
+  res.status(200).json({ message: "Friendship deleted", token: newToken });
+}
+
 const FriendsController = {
   getFriendsForUser: getFriendsForUser,
   getFriendsForAnotherUser: getFriendsForAnotherUser,
   sendFriendRequest: sendFriendRequest, 
-  getUnapprovedFriendsForUser: getUnapprovedFriendsForUser
+  getUnapprovedFriendsForUser: getUnapprovedFriendsForUser,
+  deleteFriend: deleteFriend,
+  approveFriendRequest: approveFriendRequest,
 };
 
 module.exports = FriendsController;

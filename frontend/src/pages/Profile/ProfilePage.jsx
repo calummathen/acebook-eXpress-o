@@ -12,6 +12,7 @@ export function ProfilePage() {
   const [updatePost, setUpdatePost] = useState(false);
   const [friends, setFriends] = useState([]);
   const [requests, setRequests] = useState([]);
+
   const navigate = useNavigate();
 
   const [coffeeMateQuery, setCoffeeMateQuery] = useState("");
@@ -54,16 +55,9 @@ export function ProfilePage() {
   
       fetchFriends();
 
-
+      
     }, [navigate, updatePost]); 
-
-    // console.log(requests)
-    // const user = friends[0].user
-    // console.log(user)
-    // const users = friends.map(friend => friend.sender == friend.user ? friend.receiver : friend.sender);
-    // console.log(users)
-    // const timestamps = friends.map(friend => friend.timestamp);
-    // console.log(timestamps)
+  
 
   const getConfirmedFriends = () => {
     return friends.map((friend) =>
@@ -89,9 +83,8 @@ export function ProfilePage() {
     setFilteredConfirmedFriends(result);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coffeeMateQuery, friends]);
-
+  
   // const timestamps = friends.map((friend) => friend.timestamp);
-
   return (
     <div className="profile">
       <NewNavbar />
@@ -108,10 +101,14 @@ export function ProfilePage() {
           {/* we need to make this better!! */}
           {(posts.length > 0) && (<h1>{posts[0].user}</h1>)}
           <MyCoffeeMates
+            setUpdatePost={setUpdatePost}
+            unapprovedFriendRequests={requests}
             filteredConfirmedFriends={filteredConfirmedFriends}
             coffeeMateQuery={coffeeMateQuery}
             setCoffeeMateQuery={setCoffeeMateQuery}
           />
+        </div>
+        <div>
         </div>
         <div style={{ width: "70%" }}>
           {posts.map((post) => (
