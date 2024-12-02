@@ -19,7 +19,7 @@ export async function getUsers(token) {
   return data;
 }
 
-export async function getUserInfo(token, user_Id) {
+export async function getUserInfo(token) {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -27,7 +27,7 @@ export async function getUserInfo(token, user_Id) {
     },
   };
 
-  const response = await fetch(`${BACKEND_URL}/users/${user_Id}`, requestOptions);
+  const response = await fetch(`${BACKEND_URL}/users/profile`, requestOptions);
 
   if (response.status !== 200) {
     throw new Error("Unable to fetch users");
@@ -37,7 +37,7 @@ export async function getUserInfo(token, user_Id) {
 }
 
 export const updateUserInfo = async (token, userData) => {
-  const response = await fetch("/api/user", {
+  const response = await fetch(`${BACKEND_URL}/users/profile`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

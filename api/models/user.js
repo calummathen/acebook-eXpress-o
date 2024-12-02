@@ -24,9 +24,6 @@ const UserSchema = new mongoose.Schema({
     //   },
     //   message: 'You must be at least 18 years old.',
     // },
-  location:{type:String, required: false, unique: false},
-  work_place:{type:String, required: false, unique: false},
-  telephone_number:{type:String, required: false, unique: false}
 });
 
 const User = mongoose.model("User", UserSchema);

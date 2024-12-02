@@ -90,10 +90,27 @@ async function getUserInfo(req, res) {
   }
 }
 
+async function updateUserInfo(req, res) {
+
+  if (req.body.password == undefined) {
+    delete req.body.password
+  } else {
+    req.body.password = Bcrypt.hashSync(req.body.password, 10);
+  }
+
+  await User.findOneAndUpdate(
+    {_id: req.user_id},
+    {$set: req.body}
+  );
+
+  res.status(200).json({ message: "User info updated" });
+}
+
 const UsersController = {
   create: create,
   getAllUsers: getAllUsers,
-  getUserInfo: getUserInfo
+  getUserInfo: getUserInfo,
+  updateUserInfo: updateUserInfo
 };
 
 module.exports = UsersController;

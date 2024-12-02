@@ -7,57 +7,86 @@ function UserInfoTable({ user }) {
     const [editing, setEditing] = useState(false); 
     const [userData, setUserData] = useState(user); 
 
+    // look into - one state as an array with all of these
+    const [name, setName] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState(undefined);
+
     useEffect(() => {
         if (token) {
           const fetchUserData = async () => {
             const data = await getUserInfo(token);  
-            setUserData(data);
+            setUserData(data.UserInfo);
           };
     
           fetchUserData();
+
         }
     }, [token]);
 
-    const handleChange = (new_value, key) => {
-        setUserData({ ...userData, [key]: new_value.target.value });
-    };
+    useEffect(() => {
+        if (userData) {
+            setName(userData.name);
+            setEmail(userData.email);
+        }
+    }, [userData])
 
     const toggleEdit = () => setEditing(!editing); 
     
     const handleSave = async () => {
         if (token) {
-            await updateUserInfo(token, userData);  
+            const updatedData = {
+                ...userData,
+                name: name,
+                email: email,
+                password: password
+            }
+            await updateUserInfo(token, updatedData);  
+            setUserData(updatedData)
             setEditing(false);
         }
     };
 
     const handleCancel = () => {
-        setUserData(user);  // Reset to the original user data
+        setName(userData.name);
+        setEmail(userData.email);  // Reset to the original user data
+        setPassword(undefined)
         setEditing(false);  // Exit editing mode
     };
 
     return (
         <div>
-            <table border="1" style={{ width: "100%", textAlign: "left" }}>
-                <tbody>
-                    {Object.keys(userData).map((key) => (
-                        <tr key={key}>
-                            <td>{key.charAt(0).toUpperCase() + key.slice(1)}</td>
-                            <td>
-                                {editing ? (
-                                    <input
-                                        type="text"
-                                        value={userData[key] || ""}
-                                        onChange={(new_value) => handleChange(new_value, key)}
-                                    />
-                                ) : (
-                                    userData[key] || "N/A"
-                                )}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            { (userData != undefined) && (
+                <div>
+                    { editing ? (
+                        <form>
+                            <div>
+                                <p>Name:</p>
+                                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                            </div>
+                            <div>
+                                <p>Email:</p>
+                                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            </div>
+                            <div>
+                                <p>Password:</p>
+                                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            </div>
+                        </form>
+                    ) : (
+                        <div>
+                            <div>
+                                <p>Name:</p>
+                                <p>{name}</p>
+                            </div>
+                            <div>
+                                <p>Email:</p>
+                                <p>{email}</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )}
 
             <div style={{ marginTop: "10px" }}>
                 {editing ? (
