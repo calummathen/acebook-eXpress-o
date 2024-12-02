@@ -476,4 +476,91 @@ describe("/posts", () => {
       expect(response.body.token).toEqual(undefined);
     });
   });
+
+  describe("PATCH, when token is present", () => {
+    test("the response code is 200", async () => {
+      const post1 = new Post({ user: "post-test", message: "I love all my children equally" });
+      await post1.save();
+
+      const response = await request(app)
+        .patch(`/posts/${post1._id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ message: "I do not love all my children equally", isYours: true });
+
+      expect(response.status).toEqual(200);
+    });
+
+    test("returns the updated post", async () => {
+      const post1 = new Post({ user: "post-test", message: "I love all my children equally" });
+      await post1.save();
+
+      const response = await request(app)
+        .patch(`/posts/${post1._id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ message: "I do not love all my children equally", isYours: true });
+
+      const posts = await Post.find();
+
+      expect(posts.length).toEqual(1)
+      expect(posts).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            user: "post-test", message: "I do not love all my children equally"
+          })
+        ])
+      );
+    });
+
+    test("returns a new token", async () => {
+      const post1 = new Post({ user: "post-test", message: "I love all my children equally" });
+      await post1.save();
+
+      const response = await request(app)
+        .patch(`/posts/${post1._id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ message: "I do not love all my children equally", isYours: true });
+
+      const newToken = response.body.token;
+      const newTokenDecoded = JWT.decode(newToken, process.env.JWT_SECRET);
+      const oldTokenDecoded = JWT.decode(token, process.env.JWT_SECRET);
+
+      // iat stands for issued at
+      expect(newTokenDecoded.iat > oldTokenDecoded.iat).toEqual(true);
+    });
+  });
+
+  describe("PATCH, when token is missing", () => {
+    test("the response code is 401", async () => {
+      const post1 = new Post({ user: "post-test", message: "I love all my children equally" });
+      await post1.save();
+
+      const response = await request(app)
+        .patch(`/posts/${post1._id}`)
+        .send({ message: "I do not love all my children equally", isYours: true });
+
+      expect(response.status).toEqual(401);
+    });
+
+    test("returns no posts", async () => {
+      const post1 = new Post({ user: "post-test", message: "I love all my children equally" });
+      await post1.save();
+
+      const response = await request(app)
+        .patch(`/posts/${post1._id}`)
+        .send({ message: "I do not love all my children equally", isYours: true });
+
+      expect(response.body.posts).toEqual(undefined);
+    });
+
+    test("does not return a new token", async () => {
+      const post1 = new Post({ user: "post-test", message: "I love all my children equally" });
+      await post1.save();
+
+      const response = await request(app)
+        .patch(`/posts/${post1._id}`)
+        .send({ message: "I do not love all my children equally", isYours: true });
+
+      expect(response.body.token).toEqual(undefined);
+    });
+  });
 });
