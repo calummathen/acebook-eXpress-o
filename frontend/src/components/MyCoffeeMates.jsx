@@ -3,16 +3,63 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ApproveFriendRequestButton from "./ApproveFriendRequestButton";
+import DenyFriendRequestButton from "./DenyFriendRequestButton";
 import UserInfoTable from "./UserInfo";
 
 export default function MyCoffeeMates({
+  unapprovedFriendRequests,
   unfilteredFriends,
   filteredConfirmedFriends,
   coffeeMateQuery,
   setCoffeeMateQuery,
+  setUpdatePost
 }) {
   return (
     <div>
+      <Accordion
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ArrowDownwardIcon />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+        >
+          <Typography>Pending Requests</Typography>
+        </AccordionSummary>
+        <AccordionDetails
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "start",
+            gap: "10px",
+          }}
+        >
+          {unapprovedFriendRequests.length > 0 ? (
+            unapprovedFriendRequests.map((request) => (
+              <div key={request._id}> 
+                <a href={`/profile/${request.sender}`}>
+                  ~ {request.sender}
+                </a>
+                <ApproveFriendRequestButton 
+                  friendRequestId={request._id}
+                  setUpdatePost={setUpdatePost}
+                />
+                <DenyFriendRequestButton 
+                  friendRequestId={request._id}
+                  setUpdatePost={setUpdatePost}
+                />
+              </div>
+            ))
+          ) : (
+            <p>You Have No Requests</p>
+          )}
+
+        </AccordionDetails>
+      </Accordion>
       <Accordion
         style={{
           display: "flex",
