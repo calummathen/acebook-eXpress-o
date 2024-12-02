@@ -11,11 +11,6 @@ export default function MyCoffeeMates({
   coffeeMateQuery,
   setCoffeeMateQuery,
 }) {
-  let noFriendsMessage = null;
-
-  if (unfilteredFriends.length < 1) {
-    noFriendsMessage = <p>You Have No Friends 😢</p>;
-  }
   return (
     <div>
       <Accordion
@@ -57,7 +52,6 @@ export default function MyCoffeeMates({
             gap: "10px",
           }}
         >
-          {noFriendsMessage}
           {filteredConfirmedFriends.length > 0 &&
             filteredConfirmedFriends.map((friend, index) => (
               <a href={`/profile/${friend}`} key={index}>
