@@ -102,8 +102,6 @@ async function sendFriendRequest(req, res) {
     ]
   }); 
 
-  console.log(existingFriends)
-  
   if (existingFriends.length == 0) {
     req.body.sender = req.username
     const friend = new Friend(req.body)
