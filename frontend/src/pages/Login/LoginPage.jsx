@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import { login } from "../../services/authentication";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +19,7 @@ export function LoginPage() {
       navigate("/posts");
     } catch (err) {
       console.error(err);
+      toast.error("Login failed. Please check your credentials.")
       navigate("/login");
     }
   }
@@ -30,6 +34,7 @@ export function LoginPage() {
 
   return (
     <>
+      <ToastContainer/>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
