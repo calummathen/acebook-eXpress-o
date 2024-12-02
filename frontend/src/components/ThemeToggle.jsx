@@ -4,7 +4,7 @@ import { useBeanScene } from "../context/BeanSceneContext";
 import { PiCoffeeFill } from "react-icons/pi";
 
 export const ThemeToggle = () => {
-  const [enabled, setEnabled] = useState(false);
+  const { enabled, setEnabled } = useBeanScene();
   const { theme, setTheme } = useBeanScene();
 
   const handleToggleChange = () => {

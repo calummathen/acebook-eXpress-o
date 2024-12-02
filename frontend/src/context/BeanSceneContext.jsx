@@ -3,9 +3,10 @@ import { createContext, useContext, useState } from "react";
 export const AppContext = createContext(null);
 
 export function BeanSceneContextProvider({ children }) {
+  const [enabled, setEnabled] = useState("false");
   const [theme, setTheme] = useState("dark");
   return (
-    <AppContext.Provider value={{ theme, setTheme }}>
+    <AppContext.Provider value={{ theme, setTheme, enabled, setEnabled }}>
       {children}
     </AppContext.Provider>
   );
