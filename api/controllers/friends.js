@@ -90,7 +90,6 @@ async function sendFriendRequest(req, res) {
 
 async function deleteFriend(req, res) {
   const requestId = req.params.request_id
-  console.log(requestId)
   await Friend.findByIdAndDelete(requestId)
 
   const newToken = generateToken(req.user_id, req.username);
