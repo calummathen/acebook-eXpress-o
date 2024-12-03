@@ -10,5 +10,11 @@
     "test": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
     "install": "cd ./api && npm install && cd ../frontend && npm install && cd ../",
     "cleanDev": "npm run seed --prefix api && npm run dev"
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "gridfs-stream": "^1.1.1",
+    "mongodb": "^6.11.0",
+    "multer": "^1.4.5-lts.1"
   }
 }
