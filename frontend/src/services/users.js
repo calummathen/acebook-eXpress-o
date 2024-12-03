@@ -36,6 +36,23 @@ export async function getUserInfo(token) {
   return await response.json();
 }
 
+export async function getAnotherUserInfo(token, username) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(`${BACKEND_URL}/users/profile/${username}`, requestOptions);
+
+  if (response.status !== 200) {
+    throw new Error("Unable to fetch users");
+  }
+
+  return await response.json();
+}
+
 export const updateUserInfo = async (token, userData) => {
   const response = await fetch(`${BACKEND_URL}/users/profile`, {
     method: "PUT",
