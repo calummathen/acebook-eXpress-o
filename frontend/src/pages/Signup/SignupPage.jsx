@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { signup } from "../../services/authentication";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import "./SignupPage.css";
 
 export function SignupPage() {
   const [name, setName] = useState("");
@@ -11,11 +13,17 @@ export function SignupPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   const validatePassword = (password) => {
     const chars = /[!#$%&'()*+,\-:;<=>?@£÷]/;
-    if (password.length < 8) {
+    
+    if (password == "") {
+      toast.error("Please enter a password")
+    } else if (password !== confirmPassword) {
+      toast.error("Passwords must match")
+    } else if (password.length < 8) {
       toast.error("Password must be 8 or more characters long");
     } else if (!chars.test(password)) {
       toast.error("Must contain at least 1 special character");
@@ -114,6 +122,10 @@ export function SignupPage() {
     setPassword(event.target.value);
   }
 
+  function handleConfirmPasswordChange(event) {
+    setConfirmPassword(event.target.value);
+  }
+
   const date18YearsAgo = new Date();
   date18YearsAgo.setFullYear(date18YearsAgo.getFullYear() - 18);
 
@@ -124,49 +136,62 @@ export function SignupPage() {
     .padStart(2, "0")}-${date18YearsAgo.getDate().toString().padStart(2, "0")}`;
 
   return (
-    <>
+    <div className="wrapper-auth">
       <ToastContainer />
-      <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input
-          id="name"
-          type="text"
-          value={name}
-          onChange={handleNameChange}
-        ></input>
-        <label htmlFor="birthday">Birthday:</label>
-        <input
-          id="birthday"
-          type="date"
-          value={birthday}
-          max={formattedDate}
-          onChange={handleBirthdayChange}
-        ></input>
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          type="text"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <label htmlFor="username">Username:</label>
-        <input
-          id="username"
-          type="text"
-          value={username}
-          onChange={handleUsernameChange}
-        ></input>
-        <label htmlFor="password">Password:</label>
-        <input
-          placeholder="Password"
-          id="password"
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <input role="submit-button" id="submit" type="submit" value="Submit" />
-      </form>
-    </>
+      <div className="logo-auth">
+        <h1>BeanScene</h1>
+        <p>Stirring Up Your Social Life</p>
+      </div>
+      <div className="box-auth">
+        <h2>Signup</h2>
+        <form onSubmit={handleSubmit} className="signup">
+          <label id="usernameLabel" htmlFor="username">Username:</label>
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={handleUsernameChange}
+          ></input>
+          <label id="emailLabel" htmlFor="email">Email:</label>
+          <input
+            id="email"
+            type="text"
+            value={email}
+            onChange={handleEmailChange}
+          />
+          <label id="nameLabel" htmlFor="name">Name:</label>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={handleNameChange}
+          ></input>
+          <label id="birthdayLabel" htmlFor="birthday">Birthday:</label>
+          <input
+            id="birthday"
+            type="date"
+            value={birthday}
+            max={formattedDate}
+            onChange={handleBirthdayChange}
+          ></input>
+          <label id="passwordLabel" htmlFor="password">Password:</label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <label id="confirmPasswordLabel" htmlFor="password">Confirm Password:</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
+          <Link id="login" to="/">Login</Link>
+          <input role="submit-button" id="submit" type="submit" value="Sign Up" />
+        </form>
+      </div>
+    </div>
   );
 }

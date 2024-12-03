@@ -35,15 +35,15 @@ export function LoginPage() {
   }
 
   return (
-    <div className="wrapper">
+    <div className="wrapper-auth">
       <ToastContainer toastStyle={{ backgroundColor: "#E4E0E1", color: "#493628" }} />
-      <div className="logo">
+      <div className="logo-auth">
         <h1>BeanScene</h1>
         <p>Stirring Up Your Social Life</p>
       </div>
-      <div className="box">
+      <div className="box-auth">
         <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="login">
           <label htmlFor="email">Email:</label>
           <input
             id="email"
@@ -58,12 +58,8 @@ export function LoginPage() {
             value={password}
             onChange={handlePasswordChange}
           />
-          <div>
-            <Link id="signup" to="/signup">Sign Up</Link>
-          </div>
-          <div>
-            <input role="submit-button" id="submit" type="submit" value="Login" />
-          </div>
+          <Link id="signup" to="/signup">Sign Up</Link>
+          <input role="submit-button" id="submit" type="submit" value="Login" />
         </form>
       </div>
     </div>
