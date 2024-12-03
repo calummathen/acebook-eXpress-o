@@ -1,11 +1,24 @@
 import { useEffect, useState } from "react";
-import { getUsers } from "../services/users";
+import { getUserInfo, getUsers } from "../services/users";
 import { Link } from "react-router-dom";
 
 export const Search = () => {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState([]);
+  const [username, setUsername] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (token) {
+      const fetchUserData = async () => {
+        const data = await getUserInfo(token);
+        setUsername(data.UserInfo.username);
+      };
+      fetchUserData();
+    }
+  }, [token]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -22,13 +35,15 @@ export const Search = () => {
     }
   }, []);
 
-  // console.log("filtered users:  ", filteredUsers);
-
   const createFilterUsers = (query, users) => {
     if (query.trim() === "") {
       return [];
     }
-    return users.filter((el) => {
+
+    const withoutUsername = users.filter((el) => {
+      return !el.username.toLowerCase().includes(username);
+    });
+    return withoutUsername.filter((el) => {
       return el.username.toLowerCase().includes(query.toLowerCase());
     });
   };
