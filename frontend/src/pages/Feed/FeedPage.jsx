@@ -7,7 +7,7 @@ import NewPostForm from "../../components/NewPostForm";
 
 import { useBeanScene } from "../../context/BeanSceneContext";
 
-import NewNavbar from "../../components/NewNavBar";
+import NavBar from "../../components/NavBar";
 
 import AllPostsButton from "../../components/AllPosts";
 import FriendsPostsButton from "../../components/FriendsPostsButton";
@@ -69,7 +69,7 @@ export function FeedPage() {
         color: theme === "light" ? "#333333" : "white",
       }}
     >
-      <NewNavbar />
+      <NavBar />
       <h2>{viewFriendsPosts ? "Friends Posts" : "All Posts"}</h2>
       <FriendsPostsButton toggleFriendsPosts={toggleFriendsPosts}/>
       <div>

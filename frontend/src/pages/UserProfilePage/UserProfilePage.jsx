@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserPosts } from "../../services/posts";
 import Post from "../../components/Post";
-import NewNavbar from "../../components/NewNavBar";
+import NavBar from "../../components/NavBar";
 import { deleteFriend, getFriendsForAnotherUser, getUnapprovedFriendsForAnotherUser } from "../../services/friends";
 import AddFriendButton from "../../components/AddFriendButton";
 import { sendFriendRequest } from "../../services/friends";
@@ -129,7 +129,7 @@ export function UserProfilePage() {
 
     return (
       <div className="profile">
-        <NewNavbar />
+        <NavBar />
         <div
           style={{
             display: "flex",
