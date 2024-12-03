@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getPosts } from "../../services/posts";
+import { getPosts, UpdatePost } from "../../services/posts";
 import Post from "../../components/Post";
 import NewPostForm from "../../components/NewPostForm";
 
@@ -59,7 +59,8 @@ export function FeedPage() {
             timestamp={post.timestamp}
             isLiked={post.hasLiked}
             beans={post.beans}
-            updatePost={setUpdatePost}
+            updatePost={UpdatePost}
+            setUpdatePost={setUpdatePost}
             isYours={post.isYours}
           />
         ))}

@@ -95,7 +95,7 @@ export function ProfilePage() {
       };
       fetchUserData();
     }
-  }, token);
+  }, [token]);
 
   return (
     <div className="profile">
