@@ -116,6 +116,7 @@ export function SignupPage() {
                 }
 
                 setPassword("");
+                setConfirmPassword("");
             }
         }
     }
