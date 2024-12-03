@@ -12,6 +12,6 @@ const CommentSchema = new mongoose.Schema({
 
 // We use the Schema to create the Post model. Models are classes which we can
 // use to construct entries in our Database.
-const Post = mongoose.model("Comment", CommentSchema);
+const Comment = mongoose.model("Comment", CommentSchema);
 
-module.exports = Post;
+module.exports = Comment;
