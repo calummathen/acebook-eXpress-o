@@ -24,6 +24,7 @@ function Post(props) {
   const [commentable, setCommentable] = useState(false);
   const [updateComments, setUpdateComments] = useState(false)
   const navigate = useNavigate();
+  const [friendsPosts, setFilter] = useState(false);
 
 
   useEffect(() => {
@@ -48,7 +49,6 @@ function Post(props) {
   
     fetchComments();
   }, [navigate, props.post._id, updateComments]);
-  
 
   const handleChange = (event) => {
     setPostMessage(event.target.value);
@@ -75,6 +75,10 @@ function Post(props) {
     .toLocaleString("en-gb")
     .slice(0, -3)
     .replaceAll(",", "");
+
+    const toggleFriendsPosts = () => {
+      setFilter((friendsPosts) => !friendsPosts);
+    };
 
   return editState ? (
     <div key="edit mode">
