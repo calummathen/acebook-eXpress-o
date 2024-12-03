@@ -13,7 +13,9 @@ export default function MyCoffeeMates({
   filteredConfirmedFriends,
   coffeeMateQuery,
   setCoffeeMateQuery,
-  setUpdatePost
+  setUpdatePost,
+  upcomingBirthdays
+
 }) {
   return (
     <div>
@@ -60,6 +62,7 @@ export default function MyCoffeeMates({
 
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         style={{
           display: "flex",
@@ -105,8 +108,46 @@ export default function MyCoffeeMates({
                 {friend}
               </a>
             ))}
+      </AccordionDetails>
+    </Accordion>
+
+    <Accordion
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ArrowDownwardIcon />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+        >
+          <Typography>Upcoming Birthdays</Typography>
+        </AccordionSummary>
+        <AccordionDetails
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "start",
+            gap: "10px",
+          }}
+        >
+        {console.log(upcomingBirthdays)}
+          {upcomingBirthdays.length > 0 ? (
+            upcomingBirthdays.map((birthday, index) => (
+              <div key={index}> 
+                <a href={`/profile/${birthday.username}`}>{birthday.username}: {birthday.birthday.toDateString()}</a>
+                <p>
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>No Upcoming Birthdays</p>
+          )}
+
         </AccordionDetails>
       </Accordion>
+
       <Accordion>
         <AccordionSummary
           expandIcon={<ArrowDownwardIcon />}

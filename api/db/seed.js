@@ -60,7 +60,7 @@ async function seedData() {
         email: "dripking@javaworld.com",
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
-        birthday: new Date("1997-02-16"),
+        birthday: new Date("1997-12-05"),
       },
       {
         username: "darkroastdevotee",
@@ -76,7 +76,7 @@ async function seedData() {
         email: "cafecraver@latteplace.com",
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
-        birthday: new Date("2000-03-27"),
+        birthday: new Date("2000-01-01"),
       },
       {
         username: "sipandsavor",
@@ -84,6 +84,14 @@ async function seedData() {
         email: "sipandsavor@latteplace.com",
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
+        birthday: new Date("1995-10-03"),
+      },
+      {
+        username: "mocchalover",
+        name: "Reena",
+        email: "reena@example.com",
+        password:
+          "$2b$10$Bd9IeKwyfX9JlBYPnXfRGua5b44HlIRSCoSOpU3IEVDl/SKNXl0TC",
         birthday: new Date("1995-10-03"),
       },
       
@@ -174,6 +182,13 @@ async function seedData() {
         beans: ["sipandsavor", "cafecraver"],
         timestamp: new Date("2023-11-29 13:05"),
       },
+      {
+        user: "mocchalover",
+        message:
+          "When did you have your first sip of coffee? Share your coffee origin story.",
+        beans: ["sipandsavor", "cafecraver"],
+        timestamp: new Date("2023-11-29 13:05"),
+      },
     ];
     
     for (const postData of posts) {
@@ -194,7 +209,7 @@ async function seedData() {
         receiver: "javajunkie",
       },
       {
-        sender: "sipandsavor",
+        sender: "mocchalover",
         receiver: "cafecraver",
         approved: true,
         timestamp: new Date("2023-09-25 09:15"),
@@ -204,7 +219,7 @@ async function seedData() {
         receiver: "darkroastdevotee",
       },
       {
-        sender: "darkroastdevotee",
+        sender: "mocchalover",
         receiver: "dripking",
         approved: true,
         timestamp: new Date("2023-01-27 16:45"),
