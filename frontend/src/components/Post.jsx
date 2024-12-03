@@ -1,17 +1,54 @@
 import DeletePostId from "./DeletePostButton";
 import { deletePostId, likePost, UpdatePost } from "../services/posts";
 import EditPostButton from "./EditPostButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LikePostButton from "./LikePostButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AddCommentToPost from "./AddCommentButton";
+import Comment from "./Comment";
+import { getCommentsforPost } from "../services/comments";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+
 
 function Post(props) {
   const token = localStorage.getItem("token");
   const [liked, setLiked] = useState(props.isLiked);
   const [editState, setEditState] = useState(false);
   const [postMessage, setPostMessage] = useState(props.message);
+  const [comments, setComments] = useState([]);
   const [isYours, setIsYours] = useState(props.isYours);
+  const [commentable, setCommentable] = useState(false);
+  const [updateComments, setUpdateComments] = useState(false)
+  const navigate = useNavigate();
   const [friendsPosts, setFilter] = useState(false);
+
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      const token = localStorage.getItem("token");
+      const loggedIn = token !== null;
+  
+      if (!loggedIn) {
+        navigate("/login");
+        return;
+      }
+  
+      try {
+        const data = await getCommentsforPost(token, props.post._id);
+        setComments(data.comments);
+        localStorage.setItem("token", data.token);
+      } catch (err) {
+        console.error(err);
+        navigate("/login");
+      }
+    };
+  
+    fetchComments();
+  }, [navigate, props.post._id, updateComments]);
 
   const handleChange = (event) => {
     setPostMessage(event.target.value);
@@ -20,7 +57,7 @@ function Post(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await UpdatePost(token, postMessage, props.post._id, props.isYours);
-    props.updatePost(Math.random()); //change state to rerender page
+    props.setUpdatePost(Math.random()); //change state to rerender page
     toggleEditState();
   };
 
@@ -30,7 +67,7 @@ function Post(props) {
 
   const toggleLiked = async () => {
     await likePost(token, props.post._id);
-    props.updatePost(Math.random());
+    props.setUpdatePost(Math.random());
     setLiked(() => !liked);
   };
 
@@ -67,7 +104,7 @@ function Post(props) {
         isYours={props.isYours}
         post_id={props.post._id}
         DeletePostId={deletePostId}
-        UpdatePost={props.updatePost}
+        UpdatePost={props.setUpdatePost}
       />
     </div>
   ) : (
@@ -93,6 +130,14 @@ function Post(props) {
         }}
       >
         <div>
+          <AddCommentToPost
+            UpdatePost={setUpdateComments}
+            setCommentable={setCommentable}
+            commentable={commentable}
+            postId={props.post._id}
+          />
+        </div>
+        <div>
           <LikePostButton
             liked={liked}
             toggleLiked={toggleLiked}
@@ -106,10 +151,55 @@ function Post(props) {
               isYours={props.isYours}
               post_id={props.post._id}
               DeletePostId={deletePostId}
-              UpdatePost={props.updatePost}
+              UpdatePost={props.setUpdatePost}
             />
           </div>
         )}
+      <div className="comments" role="feed">
+        
+      {comments.length > 0 && (
+        <Accordion
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <AccordionSummary
+            expandIcon={<ArrowDownwardIcon />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            <Typography>Comments</Typography>
+          </AccordionSummary>
+          <AccordionDetails
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+              gap: "10px",
+            }}
+          >
+            {comments.map((comment) => (
+              <div key={comment._id}>
+                <a href={`/profile/${comment.user}`}></a>
+                <Comment
+                  id={comment._id}
+                  post_id={comment.post_id}
+                  user={comment.user}
+                  message={comment.message}
+                  timestamp={comment.timestamp}
+                  isLiked={comment.hasLiked}
+                  beans={comment.beans}
+                  updatePost={setUpdateComments}
+                  isYours={comment.isYours}
+                />
+              </div>
+            ))}
+          </AccordionDetails>
+        </Accordion>
+      )}
+
+      </div>
       </div>
     </div>
   );
