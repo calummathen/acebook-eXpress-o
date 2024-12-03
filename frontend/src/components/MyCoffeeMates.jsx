@@ -132,7 +132,6 @@ export default function MyCoffeeMates({
             gap: "10px",
           }}
         >
-        {console.log(upcomingBirthdays)}
           {upcomingBirthdays.length > 0 ? (
             upcomingBirthdays.map((birthday, index) => (
               <div key={index}> 
