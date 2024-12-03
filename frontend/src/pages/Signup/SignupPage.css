@@ -1,0 +1,188 @@
+.wrapper-auth {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 300px 1fr 1fr;
+    justify-content: center;
+    /* align-items: center; */
+    background: url("auth-background-blur.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+.logo-auth {
+    padding: 0 32px 8px 32px;
+    grid-row: 1;
+    border-radius: 8px;
+    justify-self: center;
+    width: min-content;
+    color: #493628;
+    margin-bottom: 16px;
+    background-color: #d6c0b35b;
+    backdrop-filter: blur(16px);
+    align-self: center;
+
+    h1 {
+        font-size: 48pt;
+        font-weight: 900;
+        margin-bottom: 0 !important;
+    }
+
+    p {
+        font-size: 16pt;
+    }
+}
+
+.box-auth {
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 500px;
+    width: 50vw;
+    max-width: 800px;
+    padding: 32px 64px;
+    background-color: #d6c0b35b;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 4px solid #AB886D;
+    border-radius: 8px;
+
+    h2 {
+        font-size: 28pt;
+        padding-bottom: 32px;
+        color: #493628;
+    }
+}
+
+form.signup {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.5fr;
+    grid-template-rows: 1fr 1fr 16px 1fr 1fr 16px 1fr 1fr min-content;
+    gap: 8px;
+
+    input[type="text"],
+    input[type="password"],
+    input[type="date"] {
+        max-width: 400px;
+        padding: 8px 12px;
+        background-color: #E4E0E1;
+        font-size: 14pt;
+        border: none;
+        border-radius: 4px;
+        outline: none;
+    }
+
+    label {
+        font-size: 16pt;
+        text-align: right;
+        margin-right: 16px;
+        align-self: center;
+        color: #493628;
+        font-weight: 600;
+        grid-column: 1;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #usernameLabel {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    #username {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    #emailLabel {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    #email {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    #nameLabel {
+        grid-column: 1;
+        grid-row: 4;
+    }
+
+    #name {
+        grid-column: 2;
+        grid-row: 4;
+    }
+
+    #birthdayLabel {
+        grid-column: 1;
+        grid-row: 5;
+    }
+
+    #birthday {
+        grid-column: 2;
+        grid-row: 5;
+    }
+    
+    #passwordLabel {
+        grid-column: 1;
+        grid-row: 7;
+    }
+
+    #password {
+        grid-column: 2;
+        grid-row: 7;
+    }
+
+    #confirmPasswordLabel {
+        grid-column: 1;
+        grid-row: 8;
+    }
+
+    #confirmPassword {
+        grid-column: 2;
+        grid-row: 8;
+    }
+
+    #login {
+        grid-column: 1;
+        grid-row: 9;
+        margin-top: 32px;
+        font-size: 14pt;
+        text-decoration: underline;
+        font-weight: 700;
+        color: #493628;
+        transition: 0.15s ease-in-out;
+        cursor: pointer;
+        justify-self: center;
+        align-self: center;
+    }
+
+    #submit {
+        grid-column: 2;
+        grid-row: 9;
+        width: min-content;
+        margin-top: 32px;
+        padding: 8px 16px;
+        border: 3px solid #493628;
+        color: #493628;
+        background-color: #E4E0E1;
+        border-radius: 8px;
+        transition: 0.15s ease-in-out;
+        cursor: pointer;
+        font-size: 14pt;
+        font-weight: 700;
+        justify-self: center;
+        align-self: center;
+
+        &:hover {
+            background-color: #493628;
+            color: #E4E0E1;
+        }
+    }
+}
