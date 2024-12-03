@@ -1,9 +1,10 @@
 import DeletePostId from "./DeletePostButton";
-import { deletePostId, likePost, UpdatePost } from "../services/posts";
+import { deletePostId, likePost, UpdatePost, repostPost} from "../services/posts";
 import EditPostButton from "./EditPostButton";
 import { useState } from "react";
 import LikePostButton from "./LikePostButton";
 import { Link } from "react-router-dom";
+import RepostButton from "./RepostButton";
 
 function Post(props) {
   const token = localStorage.getItem("token");
@@ -12,6 +13,8 @@ function Post(props) {
   const [postMessage, setPostMessage] = useState(props.message);
   const [isYours, setIsYours] = useState(props.isYours);
   const [friendsPosts, setFilter] = useState(false);
+  const [reposted, setReposted] = useState(props.reposted);
+  
 
   const handleChange = (event) => {
     setPostMessage(event.target.value);
@@ -42,6 +45,15 @@ function Post(props) {
     const toggleFriendsPosts = () => {
       setFilter((friendsPosts) => !friendsPosts);
     };
+
+    const handleRepost = async (event) => {
+      event.preventDefault();
+      await repostPost(token, props.post._id); 
+      props.updatePost(Math.random());// Call the backend service
+      setReposted(true); // Set the reposted state to true
+       // Refresh the posts in the parent component
+    };
+  
 
   return editState ? (
     <div key="edit mode">
@@ -92,6 +104,7 @@ function Post(props) {
           justifyContent: "space-between",
         }}
       >
+         <RepostButton reposted={reposted} onRepost={handleRepost} />
         <div>
           <LikePostButton
             liked={liked}

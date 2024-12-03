@@ -137,6 +137,30 @@ async function likePost(req, res) {
   res.status(200).json({ message: "Likes changed", token: newToken })
 }
 
+async function repost(req, res) {
+  const originalPost = await Post.findById(req.params.postId);
+
+  if (!originalPost) {
+    res.status(404).json({ error: "Post not found" });
+    return;
+  }
+
+  const repost = new Post({
+    user: req.username,
+    message: originalPost.message,
+    timestamp: new Date(),
+    originalPostId: originalPost._id,
+    reposted: true,
+  });
+
+  await repost.save();
+}
+
+
+
+
+
+
 const PostsController = {
   getAllPosts: getAllPosts,
   getFriendsPosts:getFriendsPosts,
@@ -146,6 +170,7 @@ const PostsController = {
   getUserPosts: getUserPosts,
   getYourPosts: getYourPosts,
   likePost: likePost,
+  repost: repost,
 };
 
 module.exports = PostsController;

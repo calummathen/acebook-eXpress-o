@@ -6,7 +6,8 @@ const PostSchema = new mongoose.Schema({
   user: { type: String, required: true },
   message: { type: String, required: true },
   beans: [ String ],
-  timestamp: { type: Date, default: Date.now, required: true }
+  timestamp: { type: Date, default: Date.now, required: true },
+  reposted: {type: Boolean, default: false, required: false}
 });
 
 // We use the Schema to create the Post model. Models are classes which we can
