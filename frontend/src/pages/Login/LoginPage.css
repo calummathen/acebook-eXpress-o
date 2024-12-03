@@ -35,6 +35,9 @@
 
 .box-auth {
     grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-width: 500px;
     width: 50vw;
     max-width: 800px;
@@ -54,7 +57,7 @@
 
 form.login {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr 0.5fr;
     grid-template-rows: 1fr 1fr auto;
     gap: 8px;
 
@@ -84,9 +87,19 @@ form.login {
         justify-content: center;
     }
 
+    #emailLabel {
+        grid-column: 1;
+        grid-row: 1;
+    };
+
     #email {
         grid-column: 2;
         grid-row: 1;
+    }
+
+    #passwordLabel {
+        grid-column: 1;
+        grid-row: 2;
     }
 
     #password {
