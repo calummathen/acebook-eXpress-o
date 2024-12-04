@@ -3,162 +3,133 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+
 import ApproveFriendRequestButton from "./ApproveFriendRequestButton";
 import DenyFriendRequestButton from "./DenyFriendRequestButton";
 import UserInfoTable from "./UserInfo";
 
 export default function MyCoffeeMates({
-  unapprovedFriendRequests,
-  unfilteredFriends,
-  filteredConfirmedFriends,
-  coffeeMateQuery,
-  setCoffeeMateQuery,
-  setUpdatePost,
-  upcomingBirthdays
-
+    unapprovedFriendRequests,
+    unfilteredFriends,
+    filteredConfirmedFriends,
+    coffeeMateQuery,
+    setCoffeeMateQuery,
+    setUpdatePost,
+    upcomingBirthdays
 }) {
-  return (
-    <div>
-      <Accordion
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <AccordionSummary
-          expandIcon={<ArrowDownwardIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          <Typography>Pending Requests</Typography>
-        </AccordionSummary>
-        <AccordionDetails
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "start",
-            gap: "10px",
-          }}
-        >
-          {unapprovedFriendRequests.length > 0 ? (
-            unapprovedFriendRequests.map((request) => (
-              <div key={request._id}> 
-                <a href={`/profile/${request.sender}`}>
-                  ~ {request.sender}
-                </a>
-                <ApproveFriendRequestButton 
-                  friendRequestId={request._id}
-                  setUpdatePost={setUpdatePost}
-                />
-                <DenyFriendRequestButton 
-                  friendRequestId={request._id}
-                  setUpdatePost={setUpdatePost}
-                />
-              </div>
-            ))
-          ) : (
-            <p>You Have No Requests</p>
-          )}
+    return (
+        <div className="my-profile-coffee-mates">
+            <Accordion className="accordion-main-profile">
+                <AccordionSummary
+                    className="accordion-summary-profile"
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="friend-requests-content"
+                    id="pending-requests">
+        
+                    <Typography>Pending Coffee Mates</Typography>
+                </AccordionSummary>
+        
+                <AccordionDetails className="accordion-details-profile">
+            
+                    {unapprovedFriendRequests.length > 0 ? (
+                        unapprovedFriendRequests.map((request) => (
+                
+                            <div key={request._id} className="profile-friend-request"> 
+                                <a href={`/profile/${request.sender}`}>~ {request.sender}</a>
 
-        </AccordionDetails>
-      </Accordion>
+                                <div>
+                                    <ApproveFriendRequestButton 
+                                        friendRequestId={request._id}
+                                        setUpdatePost={setUpdatePost}
+                                    />
+                                    <DenyFriendRequestButton 
+                                        friendRequestId={request._id}
+                                        setUpdatePost={setUpdatePost}
+                                    />
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="profile-no-requests">You Have No Requests</p>
+                    )}
+                </AccordionDetails>
+            </Accordion>
+        
+            <Accordion className="accordion-main-profile">
+                <AccordionSummary
+                    className="accordion-summary-profile"
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="friends-content"
+                    id="friends">
+                    
+                    <Typography>My Coffee Mates</Typography>
+                </AccordionSummary>
+        
+                <AccordionDetails className="accordion-details-profile">
+        
+                    {unfilteredFriends.length > 1 && (
+                        <>
+                            <input
+                                className="search-coffee-mates"
+                                type="text"
+                                placeholder="filter fellow coffee snobs"
+                                value={coffeeMateQuery}
+                                onChange={(e) => setCoffeeMateQuery(e.target.value)}
+                            />
 
-      <Accordion
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <AccordionSummary
-          expandIcon={<ArrowDownwardIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          <Typography>My Coffee Mates</Typography>
-        </AccordionSummary>
-        {unfilteredFriends.length > 1 && (
-          <input
-            type="text"
-            placeholder="filter fellow coffee snobs"
-            value={coffeeMateQuery}
-            onChange={(e) => setCoffeeMateQuery(e.target.value)}
-            style={{
-              padding: "10px",
-              fontSize: "16px",
-              width: "80%",
-              maxWidth: "400px",
-              marginBottom: "20px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              justifySelf: "start",
-            }}
-          />
-        )}
-        <AccordionDetails
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "start",
-            gap: "10px",
-          }}
-        >
-          {filteredConfirmedFriends.length > 0 &&
-            filteredConfirmedFriends.map((friend, index) => (
-              <a href={`/profile/${friend}`} key={index}>
-                {friend}
-              </a>
-            ))}
-      </AccordionDetails>
-    </Accordion>
+                            {filteredConfirmedFriends.length > 0 &&
+                            filteredConfirmedFriends.map((friend, index) => (
+                    
+                                <a href={`/profile/${friend}`} key={index} className="search-coffee-mates-result">
+                                    {friend}
+                                </a>
+                            ))}
+                        </>
+                    )}
+                </AccordionDetails>
+            </Accordion>
+            
+            <Accordion className="accordion-main-profile">
+                <AccordionSummary
+                    className="accordion-summary-profile"
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="birthdays-content"
+                    id="birthdays">
 
-    <Accordion
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <AccordionSummary
-          expandIcon={<ArrowDownwardIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          <Typography>Upcoming Birthdays</Typography>
-        </AccordionSummary>
-        <AccordionDetails
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "start",
-            gap: "10px",
-          }}
-        >
-          {upcomingBirthdays.length > 0 ? (
-            upcomingBirthdays.map((birthday, index) => (
-              <div key={index}> 
-                <a href={`/profile/${birthday.username}`}>{birthday.username}: {birthday.birthday.toDateString()}</a>
-                <p>
-                </p>
-              </div>
-            ))
-          ) : (
-            <p>No Upcoming Birthdays</p>
-          )}
+                    <Typography>Upcoming Birthdays</Typography>
+                </AccordionSummary>
+            
+                <AccordionDetails className="accordion-details-profile">
+                
+                    {upcomingBirthdays.length > 0 ? (
+                        upcomingBirthdays.map(birthday => (
+                        
+                            <a className="profile-birthdays" key={birthday.username} href={`/profile/${birthday.username}`}>{birthday.username}: {birthday.birthday.toDateString()}</a>
 
-        </AccordionDetails>
-      </Accordion>
+                        ))
+                    ) : (
+                        <p className="profile-no-birthdays">No Upcoming Birthdays</p>
+                    )}
+                
+                </AccordionDetails>
+            </Accordion>
+            
+            <Accordion>
+                <AccordionSummary
+                    className="accordion-summary-profile"
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="about-me-content"
+                    id="about-me">
 
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ArrowDownwardIcon />}
-          aria-controls="panel2-content"
-          id="panel2-header"
-        >
-          <Typography>About Me</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <UserInfoTable />
-        </AccordionDetails>
-      </Accordion>
-    </div>
-  );
+                    <Typography>About Me</Typography>
+                </AccordionSummary>
+        
+                <AccordionDetails className="accordion-details-profile">
+
+                    <UserInfoTable />
+            
+                </AccordionDetails>
+            </Accordion>
+        </div>
+    );
 }
