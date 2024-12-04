@@ -80,8 +80,10 @@ async function getFriendsForAnotherUser(req, res) {
 
 async function getUnapprovedFriendsForAnotherUser(req, res) {
   const friends = await Friend.find({
-    receiver: req.params.username,
-    approved: false
+    $or: [
+      { sender: req.params.username, approved: false },
+      { receiver: req.params.username, approved: false }
+    ]
   });
   const updatedFriends = friends.map((friend) => {
     const friendObject = friend.toObject(); 
