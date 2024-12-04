@@ -90,7 +90,7 @@ export function FeedPage() {
               beans={post.beans}
               updatePost={setUpdatePost}
               isYours={post.isYours}
-              reposted={post.reposted}
+              hasReposted={post.hasReposted}
             />
           ))}
           </>
@@ -107,7 +107,7 @@ export function FeedPage() {
               beans={post.beans}
               updatePost={setUpdatePost}
               isYours={post.isYours}
-              reposted={post.reposted}
+              hasReposted={post.hasReposted}
             />
           ))}
         </>

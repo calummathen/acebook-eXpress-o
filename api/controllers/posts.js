@@ -10,9 +10,10 @@ async function getAllPosts(req, res) {
   const updatedPosts = posts.map((post) => {
     post._doc.isYours = (post.user == req.username)
     post._doc.hasLiked = (post.beans.includes(req.username))
+    post._doc.hasReposted = (post.reposted.includes(req.username) || post.repostedFrom != null)
     return post
   })
-
+  
   const token = generateToken(req.user_id, req.username);
   res.status(200).json({ posts: updatedPosts, token: token });
 }
@@ -26,12 +27,9 @@ async function getFriendsPosts(req, res) {
     ]
   });
   const usernames = friends.map((friend) => {
-    if (
-      friend.sender === req.username
-    )
-    {
+    if (friend.sender === req.username) {
       return friend.receiver
-    }else{
+    } else {
       return friend.sender
     }
   }); 
@@ -43,6 +41,7 @@ async function getFriendsPosts(req, res) {
   const updatedPosts = friendPosts.map((post) => {
     post._doc.isYours = (post.user == req.username)
     post._doc.hasLiked = (post.beans.includes(req.username))
+    post._doc.hasReposted = (post.reposted.includes(req.username) || post.repostedFrom != null)
     return post
   })
 
@@ -59,6 +58,7 @@ async function createPost(req, res) {
   const newToken = generateToken(req.user_id, req.username);
   res.status(201).json({ message: "Post created", token: newToken });
 }
+
 async function getYourPosts(req, res) {
   const posts = await Post.find({user:req.username});
   posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
@@ -66,6 +66,7 @@ async function getYourPosts(req, res) {
   const updatedPosts = posts.map((post) => {
     post._doc.isYours = (post.user == req.username)
     post._doc.hasLiked = (post.beans.includes(req.username))
+    post._doc.hasReposted = (post.reposted.includes(req.username) || post.repostedFrom != null)
     return post
   })
 
@@ -80,6 +81,7 @@ async function getUserPosts(req, res) {
   const updatedPosts = posts.map((post) => {
     post._doc.isYours = (post.user == req.username)
     post._doc.hasLiked = (post.beans.includes(req.username))
+    post._doc.hasReposted = (post.reposted.includes(req.username) || post.repostedFrom != null)
     return post
   })
 
@@ -118,7 +120,7 @@ async function updatePost(req, res) {
 
 async function likePost(req, res) {
   const postId = req.params.post_id
-  const post = await Post.findOne({_id: postId})
+  const post = await Post.findById(postId)
   const hasLiked = post.beans.includes(req.username)
   
   if (hasLiked) {
@@ -138,22 +140,25 @@ async function likePost(req, res) {
 }
 
 async function repost(req, res) {
-  const originalPost = await Post.findById(req.params.postId);
+  const postId = req.params.postId
+  const originalPost = await Post.findById(postId);
+  const hasReposted = originalPost.reposted.includes(req.username);
 
-  if (!originalPost) {
-    res.status(404).json({ error: "Post not found" });
-    return;
+  if (!hasReposted) {
+    const repost = new Post({
+      user: req.username,
+      message: originalPost.message,
+      repostedFrom: originalPost.user,
+    })
+
+    await repost.save()
+    await Post.findByIdAndUpdate(
+      { _id: postId },
+      { $push: { reposted: req.username }}
+    ) 
   }
 
-  const repost = new Post({
-    user: req.username,
-    message: originalPost.message,
-    timestamp: new Date(),
-    originalPostId: originalPost._id,
-    reposted: true,
-  });
-
-  await repost.save();
+  res.status(201).json({ message: "Post reposted" })
 }
 
 

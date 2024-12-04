@@ -13,8 +13,7 @@ function Post(props) {
   const [postMessage, setPostMessage] = useState(props.message);
   const [isYours, setIsYours] = useState(props.isYours);
   const [friendsPosts, setFilter] = useState(false);
-  const [reposted, setReposted] = useState(props.reposted);
-  
+  const [reposted, setReposted] = useState(props.hasReposted);  
 
   const handleChange = (event) => {
     setPostMessage(event.target.value);
@@ -47,7 +46,7 @@ function Post(props) {
     };
 
     const handleRepost = async (event) => {
-      event.preventDefault();
+      //event.preventDefault();
       await repostPost(token, props.post._id); 
       props.updatePost(Math.random());// Call the backend service
       setReposted(true); // Set the reposted state to true
