@@ -1,70 +1,40 @@
 import { useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { Search } from "./Search";
 import { motion, AnimatePresence } from "motion/react";
-export const SearchButton = () => {
-  const [slider, setSlider] = useState(false);
+import { MdOutlineSearch, MdOutlineSearchOff } from "react-icons/md";
 
-  const toggleSlider = () => {
-    if (!slider) {
-      setSlider(true);
-    } else {
-      setSlider(false);
+import { Search } from "./Search";
+import { useBeanScene } from "../context/BeanSceneContext";
+
+export const SearchButton = () => {
+
+    const { theme } = useBeanScene();
+    const [slider, setSlider] = useState(false);
+    
+    document.body.style.overflow = "auto"
+
+    const toggleSlider = () => {
+        document.body.style.overflow = slider ? "auto" : "hidden";
+        setSlider(slider => !slider);
     }
-  };
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "right",
-      }}
-    >
-      {slider ? (
-        <div>
-          <button
-            style={{
-              width: "110px",
-              marginRight: "10px",
-            }}
-            onClick={toggleSlider}
-          >
-            Snob Search <FaChevronRight />{" "}
-          </button>
-          <AnimatePresence>
-            <motion.div
-              exit={{ x: 1000 }}
-              initial={{ x: 1000 }}
-              animate={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-              style={{
-                display: "flex",
-                justifyContent: "start",
-                alignItems: "center",
-                height: "50vh",
-                width: "40vw",
-                position: "absolute",
-                top: 70,
-                right: 0,
-                flexDirection: "column",
-                padding: "20px",
-                boxSizing: "border-box",
-                background: "black",
-                opacity: "90%",
-                borderBottomLeftRadius: "5%",
-              }}
-            >
-              <Search />
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      ) : (
-        <button
-          style={{ width: "110px", marginRight: "10px" }}
-          onClick={toggleSlider}
-        >
-          Snob Search <FaChevronLeft />
-        </button>
-      )}
-    </div>
-  );
+
+    return (
+        <>
+            <button id="search-button" onClick={toggleSlider}>{ slider ? <MdOutlineSearchOff /> : <MdOutlineSearch /> } { slider ? "Snob Search" : "Snob Search" }</button>
+            { slider && (
+                <div id="search-wrapper" className={theme === "light" ? "search-wrapper-light" : "search-wrapper-dark"}>
+                    <AnimatePresence>
+                        <div onClick={toggleSlider} />
+                        <motion.div
+                            exit={{ x: 1000 }}
+                            initial={{ x: 1000 }}
+                            animate={{ x: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="search-box">
+                            <Search />
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+            )}
+        </>
+    );
 };
