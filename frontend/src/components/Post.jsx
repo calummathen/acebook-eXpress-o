@@ -84,7 +84,7 @@ function Post(props) {
     const handleRepost = async (event) => {
       //event.preventDefault();
       await repostPost(token, props.post._id); 
-      props.updatePost(Math.random());// Call the backend service
+      props.setUpdatePost(Math.random());// Call the backend service
       setReposted(true); // Set the reposted state to true
        // Refresh the posts in the parent component
     };
