@@ -123,13 +123,13 @@ async function deleteFriend(req, res) {
   res.status(200).json({ message: "Friendship deleted", token: newToken });
 }
 
-async function deleteFriend(req, res) {
-  const requestId = req.params.request_id
-  await Friend.findByIdAndDelete(requestId)
+// async function deleteFriend(req, res) {
+//   const requestId = req.params.request_id
+//   await Friend.findByIdAndDelete(requestId)
 
-  const newToken = generateToken(req.user_id, req.username);
-  res.status(200).json({ message: "Friendship deleted", token: newToken });
-}
+//   const newToken = generateToken(req.user_id, req.username);
+//   res.status(200).json({ message: "Friendship deleted", token: newToken });
+// }
 
 const FriendsController = {
   getFriendsForUser: getFriendsForUser,
