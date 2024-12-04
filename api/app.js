@@ -1,4 +1,5 @@
 const express = require("express");
+const { connectToDatabase } = require("./db/db.js");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -8,10 +9,23 @@ const friendsRouter = require("./routes/friends")
 const commentsRouter = require("./routes/comments")
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
+const fileRoutes = require("./routes/files");
 
 
 const app = express();
 
+// Initialize Database Connection
+(async () => {
+  try {
+    await connectToDatabase();
+    console.log("Database connected successfully");
+  } catch (error) {
+    console.error("Failed to connect to database:", error);
+    process.exit(1); // Exit the process if database connection fails
+  }
+})();
+
+// Middleware
 // Allow requests from any client
 // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 // docs: https://expressjs.com/en/resources/middleware/cors.html
@@ -26,6 +40,7 @@ app.use("/posts", tokenChecker, postsRouter);
 app.use("/comments", tokenChecker, commentsRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/friends", tokenChecker, friendsRouter);
+app.use("/files", fileRoutes);
 
 // 404 Handler
 app.use((_req, res) => {
