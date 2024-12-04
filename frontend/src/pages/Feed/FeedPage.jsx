@@ -91,6 +91,7 @@ export function FeedPage() {
               updatePost={UpdatePost}
               setUpdatePost={setUpdatePost}
               isYours={post.isYours}
+              hasReposted={post.hasReposted}
             />
           ))}
           </>
@@ -108,6 +109,7 @@ export function FeedPage() {
               updatePost={UpdatePost}
               setUpdatePost={setUpdatePost}
               isYours={post.isYours}
+              hasReposted={post.hasReposted}
             />
           ))}
         </>

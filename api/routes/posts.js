@@ -11,5 +11,5 @@ router.patch("/:post_id", PostsController.updatePost);
 router.patch("/:post_id/like", PostsController.likePost);
 router.get("/mine", PostsController.getYourPosts);
 router.get("/:username", PostsController.getUserPosts);
-
+router.post("/repost/:postId", PostsController.repost);
 module.exports = router;
