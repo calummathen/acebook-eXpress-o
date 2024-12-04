@@ -7,6 +7,8 @@ const PostSchema = new mongoose.Schema({
   message: { type: String, required: true },
   beans: [ String ],
   timestamp: { type: Date, default: Date.now, required: true },
+  reposted: [ String ],
+  repostedFrom: String
   comments: { type: Boolean, default: true, required: true},
 });
 

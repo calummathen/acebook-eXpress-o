@@ -212,6 +212,7 @@ export function ProfilePage() {
                         beans={post.beans}
                         updatePost={setUpdatePost}
                         isYours={true}
+                        hasReposted={post.hasReposted}
                     />
                 ))}
             </div>

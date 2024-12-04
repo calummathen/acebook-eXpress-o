@@ -1,8 +1,9 @@
 import DeletePostId from "./DeletePostButton";
-import { deletePostId, likePost, UpdatePost } from "../services/posts";
+import { deletePostId, likePost, UpdatePost, repostPost} from "../services/posts";
 import EditPostButton from "./EditPostButton";
 import { useState, useEffect } from "react";
 import LikePostButton from "./LikePostButton";
+import RepostButton from "./RepostButton";
 import { Link, useNavigate } from "react-router-dom";
 import AddCommentToPost from "./AddCommentButton";
 import Comment from "./Comment";
@@ -12,7 +13,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-
 
 function Post(props) {
   const token = localStorage.getItem("token");
@@ -25,6 +25,7 @@ function Post(props) {
   const [updateComments, setUpdateComments] = useState(false)
   const navigate = useNavigate();
   const [friendsPosts, setFilter] = useState(false);
+  const [reposted, setReposted] = useState(props.hasReposted);  
 
 
   useEffect(() => {
@@ -80,6 +81,15 @@ function Post(props) {
       setFilter((friendsPosts) => !friendsPosts);
     };
 
+    const handleRepost = async (event) => {
+      //event.preventDefault();
+      await repostPost(token, props.post._id); 
+      props.updatePost(Math.random());// Call the backend service
+      setReposted(true); // Set the reposted state to true
+       // Refresh the posts in the parent component
+    };
+  
+
   return editState ? (
     <div key="edit mode">
       <h2>{props.user}</h2>
@@ -129,6 +139,7 @@ function Post(props) {
           justifyContent: "space-between",
         }}
       >
+         <RepostButton reposted={reposted} onRepost={handleRepost} />
         <div>
           <AddCommentToPost
             UpdatePost={setUpdateComments}

@@ -139,3 +139,20 @@ export async function getUserPosts(token, username) {
   const data = await response.json();
   return data;
 }
+
+export async function repostPost(token, postId) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  const response = await fetch(`${BACKEND_URL}/posts/repost/${postId}`, requestOptions);
+  if (!response.ok) {
+    throw new Error("Failed to repost");
+  }
+
+  return await response.json();
+}
