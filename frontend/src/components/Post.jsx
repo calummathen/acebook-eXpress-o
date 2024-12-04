@@ -1,5 +1,5 @@
 import DeletePostId from "./DeletePostButton";
-import { deletePostId, likePost, UpdatePost, repostPost} from "../services/posts";
+import { deletePostId, likePost, UpdatePost, repostPost, disableCommentsOnPost} from "../services/posts";
 import EditPostButton from "./EditPostButton";
 import { useState, useEffect } from "react";
 import LikePostButton from "./LikePostButton";
@@ -13,6 +13,8 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import CancelEditButton from "./CancelEditButton";
+import DisableCommentsButton from "./DisableCommentsButton";
 
 function Post(props) {
   const token = localStorage.getItem("token");
@@ -24,9 +26,9 @@ function Post(props) {
   const [commentable, setCommentable] = useState(false);
   const [updateComments, setUpdateComments] = useState(false)
   const navigate = useNavigate();
-  const [friendsPosts, setFilter] = useState(false);
+  // const [friendsPosts, setFilter] = useState(false);
   const [reposted, setReposted] = useState(props.hasReposted);  
-
+  const [commentsEnabled, setCommentsEnabled] = useState(props.post.comments)
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -66,29 +68,30 @@ function Post(props) {
     setEditState((editState) => !editState);
   };
 
+  
   const toggleLiked = async () => {
     await likePost(token, props.post._id);
     props.setUpdatePost(Math.random());
     setLiked(() => !liked);
   };
-
+  
   const cleanDate = new Date(props.timestamp)
     .toLocaleString("en-gb")
     .slice(0, -3)
     .replaceAll(",", "");
 
-    const toggleFriendsPosts = () => {
-      setFilter((friendsPosts) => !friendsPosts);
-    };
-
-    const handleRepost = async (event) => {
-      //event.preventDefault();
+  const handleRepost = async () => {
       await repostPost(token, props.post._id); 
-      props.setUpdatePost(Math.random());// Call the backend service
-      setReposted(true); // Set the reposted state to true
-       // Refresh the posts in the parent component
-    };
+      props.setUpdatePost(Math.random());
+      setReposted(true);
+  };
   
+  const toggleCommentsEnabled = async () => {
+    setCommentsEnabled(!commentsEnabled);
+    await disableCommentsOnPost(token, !commentsEnabled, props.post._id, props.isYours)
+    props.setUpdatePost(Math.random())
+  };
+
 
   return editState ? (
     <div key="edit mode">
@@ -110,6 +113,7 @@ function Post(props) {
           <button type="submit">Confirm Edit</button>
         </div>
       </form>
+      <CancelEditButton setUpdatePost = {props.setUpdatePost} toggleEditState={toggleEditState}/>
       <DeletePostId
         isYours={props.isYours}
         post_id={props.post._id}
@@ -140,12 +144,23 @@ function Post(props) {
         }}
       >
          <RepostButton reposted={reposted} onRepost={handleRepost} />
+        {props.post.comments ? (
         <div>
           <AddCommentToPost
             UpdatePost={setUpdateComments}
             setCommentable={setCommentable}
             commentable={commentable}
             postId={props.post._id}
+          />
+        </div>
+        ) : ( 
+          "🚫 Comments have been disabled 🚫"
+        )}
+        <div>
+          <DisableCommentsButton
+          commentsEnabled={commentsEnabled}
+          toggleCommentsEnabled={toggleCommentsEnabled}
+          setUpdatePost={props.setUpdatePost} 
           />
         </div>
         <div>
@@ -168,7 +183,7 @@ function Post(props) {
         )}
       <div className="comments" role="feed">
         
-      {comments.length > 0 && (
+      {comments.length > 0 && props.post.comments && (
         <Accordion
           style={{
             display: "flex",
