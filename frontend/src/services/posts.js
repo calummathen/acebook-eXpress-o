@@ -156,3 +156,21 @@ export async function repostPost(token, postId) {
 
   return await response.json();
 }
+
+export async function disableCommentsOnPost(token, state, post_id, isYours) {
+  const requestOptions = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ state: state, isYours: isYours }),
+  };
+
+  const response = await fetch(`${BACKEND_URL}/posts/${post_id}/comments`, requestOptions);
+  if (response.status !== 200) {
+    throw new Error("Unable to update post");
+  }
+
+  return response;
+}

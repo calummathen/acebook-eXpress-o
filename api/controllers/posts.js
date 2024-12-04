@@ -161,9 +161,21 @@ async function repost(req, res) {
   res.status(201).json({ message: "Post reposted" })
 }
 
-
-
-
+async function disableCommentsOnPost(req, res) {
+  const postId = req.params.post_id
+  if (req.body.isYours) {
+    await Post.findOneAndUpdate(
+      {_id: postId},
+      {$set: {comments: req.body.state}},
+    );
+    
+    const newToken = generateToken(req.user_id, req.username);
+    res.status(200).json({ message: "Comments Enabled State Changed", token: newToken });
+  } else {
+    console.error("Not your post, can't edit comment state")
+    res.status(401).json({ message: "Not your post can't edit comment state" })
+  }
+} 
 
 
 const PostsController = {
@@ -176,6 +188,7 @@ const PostsController = {
   getYourPosts: getYourPosts,
   likePost: likePost,
   repost: repost,
+  disableCommentsOnPost: disableCommentsOnPost,
 };
 
 module.exports = PostsController;
