@@ -14,18 +14,18 @@ async function connectToDatabase() {
   }
 
   // Connect to MongoDB
-  const connection = await mongoose.connect(mongoDbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  // const connection = await mongoose.connect(mongoDbUrl, {
+  //   useNewUrlParser: true,
+  //   useUnifiedTopology: true,
+  // });
 
-  connection.connection.once("open", () => {
-    gfs = Grid(connection.connection.db, mongoose.mongo);
-    gfs.collection("uploads"); // Use 'uploads' as the collection name
-    if (process.env.NODE_ENV !== "test") {
-      console.log("GridFS is ready");
-    }
-  });
+  // connection.connection.once("open", () => {
+  //   gfs = Grid(connection.connection.db, mongoose.mongo);
+  //   gfs.collection("uploads"); // Use 'uploads' as the collection name
+  //   if (process.env.NODE_ENV !== "test") {
+  //     console.log("GridFS is ready");
+  //   }
+  // });
 
   if (process.env.NODE_ENV !== "test") {
     console.log("Successfully connected to MongoDB");
