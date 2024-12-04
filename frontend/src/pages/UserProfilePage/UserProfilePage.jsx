@@ -163,7 +163,7 @@ export function UserProfilePage() {
               timestamp={post.timestamp}
               isLiked={post.hasLiked}
               beans={post.beans}
-              updatePost={setUpdatePost}
+              setUpdatePost={setUpdatePost}
               isYours={false}
               />
             ))}

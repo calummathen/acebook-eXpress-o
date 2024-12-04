@@ -76,26 +76,20 @@ function Post(props) {
   };
   
   const cleanDate = new Date(props.timestamp)
-  .toLocaleString("en-gb")
-  .slice(0, -3)
-  .replaceAll(",", "");
-  
-  // const toggleFriendsPosts = () => {
-  //   setFilter((friendsPosts) => !friendsPosts);
-  // };
-  
-  const handleRepost = async (event) => {
-    //event.preventDefault();
-    await repostPost(token, props.post._id); 
-    props.updatePost(Math.random());// Call the backend service
-    setReposted(true); // Set the reposted state to true
-    // Refresh the posts in the parent component
+    .toLocaleString("en-gb")
+    .slice(0, -3)
+    .replaceAll(",", "");
+
+  const handleRepost = async () => {
+      await repostPost(token, props.post._id); 
+      props.setUpdatePost(Math.random());
+      setReposted(true);
   };
   
   const toggleCommentsEnabled = async () => {
     setCommentsEnabled(!commentsEnabled);
     await disableCommentsOnPost(token, !commentsEnabled, props.post._id, props.isYours)
-    props.updatePost(Math.random())
+    props.setUpdatePost(Math.random())
   };
 
 
@@ -166,7 +160,7 @@ function Post(props) {
           <DisableCommentsButton
           commentsEnabled={commentsEnabled}
           toggleCommentsEnabled={toggleCommentsEnabled}
-          setUpdatePost={props.updatePost} 
+          setUpdatePost={props.setUpdatePost} 
           />
         </div>
         <div>

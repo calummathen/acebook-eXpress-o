@@ -6,11 +6,14 @@ import MyCoffeeMates from "../../components/MyCoffeeMates";
 
 import { getFriendsForUser, getUnapprovedFriendsForUser } from "../../services/friends";
 import { getYourPosts } from "../../services/posts";
-import { getUserInfo, getUserByUsername } from "../../services/users";
+import { getUserInfo, getUserByUsername } from "../../services/users";;
+import { useBeanScene } from "../../context/BeanSceneContext";
 
 import "./ProfilePage.css";
 
 export function ProfilePage() {
+
+    const { theme } = useBeanScene();
     
     const token = localStorage.getItem("token");
     
@@ -51,7 +54,7 @@ export function ProfilePage() {
         if (token) {
 
             getUserInfo(token)
-                .then(data => setName(data.UserInfo.name))
+                .then(data => setName(data.UserInfo.username))
                 .catch((err) => {
                     console.log(err);
                     navigate("/");
@@ -180,7 +183,7 @@ export function ProfilePage() {
     }, [friends, token]);
 
     return (
-        <div className="wrapper-profile">
+        <div className={`wrapper-profile ${theme === "light" ? "wrapper-profile-light" : "wrapper-profile-dark"}`}>
 
             <NavBar />
         
@@ -210,7 +213,7 @@ export function ProfilePage() {
                         timestamp={post.timestamp}
                         isLiked={post.hasLiked}
                         beans={post.beans}
-                        updatePost={setUpdatePost}
+                        setUpdatePost={setUpdatePost}
                         isYours={true}
                         hasReposted={post.hasReposted}
                     />
