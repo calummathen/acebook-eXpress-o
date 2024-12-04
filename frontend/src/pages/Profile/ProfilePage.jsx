@@ -6,7 +6,7 @@ import MyCoffeeMates from "../../components/MyCoffeeMates";
 
 import { getFriendsForUser, getUnapprovedFriendsForUser } from "../../services/friends";
 import { getYourPosts } from "../../services/posts";
-import { getUserInfo } from "../../services/users";
+import { getUserInfo, getUserByUsername } from "../../services/users";
 
 import "./ProfilePage.css";
 
@@ -19,8 +19,9 @@ export function ProfilePage() {
     const [ updatePost, setUpdatePost ] = useState(false);
     const [ friends, setFriends ] = useState([]);
     const [ requests, setRequests ] = useState([]);
-    const [coffeeMateQuery, setCoffeeMateQuery] = useState("");
-    const [filteredConfirmedFriends, setFilteredConfirmedFriends] = useState([]);
+    const [ upcomingBirthdays, setUpcomingBirthdays ] = useState([]);
+    const [ coffeeMateQuery, setCoffeeMateQuery ] = useState("");
+    const [ filteredConfirmedFriends, setFilteredConfirmedFriends ] = useState([]);
     
     const navigate = useNavigate();
     
@@ -116,6 +117,58 @@ export function ProfilePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [coffeeMateQuery, friends]);
 
+    useEffect(() => {
+        const getUpcomingBirthdays = async () => {
+          const today = new Date();
+          let upcoming = [];
+    
+          for (const friend of friends) {
+    
+            try { 
+              const friendUsername = friend.sender === friend.user ? friend.receiver : friend.sender;
+      
+    
+              const user = await getUserByUsername(friendUsername, token);
+    
+              if (user && user.birthday) {
+                const birthday = new Date(user.birthday);
+             
+              const thisYearBirthday = new Date (today.getFullYear(), birthday.getMonth(), birthday.getDate());
+            
+              const thirtyDaysFromToday = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+      
+              // Check if the birthday is within the next 30 days
+              // Ensure that if the birthday date is in the past (before today), we add one year to it
+              if (thisYearBirthday >= today && thisYearBirthday <= thirtyDaysFromToday) {
+                upcoming.push({
+                  username: user.username,
+                  birthday: thisYearBirthday
+                });
+              } else {
+                // Optionally, if the birthday is in the past but within 30 days next year, you can adjust the year
+                const nextYearBirthday = new Date(today.getFullYear() + 1, birthday.getMonth(), birthday.getDate());
+                if (nextYearBirthday >= today && nextYearBirthday <= thirtyDaysFromToday) {
+                  upcoming.push({
+                    username: user.username,
+                    birthday: nextYearBirthday
+                  });
+                }
+              }
+            }
+            } catch (error) {
+              console.error (`Error fetching data for friend`, error);
+            }
+          }
+    
+          upcoming.sort((a, b) => a.birthday - b.birthday);
+          setUpcomingBirthdays(upcoming);
+          };
+        
+          if (friends.length > 0) {
+          getUpcomingBirthdays();
+        }
+    }, [friends, token]);
+
     return (
         <div className="wrapper-profile">
 
@@ -132,6 +185,7 @@ export function ProfilePage() {
                     filteredConfirmedFriends={filteredConfirmedFriends}
                     coffeeMateQuery={coffeeMateQuery}
                     setCoffeeMateQuery={setCoffeeMateQuery}
+                    upcomingBirthdays={upcomingBirthdays}
                 />
             </div>
 

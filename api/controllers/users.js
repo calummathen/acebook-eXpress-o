@@ -128,12 +128,30 @@ async function updateUserInfo(req, res) {
   res.status(200).json({ message: "User info updated" });
 }
 
+async function getUserByUsername(req, res) {
+  try {
+    const user = await User.findOne({username:req.params.username});
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+console.log(user.username)
+    res.status(200).json({
+      username: user.username,
+      birthday: user.birthday,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "An error occurred fetching user info." });
+  }
+}
+
 const UsersController = {
   create: create,
   getAllUsers: getAllUsers,
   getUserInfo: getUserInfo,
   getAnotherUserInfo: getAnotherUserInfo,
   updateUserInfo: updateUserInfo,
+  getUserByUsername: getUserByUsername,
 };
 
 module.exports = UsersController;
