@@ -51,7 +51,7 @@ export const ThemeToggle = () => {
             height: "1rem",
             borderRadius: "9999px",
             backgroundColor: enabled ? "#FFFFFF" : "#333333",
-            transform: enabled ? "translateX(1rem)" : "translateX(0)",
+            transform: enabled ? "translateX(1.5rem)" : "translateX(0.2rem)",
             transition: "transform 0.2s ease-in-out",
           }}
         />
