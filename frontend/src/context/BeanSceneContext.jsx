@@ -1,10 +1,20 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const AppContext = createContext(null);
 
 export function BeanSceneContextProvider({ children }) {
-  const [enabled, setEnabled] = useState("false");
-  const [theme, setTheme] = useState("dark");
+  const toggleStateFromLocalStorage = localStorage.getItem("enabled");
+  const [enabled, setEnabled] = useState(
+    toggleStateFromLocalStorage
+      ? JSON.parse(toggleStateFromLocalStorage)
+      : false
+  );
+  const [theme, setTheme] = useState(enabled ? "light" : "dark");
+
+  useEffect(() => {
+    localStorage.setItem("enabled", JSON.stringify(enabled));
+    setTheme(enabled ? "light" : "dark");
+  }, [enabled]);
   return (
     <AppContext.Provider value={{ theme, setTheme, enabled, setEnabled }}>
       {children}

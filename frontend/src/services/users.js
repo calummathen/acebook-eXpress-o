@@ -65,3 +65,21 @@ export const updateUserInfo = async (token, userData) => {
 
   return await response.json();
 };
+
+export const getUserByUsername = async (friendUsername, token) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(`${BACKEND_URL}/users/${friendUsername}`, requestOptions);
+
+  if (response.status !== 200) {
+    throw new Error(`Unable to fetch user info for user`);
+  }
+
+  return await response.json();
+}
+
