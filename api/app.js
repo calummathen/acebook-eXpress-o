@@ -15,15 +15,15 @@ const fileRoutes = require("./routes/files");
 const app = express();
 
 // Initialize Database Connection
-(async () => {
-  try {
-    await connectToDatabase();
-    console.log("Database connected successfully");
-  } catch (error) {
-    console.error("Failed to connect to database:", error);
-    process.exit(1); // Exit the process if database connection fails
-  }
-})();
+// (async () => {
+//   try {
+//     await connectToDatabase();
+//     console.log("Database connected successfully");
+//   } catch (error) {
+//     console.error("Failed to connect to database:", error);
+//     process.exit(1); // Exit the process if database connection fails
+//   }
+// })();
 
 // Middleware
 // Allow requests from any client

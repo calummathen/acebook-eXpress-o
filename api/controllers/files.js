@@ -24,7 +24,9 @@ async function uploadFile(req, res) { // Handles file uploads.
       console.error("File upload error:", err);
       return res.status(500).json({ error: "File upload failed" });
     }
-    res.status(201).json({ message: "File uploaded successfully", file: req.file });
+    res.status(201).json({ 
+      message: "File uploaded successfully", 
+      file: req.file });
   });
 }
 
@@ -33,7 +35,7 @@ async function getFile(req, res) {    // To fetch a file
   try {
     const gfs = getGfs(); //to get the GridFS instance for file operations
     const file = await gfs.files.findOne({ filename: req.params.filename });
-
+    console.log(file)
     if (!file || file.length === 0) {
       return res.status(404).json({ error: "No file exists" });
     }
