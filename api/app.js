@@ -4,11 +4,11 @@ const cors = require("cors");
 
 const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
-const friendsRouter = require("./routes/friends")
-const commentsRouter = require("./routes/comments")
+const friendsRouter = require("./routes/friends");
+const commentsRouter = require("./routes/comments");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
-
+const filesRouter = require("./routes/files");
 
 const app = express();
 
@@ -26,6 +26,7 @@ app.use("/posts", tokenChecker, postsRouter);
 app.use("/comments", tokenChecker, commentsRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/friends", tokenChecker, friendsRouter);
+app.use("/files", filesRouter);
 
 // 404 Handler
 app.use((_req, res) => {
