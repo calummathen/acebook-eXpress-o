@@ -8,7 +8,7 @@ const PostSchema = new mongoose.Schema({
   beans: [ String ],
   timestamp: { type: Date, default: Date.now, required: true },
   reposted: [ String ],
-  repostedFrom: String
+  repostedFrom: String,
   comments: { type: Boolean, default: true, required: true},
 });
 
