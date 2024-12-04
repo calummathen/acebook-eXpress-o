@@ -60,6 +60,7 @@ export function ProfilePage() {
         } else {
             navigate("/");
         }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
     
@@ -118,55 +119,64 @@ export function ProfilePage() {
     }, [coffeeMateQuery, friends]);
 
     useEffect(() => {
+
         const getUpcomingBirthdays = async () => {
-          const today = new Date();
-          let upcoming = [];
+
+            const today = new Date();
+            let upcoming = [];
     
-          for (const friend of friends) {
+            for (const friend of friends) {
     
-            try { 
-              const friendUsername = friend.sender === friend.user ? friend.receiver : friend.sender;
-      
-    
-              const user = await getUserByUsername(friendUsername, token);
-    
-              if (user && user.birthday) {
-                const birthday = new Date(user.birthday);
-             
-              const thisYearBirthday = new Date (today.getFullYear(), birthday.getMonth(), birthday.getDate());
+                try { 
+
+                    const friendUsername = friend.sender === friend.user ? friend.receiver : friend.sender;
+                    const user = await getUserByUsername(friendUsername, token);
             
-              const thirtyDaysFromToday = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
-      
-              // Check if the birthday is within the next 30 days
-              // Ensure that if the birthday date is in the past (before today), we add one year to it
-              if (thisYearBirthday >= today && thisYearBirthday <= thirtyDaysFromToday) {
-                upcoming.push({
-                  username: user.username,
-                  birthday: thisYearBirthday
-                });
-              } else {
-                // Optionally, if the birthday is in the past but within 30 days next year, you can adjust the year
-                const nextYearBirthday = new Date(today.getFullYear() + 1, birthday.getMonth(), birthday.getDate());
-                if (nextYearBirthday >= today && nextYearBirthday <= thirtyDaysFromToday) {
-                  upcoming.push({
-                    username: user.username,
-                    birthday: nextYearBirthday
-                  });
+                    if (user && user.birthday) {
+
+                        const birthday = new Date(user.birthday);
+                    
+                        const thisYearBirthday = new Date (today.getFullYear(), birthday.getMonth(), birthday.getDate());
+                    
+                        const thirtyDaysFromToday = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+            
+                        // Check if the birthday is within the next 30 days
+                        // Ensure that if the birthday date is in the past (before today), we add one year to it
+                        if (thisYearBirthday >= today && thisYearBirthday <= thirtyDaysFromToday) {
+
+                            upcoming.push({
+                                username: user.username,
+                                birthday: thisYearBirthday
+                            });
+
+                        } else {
+
+                            // Optionally, if the birthday is in the past but within 30 days next year, you can adjust the year
+
+                            const nextYearBirthday = new Date(today.getFullYear() + 1, birthday.getMonth(), birthday.getDate());
+
+                            if (nextYearBirthday >= today && nextYearBirthday <= thirtyDaysFromToday) {
+                                upcoming.push({
+                                    username: user.username,
+                                    birthday: nextYearBirthday
+                                });
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error (`Error fetching data for friend`, error);
                 }
-              }
             }
-            } catch (error) {
-              console.error (`Error fetching data for friend`, error);
-            }
-          }
     
-          upcoming.sort((a, b) => a.birthday - b.birthday);
-          setUpcomingBirthdays(upcoming);
-          };
-        
-          if (friends.length > 0) {
-          getUpcomingBirthdays();
+            upcoming.sort((a, b) => a.birthday - b.birthday);
+            setUpcomingBirthdays(upcoming);
+        };
+    
+        if (friends.length > 0) {
+            getUpcomingBirthdays();
         }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [friends, token]);
 
     return (

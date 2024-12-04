@@ -123,22 +123,94 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 1fr auto;
     z-index: 999;
+
+    .search-box {
+        height: 100%;
+        min-width: 400px;
+        width: 30vw;
+        max-width: 600px;
+
+        .search-results-wrapper {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            input {
+                margin: 32px 48px 16px 48px;
+                padding: 12px 16px;
+                border: none;
+                outline: none;
+                border-radius: 4px;
+                font-size: 12pt;
+            }
+
+            .search-results {
+                width: 100%;
+                height: 100%;
+                padding: 0 48px 32px 48px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+
+                a {
+                    border-radius: 4px;
+                    padding: 12px 16px;
+                    text-align: left;
+                    font-size: 12pt;
+                    transition: 0.15s ease-in-out;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
 
     &.search-wrapper-light {
         .search-box {
             background-color: #AB886D;
+
+            .search-results-wrapper {
+                input {
+                    background-color: #E4E0E1;
+                    color: #3B3030;
+                }
+
+                .search-results {
+                    a {
+                        color: #3B3030;
+
+                        &:hover {
+                            background-color: #493628;
+                            color: #D6C0B3;
+                        }
+                    }
+                }
+            }
         }
     }
 
     &.search-wrapper-dark {
         .search-box {
             background-color: #493628;
-        }
-    }
 
-    .search-box {
-        height: 100%;
+            .search-results-wrapper {
+                input {
+                    background-color: #AB886D;
+                    color: #E4E0E1;
+                }
+
+                .search-results {
+                    a {
+                        color: #E4E0E1;
+
+                        &:hover {
+                            background-color: #D6C0B3;
+                            color: #3B3030;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
