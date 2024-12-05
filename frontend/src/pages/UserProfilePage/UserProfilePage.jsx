@@ -152,7 +152,7 @@ export function UserProfilePage() {
     }
 
     async function deleteFriendAction() {
-        const requestId = friends.find((friend) => friend.user === friend.sender)._id
+        const requestId = friends.find((friend) => friend.user === friend.sender || friend.user === friend.receiver)?._id;
         await deleteFriend(token, requestId)
         setUpdatePost(Math.random())
     }

@@ -1,3 +1,4 @@
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
@@ -51,11 +52,13 @@ export function ProfilePage() {
       getUserInfo(token)
         .then((data) => {
           setName(data.UserInfo.username);
-          setProfileImage(data.UserInfo.profileImage);
+          const profilePic = data.UserInfo.profileImage || "/images/default_profile_pic.jpeg";
+          setProfileImage(profilePic);
         })
         .catch((err) => {
           console.log(err);
           navigate("/");
+        
         });
     } else {
       navigate("/");
@@ -196,7 +199,7 @@ export function ProfilePage() {
             <NavBar />
         
             <div className="sidebar-profile">
-
+                <img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
                 <h1>{name}</h1>
 
                 <MyCoffeeMates
@@ -209,7 +212,6 @@ export function ProfilePage() {
                     upcomingBirthdays={upcomingBirthdays}
                 />
             </div>
-
             <div className="posts-profile">
 
                 { posts.map((post) => (
