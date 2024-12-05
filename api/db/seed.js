@@ -21,14 +21,16 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("2000-01-01"),
+        profileImage: "/images/Charles1.jpg",
       },
       {
         username: "beanblogger",
-        name: "Bob",
+        name: "Bobbi",
         email: "beanblogger@coffee.com",
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1991-03-18"),
+        profileImage:"/images/Bobbi.jpg",
       },
       {
         username: "lattelover",
@@ -37,6 +39,7 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1989-09-25"),
+        profileImage:"/images/Leticia.jpg",
       },
       {
         username: "coldbrewfanatic",
@@ -45,6 +48,7 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1993-12-12"),
+        profileImage:"/images/Chris.jpg",
       },
       {
         username: "capuccinoking",
@@ -53,6 +57,7 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1987-07-07"),
+        profileImage:"/images/Carl.jpg",
       },
       {
         username: "dripking",
@@ -61,6 +66,7 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1997-02-16"),
+        profileImage:"/images/Daniel.jpg",
       },
       {
         username: "darkroastdevotee",
@@ -69,6 +75,7 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("2004-12-16"),
+        profileImage:"/images/Derek.jpg",
       },
       {
         username: "cafecraver",
@@ -77,6 +84,7 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("2000-03-27"),
+        profileImage:"/images/Chloe.jpg"
       },
       {
         username: "sipandsavor",
@@ -85,6 +93,7 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1995-10-03"),
+        profileImage: "/images/Sophie.jpg",
       },
       {
         username: "scarpenter",
@@ -93,6 +102,7 @@ async function seedData() {
         password:
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1999-05-11"),
+        profileImage: "/images/Sabrina_Carpenter.png",
       },
       
     ];

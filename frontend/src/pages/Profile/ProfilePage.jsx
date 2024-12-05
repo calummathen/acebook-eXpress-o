@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import Post from "../../components/Post";
 import MyCoffeeMates from "../../components/MyCoffeeMates";
-
 import { getFriendsForUser, getUnapprovedFriendsForUser } from "../../services/friends";
 import { getYourPosts } from "../../services/posts";
 import { getUserInfo, getUserByUsername } from "../../services/users";
@@ -158,7 +157,6 @@ export function ProfilePage() {
                 birthday: thisYearBirthday,
               });
             } else {
-              // Optionally, if the birthday is in the past but within 30 days next year, you can adjust the year
 
               const nextYearBirthday = new Date(
                 today.getFullYear() + 1,
@@ -192,7 +190,9 @@ export function ProfilePage() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [friends, token]);
-
+    
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+    
     return (
         <div className={`wrapper-profile ${theme === "light" ? "wrapper-profile-light" : "wrapper-profile-dark"}`}>
 
@@ -201,7 +201,7 @@ export function ProfilePage() {
             <div className="sidebar-profile">
                 <img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
                 <h1>{name}</h1>
-
+                <img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
                 <MyCoffeeMates
                     setUpdatePost={setUpdatePost}
                     unapprovedFriendRequests={requests}
