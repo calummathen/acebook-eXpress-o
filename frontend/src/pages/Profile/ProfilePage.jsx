@@ -191,47 +191,39 @@ export function ProfilePage() {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [friends, token]);
+    }, [friends, token]);
 
-  return (
-    <div
-      className={`wrapper-profile ${
-        theme === "light" ? "wrapper-profile-light" : "wrapper-profile-dark"
-      }`}
-    >
-      <NavBar />
+    return (
+        <div className={`wrapper-profile ${theme === "light" ? "wrapper-profile-light" : "wrapper-profile-dark"}`}>
 
-      <div className="sidebar-profile">
-        <img src={`http://localhost:3000/${profileImage}`} />
-        <h1>{name}</h1>
+            <NavBar />
+        
+            <div className="sidebar-profile">
 
-        <MyCoffeeMates
-          setUpdatePost={setUpdatePost}
-          unapprovedFriendRequests={requests}
-          unfilteredFriends={friends}
-          filteredConfirmedFriends={filteredConfirmedFriends}
-          coffeeMateQuery={coffeeMateQuery}
-          setCoffeeMateQuery={setCoffeeMateQuery}
-          upcomingBirthdays={upcomingBirthdays}
-        />
-      </div>
+                <h1>{name}</h1>
 
-      <div className="posts-profile">
-        {posts.map((post) => (
-          <Post
-            post={post}
-            key={post._id}
-            user={post.user}
-            message={post.message}
-            timestamp={post.timestamp}
-            isLiked={post.hasLiked}
-            beans={post.beans}
-            setUpdatePost={setUpdatePost}
-            isYours={true}
-            hasReposted={post.hasReposted}
-          />
-        ))}
-      </div>
-    </div>
-  );
+                <MyCoffeeMates
+                    setUpdatePost={setUpdatePost}
+                    unapprovedFriendRequests={requests}
+                    unfilteredFriends={friends}
+                    filteredConfirmedFriends={filteredConfirmedFriends}
+                    coffeeMateQuery={coffeeMateQuery}
+                    setCoffeeMateQuery={setCoffeeMateQuery}
+                    upcomingBirthdays={upcomingBirthdays}
+                />
+            </div>
+
+            <div className="posts-profile">
+
+                { posts.map((post) => (
+                    <Post
+                        key={post._id}
+                        post={post}
+                        setUpdatePost={setUpdatePost}
+                    />
+                ))}
+
+            </div>
+        </div>
+    );
 }

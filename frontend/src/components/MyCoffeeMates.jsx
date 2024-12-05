@@ -67,7 +67,7 @@ export default function MyCoffeeMates({
         
                 <AccordionDetails className="accordion-details-profile">
         
-                    {unfilteredFriends.length > 1 && (
+                    {unfilteredFriends.length > 0 && (
                         <>
                             <input
                                 className="search-coffee-mates"
