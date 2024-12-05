@@ -202,7 +202,7 @@ export function ProfilePage() {
       <NavBar />
 
       <div className="sidebar-profile">
-        <img src="http://localhost:3000/images/file_1733383248845.jpeg" />
+        <img src={`http://localhost:3000/${profileImage}`} />
         <h1>{name}</h1>
 
         <MyCoffeeMates

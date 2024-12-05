@@ -18,7 +18,7 @@ async function create(req, res) {
 
   let profileImage = null;
   if (req.file) {
-    profileImage = path.join("public", "images", req.file.filename);
+    profileImage = path.join("images", req.file.filename);
   }
 
   // console.log(profileImage);
