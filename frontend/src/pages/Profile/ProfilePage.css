@@ -80,6 +80,10 @@
             color: #494949;
         }
     }
+
+    .posts-profile h3 {
+        color: #322C2B;
+    }
 }
 
 .wrapper-profile-dark {
@@ -155,6 +159,10 @@
             color: #FAF7F0;
         }
     }
+
+    .posts-profile h3 {
+        color: #FAF7F0;
+    }
 }
 
 .sidebar-profile {
@@ -164,6 +172,14 @@
     flex-direction: column;
     padding: 32px 16px;
     overflow-x: auto;
+
+    .sidebar-profile-picture {
+        border-radius: 50%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        width: 50%;
+        align-self: center;
+    }
 
     .add-friend-button {
         width: max-content;
@@ -205,6 +221,7 @@
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    
 }
 
 .accordion-details-profile {
