@@ -71,12 +71,24 @@ export function FeedPage() {
 
         <div className="sidebar-newpost">
           <NewPostForm token={token} setUpdatePost={setUpdatePost} />
+          <div>
+            <iframe
+              width="650"
+              height="366"
+              src="https://www.youtube.com/embed/0jIeCAOkgcQ?autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0&loop=1&playlist=0jIeCAOkgcQ&mute=1"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
         <div className="posts-feedpage">
           <div className="posts-toggle">
             <AllPostsButton toggleAllPosts={toggleAllPosts} viewFriendsPosts={viewFriendsPosts} />
             <FriendsPostsButton toggleFriendsPosts={toggleFriendsPosts} viewFriendsPosts={viewFriendsPosts} />
           </div>
+
           <h2>{viewFriendsPosts ? "Friends Posts" : "All Posts"}</h2>
           <div className="posts-feed">
             {viewFriendsPosts ? (
