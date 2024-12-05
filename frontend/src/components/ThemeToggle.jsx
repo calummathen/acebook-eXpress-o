@@ -43,6 +43,7 @@ export const ThemeToggle = () => {
           borderColor: enabled ? "#493628" : "#FAF7F0",
           backgroundColor: enabled ? "#493628" : "#FAF7F0",
           transition: "background-color 0.2s ease-in-out",
+          cursor: "pointer",
         }}
       >
         <span
