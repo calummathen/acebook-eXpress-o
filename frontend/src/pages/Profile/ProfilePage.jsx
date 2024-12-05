@@ -200,7 +200,6 @@ export function ProfilePage() {
             <NavBar />
         
             <div className="sidebar-profile">
-                <img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
                 <h1>{name}</h1>
                 <img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
                 <MyCoffeeMates
@@ -214,14 +213,18 @@ export function ProfilePage() {
                 />
             </div>
             <div className="posts-profile">
-
-                { posts.map((post) => (
-                    <Post
-                        key={post._id}
-                        post={post}
-                        setUpdatePost={setUpdatePost}
-                    />
-                ))}
+                {posts.length > 0 ? 
+                  (posts.map((post) => (
+                      <Post
+                          key={post._id}
+                          post={post}
+                          setUpdatePost={setUpdatePost}
+                      />
+                  ))) : (
+                    <h3>You have made no posts!</h3>
+                  )
+                }
+ 
 
             </div>
         </div>
