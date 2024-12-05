@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const ImageForm = () => {
   const [file, setFile] = useState();
@@ -6,12 +7,11 @@ export const ImageForm = () => {
   const handleUpload = async (e) => {
     const formData = new FormData();
     formData.append("file", file);
-    const res = await fetch("http://localhost:3000/files/upload", {
+    const res = await fetch(`${BACKEND_URL}/files/upload`, {
       method: "POST",
       body: formData,
     });
     const data = await res.json();
-    console.log(data);
   };
   return (
     <div>
