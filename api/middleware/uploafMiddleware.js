@@ -18,14 +18,4 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 }).single("file");
 
-async function uploadFile(req, res) {
-  upload(req, res, (err) => {
-    console.log(req.file);
-  });
-}
-
-const FilesController = {
-  uploadFile: uploadFile,
-};
-
-module.exports = FilesController;
+module.exports = upload;

@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { signup } from "../../services/authentication";
 
 import "./SignupPage.css";
-import { ImageForm } from "../../components/ImageForm";
 
 export function SignupPage() {
   const [name, setName] = useState("");
@@ -15,7 +14,9 @@ export function SignupPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [file, setFile] = useState(null);
 
+  console.log(file);
   const navigate = useNavigate();
 
   const validatePassword = (password) => {
@@ -83,8 +84,18 @@ export function SignupPage() {
       validateBirthday(birthday) &&
       validateName(name)
     ) {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("birthday", birthday);
+      formData.append("email", email);
+      formData.append("username", username);
+      formData.append("password", password);
+
+      if (file) {
+        formData.append("file", file); // Append the profile image if it exists
+      }
       try {
-        await signup(name, birthday, email, username, password);
+        await signup(formData);
         navigate("/");
       } catch (err) {
         console.error(err);
@@ -117,8 +128,6 @@ export function SignupPage() {
 
   return (
     <div className="wrapper-auth">
-      <ImageForm />
-
       <ToastContainer
         toastStyle={{ backgroundColor: "#E4E0E1", color: "#493628" }}
       />
@@ -191,6 +200,15 @@ export function SignupPage() {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+
+          <label id="profileImageLabel" htmlFor="profileImage">
+            Profile Image:
+          </label>
+          <input
+            id="profileImage"
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
           />
 
           <Link id="login" to="/">

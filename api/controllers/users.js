@@ -1,8 +1,9 @@
 const Bcrypt = require("bcrypt");
 const User = require("../models/user");
 const { generateToken } = require("../lib/token");
+const path = require("path");
 
-function create(req, res) {
+async function create(req, res) {
   if (Object.keys(req.body).length !== 5) {
     return res
       .status(400)
@@ -15,39 +16,35 @@ function create(req, res) {
   const username = req.body.username;
   const password = Bcrypt.hashSync(req.body.password, 10);
 
-  // if (!Object.keys(req.body).includes('birthday') || !req.body.birthday) {
-  //   return res
-  //     .status(400)
-  //     .json({ message: "Missing birthday." });
-  // }
-  // if (!Object.keys(req.body).includes('name') || !req.body.name) {
-  //   return res
-  //     .status(400)
-  //     .json({ message: "Name required." });
-  // }
-  // if (!Object.keys(req.body).includes('email') || !req.body.email) {
-  //   return res
-  //     .status(400)
-  //     .json({ message: "Missing email." });
-  // }
-  // if (!Object.keys(req.body).includes('username') || !req.body.username) {
-  //   return res
-  //     .status(400)
-  //     .json({ message: "Missing username." });
-  // }
-  // if (!Object.keys(req.body).includes('password') || !req.body.password) {
-  //   return res
-  //     .status(400)
-  //     .json({ message: "Password required." });
-  // }
-  // console.log(`Name: ${name}, Birthday: ${birthday}, Email: ${email}, Username: ${username}, Password: ${password}`)
+  let profileImage = null;
+  if (req.file) {
+    profileImage = path.join("public", "images", req.file.filename);
+  }
 
-  const user = new User({ name, birthday, email, username, password });
-  user
+  // console.log(profileImage);
+
+  const user = new User({
+    name,
+    birthday,
+    email,
+    username,
+    password,
+    profileImage,
+  });
+  await user
     .save()
     .then((user) => {
       console.log("User created, id:", user._id.toString());
-      res.status(201).json({ message: "OK" });
+      res.status(201).json({
+        message: "OK",
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          username: user.username,
+          profileImage: user.profileImage,
+        },
+      });
     })
     .catch((err) => {
       console.error(err);
@@ -130,7 +127,7 @@ async function updateUserInfo(req, res) {
 
 async function getUserByUsername(req, res) {
   try {
-    const user = await User.findOne({username:req.params.username});
+    const user = await User.findOne({ username: req.params.username });
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
