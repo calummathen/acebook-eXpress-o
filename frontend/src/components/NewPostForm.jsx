@@ -18,19 +18,20 @@ const NewPostForm = ({token, setUpdatePost}) => {
 
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Write your post:
-          <input
+    <form onSubmit={handleSubmit} className="post-feedpage-new-post">
+      <label htmlFor="new-post">Spill the beans:</label>
+          <textarea
+            id="new-post"
             type="text"
             value={postMessage}
             onChange={handleChange}
+            placeholder="Expresso yourself..."
+            rows={4}
+            cols={40}
           />
-      </label>
-      <button type="submit">Submit</button>
+      <button type="submit">Post</button>
     </form>
   )
-
 }
 
 export default NewPostForm;

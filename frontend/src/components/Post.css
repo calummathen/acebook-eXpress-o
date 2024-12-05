@@ -101,9 +101,156 @@
             border-radius: 4px;
         }
     }
+
     .post-actions {
         div {
             gap: 8px;
+        }
+    }
+
+    .post-comments {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px;
+
+        .post-comment {
+            border-radius: 6px;
+            display: grid;
+            grid-template-rows: 1fr auto 1fr;
+
+            .post-comment-header,
+            .post-comment-actions {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 8px;
+
+                div {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                }
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                    padding: 8px 16px;
+                    border: none;
+                    outline: none;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    transition: 0.15s ease-in-out;
+                    font-weight: 600;
+                    font-size: 10pt;
+        
+                    svg {
+                        font-size: 11pt;
+                    }
+        
+                    &:not(:disabled):hover {
+                        background-color: #FF8303 !important;
+                        color: #FAF7F0 !important;
+        
+                        &.post-like-button-liked svg {
+                            color: #FAF7F0;
+                        }
+                    }
+        
+                    &:disabled,
+                    &[disabled] {
+                        cursor: not-allowed;
+                    }
+        
+                    &.post-like-button-liked svg {
+                        color: #FF8303;
+                    }
+                }
+            }
+
+            .post-comment-header {
+                a {
+                    padding: 8px;
+                    border-radius: 6px;
+                    transition: 0.15s ease-in-out;
+                }
+            }
+            
+            .post-comment-body {
+                padding: 8px;
+
+                p {
+                    padding: 8px 16px;
+                    font-size: 12pt;
+                    line-height: 1.25;
+                    text-align: left;
+                }
+        
+                textarea {
+                    width: 100%;
+                    padding: 8px 16px 4px 16px;
+                    text-align: left;
+                    line-height: 1.25;
+                    font-size: 12pt;
+                    resize: none;
+                    min-height: 1.5rem;
+                    border: none;
+                    outline: none;
+                    border-radius: 4px;
+                }
+            }
+
+            .post-comment-actions {
+                div {
+                    gap: 8px;
+                }
+            }
+        }
+
+        .post-add-comment-form {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+
+            textarea {
+                width: 100%;
+                padding: 8px 16px;
+                text-align: left;
+                line-height: 1.25;
+                font-size: 12pt;
+                resize: none;
+                min-height: 1.5rem;
+                border: none;
+                outline: none;
+                border-radius: 4px;
+            }
+
+            button {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                padding: 10px 16px;
+                border: none;
+                outline: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: 0.15s ease-in-out;
+                font-weight: 600;
+                max-height: max-content;
+                align-self: flex-start;
+
+                svg {
+                    font-size: 12pt;
+                }
+
+                &:hover {
+                    background-color: #FF8303 !important;
+                    color: #FAF7F0 !important;
+                }
+            }
         }
     }
 }
@@ -111,7 +258,8 @@
 .post-light {
     background-color: #D6C0B3;
     
-    .post-header {
+    .post-header,
+    .post-comment-header {
         color: #322C2B;
 
         a {
@@ -124,9 +272,15 @@
         }
     }
 
-    .post-body {
+    .post-body,
+    .post-comment-body {
         p {
             color: #322C2B;
+        }
+
+        textarea {
+            background-color: #F3EEEA;
+            color: #493628;
         }
     }
 
@@ -136,12 +290,30 @@
             color: #494949;
         }
     }
+
+    .post-comment-actions button {
+        background-color: #D6C0B3;
+        color: #322C2B;
+    }
+
+    .post-comments .post-comment {
+        background-color: #F3EEEA;
+    }
+
+    .post-comments .post-add-comment-form {
+        textarea,
+        button {
+            background-color: #F3EEEA;
+            color: #493628;
+        }
+    }
 }
 
 .post-dark {
     background-color: #453c3c;
 
-    .post-header {
+    .post-header,
+    .post-comment-header {
         color: #FAF7F0;
 
         a {
@@ -154,13 +326,36 @@
         }
     }
 
-    .post-body {
+    .post-body,
+    .post-comment-body {
         p {
+            color: #FAF7F0;
+        }
+
+        textarea {
+            background-color: #342E2A;
             color: #FAF7F0;
         }
     }
 
     .post-actions {
+        button {
+            background-color: #342E2A;
+            color: #FAF7F0;
+        }
+    }
+
+    .post-comment-actions button {
+        background-color: #453c3c;
+        color: #FAF7F0;
+    }
+
+    .post-comments .post-comment {
+        background-color: #342E2A;
+    }
+
+    .post-comments .post-add-comment-form {
+        textarea,
         button {
             background-color: #342E2A;
             color: #FAF7F0;

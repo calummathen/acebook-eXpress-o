@@ -163,6 +163,7 @@
     display: flex;
     flex-direction: column;
     padding: 32px 16px;
+    overflow-x: auto;
 
     .add-friend-button {
         width: max-content;

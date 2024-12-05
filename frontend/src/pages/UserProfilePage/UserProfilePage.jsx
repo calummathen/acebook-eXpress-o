@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
+
 import Post from "../../components/Post";
 import NavBar from "../../components/NavBar";
 import AddFriendButton from "../../components/AddFriendButton";
@@ -156,7 +157,7 @@ export function UserProfilePage() {
     }
 
     async function deleteFriendAction() {
-        const requestId = friends.find((friend) => friend.user === friend.sender)._id
+        const requestId = friends.find((friend) => friend.user === friend.sender || friend.user === friend.receiver)?._id;
         await deleteFriend(token, requestId)
         setUpdatePost(Math.random())
     }
@@ -191,15 +192,9 @@ export function UserProfilePage() {
 
             {posts.map((post) => (
                 <Post
-                    post={post}
                     key={post._id}
-                    user={post.user}
-                    message={post.message}
-                    timestamp={post.timestamp}
-                    isLiked={post.hasLiked}
-                    beans={post.beans}
+                    post={post}
                     setUpdatePost={setUpdatePost}
-                    isYours={false}
                 />
             ))}
         </div>

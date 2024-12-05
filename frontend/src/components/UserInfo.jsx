@@ -1,3 +1,4 @@
+import { useConfirm } from "material-ui-confirm";
 import { useState, useEffect } from "react";
 
 import { getUserInfo } from "../services/users";
@@ -7,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 function UserInfoTable({ user }) {
 
     const token = localStorage.getItem("token");
+    const confirm = useConfirm()
 
     const [editing, setEditing] = useState(false); 
     const [userData, setUserData] = useState(user); 
@@ -113,7 +115,19 @@ function UserInfoTable({ user }) {
             <div className="profile-edit-buttons">
                 {editing ? (
                     <>
-                        <button onClick={handleSave}>Save</button>
+                        <button 
+                    
+                        onClick={() => {
+
+                            confirm({ description: "User information will be overwritten" })
+                                .then(() => {
+                                    handleSave()
+                                })
+                                .catch(() => {
+                                    console.log("Save updated user info cancelled")
+                                })
+                            }}
+                        >Save</button>
                         <button onClick={handleCancel}>Cancel</button>
                     </>
                 ) : (

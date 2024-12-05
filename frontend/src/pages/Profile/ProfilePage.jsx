@@ -1,12 +1,10 @@
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import Post from "../../components/Post";
 import MyCoffeeMates from "../../components/MyCoffeeMates";
-import {
-  getFriendsForUser,
-  getUnapprovedFriendsForUser,
-} from "../../services/friends";
+import { getFriendsForUser, getUnapprovedFriendsForUser } from "../../services/friends";
 import { getYourPosts } from "../../services/posts";
 import { getUserInfo, getUserByUsername } from "../../services/users";
 import { useBeanScene } from "../../context/BeanSceneContext";
@@ -53,11 +51,13 @@ export function ProfilePage() {
       getUserInfo(token)
         .then((data) => {
           setName(data.UserInfo.username);
-          setProfileImage(data.UserInfo.profileImage);
+          const profilePic = data.UserInfo.profileImage || "/images/default_profile_pic.jpeg";
+          setProfileImage(profilePic);
         })
         .catch((err) => {
           console.log(err);
           navigate("/");
+        
         });
     } else {
       navigate("/");
@@ -199,7 +199,7 @@ export function ProfilePage() {
             <NavBar />
         
             <div className="sidebar-profile">
-
+                <img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
                 <h1>{name}</h1>
                 <img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
                 <MyCoffeeMates
@@ -212,7 +212,6 @@ export function ProfilePage() {
                     upcomingBirthdays={upcomingBirthdays}
                 />
             </div>
-
             <div className="posts-profile">
 
                 { posts.map((post) => (
