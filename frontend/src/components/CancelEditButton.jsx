@@ -1,10 +1,10 @@
 import { TbPencilOff } from "react-icons/tb";
 
-const EditPostButton = ({cancelEdit}) =>{
+const CancelEditButton = ({cancelEdit}) =>{
     return (
         <button onClick={cancelEdit}><TbPencilOff /></button>
     )
     
 };
 
-export default EditPostButton;
+export default CancelEditButton;
