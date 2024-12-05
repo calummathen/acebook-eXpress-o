@@ -80,8 +80,10 @@ async function getFriendsForAnotherUser(req, res) {
 
 async function getUnapprovedFriendsForAnotherUser(req, res) {
   const friends = await Friend.find({
-    receiver: req.params.username,
-    approved: false
+    $or: [
+      { sender: req.params.username, approved: false },
+      { receiver: req.params.username, approved: false }
+    ]
   });
   const updatedFriends = friends.map((friend) => {
     const friendObject = friend.toObject(); 
@@ -113,14 +115,6 @@ async function sendFriendRequest(req, res) {
   } else {
     res.status(200).json({ message: "Friend already exists"})
   }
-}
-
-async function deleteFriend(req, res) {
-  const requestId = req.params.request_id
-  await Friend.findByIdAndDelete(requestId)
-
-  const newToken = generateToken(req.user_id, req.username);
-  res.status(200).json({ message: "Friendship deleted", token: newToken });
 }
 
 async function deleteFriend(req, res) {

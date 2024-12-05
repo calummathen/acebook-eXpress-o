@@ -1,11 +1,18 @@
-const RepostButton = ({ reposted, onRepost }) => {
-  return (
-    <div>
-      <button onClick={onRepost}>
-        {reposted ? "🔁 Reposted" : "🔄 Repost"} {/* Toggle button text */}
-      </button>
-    </div>
-  );
+import { BiRepost } from "react-icons/bi";
+
+const RepostButton = (props) => {
+    return (
+        
+        <button onClick={props.onRepost} disabled={props.editState || props.reposted}>
+            <BiRepost />
+
+            {props.reposted ? (
+                "Reposted"
+            ) : (
+                "Repost"
+            )}
+        </button>
+    );
 };
 
 export default RepostButton;

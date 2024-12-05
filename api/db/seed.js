@@ -86,6 +86,14 @@ async function seedData() {
           "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
         birthday: new Date("1995-10-03"),
       },
+      {
+        username: "scarpenter",
+        name: "Sabrina",
+        email: "scarpenter@espresso.com",
+        password:
+          "$2b$10$EC7tDwsuW.CTjF5EpPCZ4e1KNyW/ZOoI3uM.ygp3aNK8uaz5MgtZG",
+        birthday: new Date("1999-05-11"),
+      },
       
     ];
 
@@ -102,7 +110,14 @@ async function seedData() {
         message:
           "Just enjoyed a cup of the most amazing cold brew coffee! ☕️ The rich, smooth flavor with a hint of chocolate notes made my morning. Who else can't start their day without their favorite brew?",
         beans: ["BeanBlogger"],
-        timestamp: new Date("2023-11-26 18:17"),
+        timestamp: new Date("2024-11-26 18:17"),
+      },
+      {
+        user: "scarpenter",
+        message:
+          "I'm working late, 'cause I'm a coder. #Thatsthatmeespresso",
+        beans: ["BeanBlogger"],
+        timestamp: new Date("2024-11-26 00:01"),
       },
       {
         user: "beanblogger",
@@ -234,6 +249,12 @@ async function seedData() {
         receiver: "darkroastdevotee",
         approved: true,
         timestamp: new Date("2024-11-28 18:20"),
+      },
+      {
+        sender: "beanblogger",
+        receiver: "scarpenter",
+        approved: true,
+        timestamp: new Date("2024-11-29 18:20"),
       },
     ];
     
