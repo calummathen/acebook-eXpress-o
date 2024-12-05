@@ -171,7 +171,6 @@ function Post(props) {
                         <DisableCommentsButton
                             commentsEnabled={commentsEnabled}
                             toggleCommentsEnabled={toggleCommentsEnabled}
-                            setUpdatePost={props.setUpdatePost} 
                             editState={editState}
                         />
                         
@@ -192,8 +191,8 @@ function Post(props) {
                         )}
 
                         <DeletePostId
-                            isYours={props.isYours}
-                            post_id={props.post._id}
+                            isYours={post.isYours}
+                            post_id={post._id}
                             DeletePostId={deletePostId}
                             UpdatePost={props.setUpdatePost}
                             editState={editState}
