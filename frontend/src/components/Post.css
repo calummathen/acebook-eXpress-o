@@ -279,7 +279,7 @@
         }
 
         textarea {
-            background-color: #D6C0B3;
+            background-color: #F3EEEA;
             color: #493628;
         }
     }
@@ -333,7 +333,7 @@
         }
 
         textarea {
-            background-color: #453c3c;
+            background-color: #342E2A;
             color: #FAF7F0;
         }
     }
@@ -358,7 +358,7 @@
         textarea,
         button {
             background-color: #342E2A;
-        color: #FAF7F0;
+            color: #FAF7F0;
         }
     }
 }
