@@ -196,9 +196,14 @@
 }
 
 .posts-profile {
+    padding: 64px 0;
     grid-column: 2;
     grid-row: 2;
     overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
 }
 
 .accordion-details-profile {

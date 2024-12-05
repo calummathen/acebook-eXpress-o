@@ -204,20 +204,14 @@ export function ProfilePage() {
 
             <div className="posts-profile">
 
-                {posts.map((post) => (
+                { posts.map((post) => (
                     <Post
-                        post={post}
                         key={post._id}
-                        user={post.user}
-                        message={post.message}
-                        timestamp={post.timestamp}
-                        isLiked={post.hasLiked}
-                        beans={post.beans}
+                        post={post}
                         setUpdatePost={setUpdatePost}
-                        isYours={true}
-                        hasReposted={post.hasReposted}
                     />
                 ))}
+
             </div>
         </div>
     );

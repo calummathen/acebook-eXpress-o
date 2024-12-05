@@ -1,8 +1,10 @@
+import { TbPencil } from "react-icons/tb";
+
 const EditPostButton = ({toggleEditState}) =>{
-      return (
-        <button onClick={toggleEditState}>Edit Post</button>
+    return (
+        <button onClick={toggleEditState}><TbPencil /></button>
     )
-  
-  };
-  
-  export default EditPostButton;
+    
+};
+
+export default EditPostButton;

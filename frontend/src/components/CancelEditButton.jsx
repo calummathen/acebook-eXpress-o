@@ -1,12 +1,10 @@
-const CancelEditButton = ({toggleEditState, setUpdatePost}) => {
-  return (
-    <button onClick={()=>{
-      toggleEditState()
-      setUpdatePost(Math.random())
-    }
+import { TbPencilOff } from "react-icons/tb";
 
-    }>Cancel Edit</button>
-  )
-}
+const EditPostButton = ({cancelEdit}) =>{
+    return (
+        <button onClick={cancelEdit}><TbPencilOff /></button>
+    )
+    
+};
 
-export default CancelEditButton;
+export default EditPostButton;
