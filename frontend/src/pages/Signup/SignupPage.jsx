@@ -16,7 +16,6 @@ export function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [file, setFile] = useState(null);
 
-  console.log(file);
   const navigate = useNavigate();
 
   const validatePassword = (password) => {
