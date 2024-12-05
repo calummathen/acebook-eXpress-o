@@ -1,6 +1,6 @@
-const AllPostsButton = ({toggleAllPosts}) =>{
+const AllPostsButton = ({toggleAllPosts, viewFriendsPosts}) =>{
     return (
-      <button onClick={toggleAllPosts}>All Posts</button>
+      <button onClick={toggleAllPosts} className={!viewFriendsPosts && "post-toggles-active"}>All Posts</button>
   )
 
 };

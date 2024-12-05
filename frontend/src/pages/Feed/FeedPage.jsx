@@ -12,19 +12,22 @@ import NavBar from "../../components/NavBar";
 import AllPostsButton from "../../components/AllPosts";
 import FriendsPostsButton from "../../components/FriendsPostsButton";
 
+import "./FeedPage.css";
 
 export function FeedPage() {
   const { theme } = useBeanScene();
+  
+  const token = localStorage.getItem("token");
+  
   const [posts, setPosts] = useState([]);
   const [updatePost, setUpdatePost] = useState(false);
   const [FriendsPosts, setFriendsPosts] = useState([]);
   const [viewFriendsPosts, setViewFriendsPosts] = useState(false); 
+  
   const navigate = useNavigate();
-
+  
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const loggedIn = token !== null;
-    if (loggedIn) {
+    if (token) {
       getPosts(token)
         .then((data) => {
           setPosts(data.posts);
@@ -32,81 +35,73 @@ export function FeedPage() {
         })
         .catch((err) => {
           console.error(err);
-          navigate("/login");
+          navigate("/");
         });
-        getFriendsPosts(token)
+      
+      getFriendsPosts(token)
         .then((data) => {
           setFriendsPosts(data.posts);
           localStorage.setItem("token", data.token);
         })
         .catch((err) => {
           console.error(err);
-          navigate("/login");
+          navigate("/");
         });
+    } else {
+      navigate("/");
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate, updatePost]);
-
-  const token = localStorage.getItem("token");
-  if (!token) {
-    navigate("/login");
-    return;
-  }
-
+  
   const toggleFriendsPosts = () => {
     setViewFriendsPosts(true);
-    setPosts((prevPosts) => prevPosts.filter((post) => post.isFriend)); };
-
- 
+    setPosts((prevPosts) => prevPosts.filter((post) => post.isFriend));
+  };  
+    
   const toggleAllPosts = () => {
     setViewFriendsPosts(false);
     setUpdatePost(!updatePost);
   };
-
+    
   return (
-    <div
-      style={{
-        background: theme === "light" ? "white" : "#333333",
-        color: theme === "light" ? "#333333" : "white",
-      }}
-    >
-      <NavBar />
-      <h2>{viewFriendsPosts ? "Friends Posts" : "All Posts"}</h2>
-      <FriendsPostsButton toggleFriendsPosts={toggleFriendsPosts}/>
-      <div>
-        <NewPostForm token={token} setUpdatePost={setUpdatePost} />
-      </div>
-      <AllPostsButton toggleAllPosts={toggleAllPosts} />
-      <div className="feed" role="feed">
-        {viewFriendsPosts ? (
-          <>
-          {FriendsPosts.map((post) => (
-            <Post
-              post={post}
-              key={post._id}
-              user={post.user}
-              message={post.message}
-              timestamp={post.timestamp}
-              isLiked={post.hasLiked}
-              beans={post.beans}
-              updatePost={UpdatePost}
-              setUpdatePost={setUpdatePost}
-              isYours={post.isYours}
-              hasReposted={post.hasReposted}
-            />
-          ))}
-          </>
-        ):(
-          <>
-          {posts.map((post) => (
-            <Post
-              key={post._id}
-              post={post}
-              setUpdatePost={setUpdatePost}
-            />
-          ))}
-        </>
-        )
-      }
+      <div className={`wrapper-feedpage ${theme === "light" ? "wrapper-feedpage-light" : "wrapper-feedpage-dark"}`}>
+      
+        <NavBar />
+
+        <div className="sidebar-newpost">
+          <NewPostForm token={token} setUpdatePost={setUpdatePost} />
+        </div>
+        <div className="posts-feedpage">
+          <div className="posts-toggle">
+            <AllPostsButton toggleAllPosts={toggleAllPosts} viewFriendsPosts={viewFriendsPosts} />
+            <FriendsPostsButton toggleFriendsPosts={toggleFriendsPosts} viewFriendsPosts={viewFriendsPosts} />
+          </div>
+          <h2>{viewFriendsPosts ? "Friends Posts" : "All Posts"}</h2>
+          <div className="posts-feed">
+            {viewFriendsPosts ? (
+              <>
+              {FriendsPosts.map((post) => (
+                <Post
+                  key={post._id}
+                  post={post}
+                  setUpdatePost={setUpdatePost}
+                />
+              ))}
+              </>
+            ):(
+              <>
+              {posts.map((post) => (
+                <Post
+                key={post._id}
+                post={post}
+                setUpdatePost={setUpdatePost}
+                />
+              ))}
+              </>
+            )
+          }
+        </div>
       </div>
     </div>
   );

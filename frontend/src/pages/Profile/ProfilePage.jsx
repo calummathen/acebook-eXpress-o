@@ -4,10 +4,7 @@ import NavBar from "../../components/NavBar";
 import Post from "../../components/Post";
 import MyCoffeeMates from "../../components/MyCoffeeMates";
 
-import {
-  getFriendsForUser,
-  getUnapprovedFriendsForUser,
-} from "../../services/friends";
+import { getFriendsForUser, getUnapprovedFriendsForUser } from "../../services/friends";
 import { getYourPosts } from "../../services/posts";
 import { getUserInfo, getUserByUsername } from "../../services/users";
 import { useBeanScene } from "../../context/BeanSceneContext";

@@ -1,6 +1,6 @@
-const FilterPostsButton = ({toggleFriendsPosts}) =>{
+const FilterPostsButton = ({toggleFriendsPosts, viewFriendsPosts}) =>{
     return (
-      <button onClick={toggleFriendsPosts}>Friends Posts</button>
+      <button onClick={toggleFriendsPosts} className={viewFriendsPosts && "post-toggles-active"}>Friends Posts</button>
   )
 
 };
