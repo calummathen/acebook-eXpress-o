@@ -59,29 +59,34 @@ export function LoginPage() {
 
                 <form onSubmit={handleSubmit} className="login">
 
-                    <label id="emailLabel" htmlFor="email">Email:</label>
-                    <input
-                        id="email"
-                        type="text"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                    />
+                    <div className="login-form">
 
-                    <label id="passwordLabel" htmlFor="password">Password:</label>
-                    <input
-                        id="password"
-                        type="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
+                        <label id="emailLabel" htmlFor="email">Email:</label>
+                        <input
+                            id="email"
+                            type="text"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+
+                        <label id="passwordLabel" htmlFor="password">Password:</label>
+                        <input
+                            id="password"
+                            type="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                    </div>
                     
-                    <Link id="signup" to="/signup">Sign Up</Link>
-                    <input
-                        id="submit"
-                        type="submit"
-                        value="Login"
-                        role="submit-button"
-                    />
+                    <div className="login-buttons">
+                        <Link id="signup" to="/signup">Sign Up</Link>
+                        <input
+                            id="submit"
+                            type="submit"
+                            value="Login"
+                            role="submit-button"
+                        />
+                    </div>
                 </form>
             </div>
         </div>

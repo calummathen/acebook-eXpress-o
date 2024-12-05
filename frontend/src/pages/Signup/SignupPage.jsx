@@ -140,85 +140,89 @@ export function SignupPage() {
         <h2>Signup</h2>
 
         <form onSubmit={handleSubmit} className="signup">
-          <label id="usernameLabel" htmlFor="username">
-            Username:
-          </label>
-          <input
-            id="username"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+          <div className="signup-form">
+            <label id="usernameLabel" htmlFor="username">
+              Username:
+            </label>
+            <input
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
 
-          <label id="emailLabel" htmlFor="email">
-            Email:
-          </label>
-          <input
-            id="email"
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <label id="emailLabel" htmlFor="email">
+              Email:
+            </label>
+            <input
+              id="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <label id="nameLabel" htmlFor="name">
-            Name:
-          </label>
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+            <label id="nameLabel" htmlFor="name">
+              Name:
+            </label>
+            <input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
-          <label id="birthdayLabel" htmlFor="birthday">
-            Birthday:
-          </label>
-          <input
-            id="birthday"
-            type="date"
-            value={birthday}
-            max={formattedDate}
-            onChange={(e) => setBirthday(e.target.value)}
-          />
+            <label id="birthdayLabel" htmlFor="birthday">
+              Birthday:
+            </label>
+            <input
+              id="birthday"
+              type="date"
+              value={birthday}
+              max={formattedDate}
+              onChange={(e) => setBirthday(e.target.value)}
+            />
 
-          <label id="passwordLabel" htmlFor="password">
-            Password:
-          </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <label id="passwordLabel" htmlFor="password">
+              Password:
+            </label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-          <label id="confirmPasswordLabel" htmlFor="password">
-            Confirm Password:
-          </label>
-          <input
-            id="confirmPassword"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
+            <label id="confirmPasswordLabel" htmlFor="password">
+              Confirm Password:
+            </label>
+            <input
+              id="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
 
-          <label id="profileImageLabel" htmlFor="profileImage">
-            Profile Image:
-          </label>
-          <input
-            id="profileImage"
-            type="file"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
+            <label id="profileImageLabel" htmlFor="profileImage">
+              Profile Image:
+            </label>
+            <input
+              id="profileImage"
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </div>
+          <div className="signup-buttons">
 
-          <Link id="login" to="/">
-            Login
-          </Link>
-          <input
-            role="submit-button"
-            id="submit"
-            type="submit"
-            value="Sign Up"
-          />
+            <Link id="login" to="/">
+              Login
+            </Link>
+            <input
+              role="submit-button"
+              id="submit"
+              type="submit"
+              value="Sign Up"
+            />
+          </div>
         </form>
       </div>
     </div>
