@@ -5,10 +5,6 @@ import { deletePostId, likePost, UpdatePost, repostPost, disableCommentsOnPost} 
 import { getCommentsforPost } from "../services/comments";
 import { useBeanScene } from "../context/BeanSceneContext";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
 import TextareaAutosize from 'react-textarea-autosize';
 
 import LikePostButton from "./LikePostButton";
@@ -19,12 +15,12 @@ import DeletePostId from "./DeletePostButton";
 import Comment from "./Comment";
 import AddCommentToPost from "./AddCommentButton";
 import DisableCommentsButton from "./DisableCommentsButton";
+import ConfirmEditPostButton from "./ConfirmEditPostButton";
+import ConmmentViewPostButton from "./CommentViewPost";
 
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { BiRepost } from "react-icons/bi";
 
 import "./Post.css";
-import ConfirmEditPostButton from "./ConfirmEditPostButton";
 
 function Post(props) {
 
@@ -36,10 +32,10 @@ function Post(props) {
     const [ isYours ] = useState(post.isYours);
     const [ postMessage, setPostMessage ] = useState(post.message);
     const [ liked, setLiked ] = useState(post.hasLiked);
-    const [ commentable, setCommentable ] = useState(false);
     const [ commentsEnabled, setCommentsEnabled ] = useState(post.comments)
     const [ comments, setComments ] = useState([]);
     const [ updateComments, setUpdateComments ] = useState(false)
+    const [ showComments, setShowComments ] = useState(false)
     const [ reposted, setReposted ] = useState(post.hasReposted);  
     const [ editState, setEditState ] = useState(false);
 
@@ -96,6 +92,7 @@ function Post(props) {
         await disableCommentsOnPost(token, !commentsEnabled, post._id, post.isYours)
         props.setUpdatePost(Math.random())
         setCommentsEnabled(!commentsEnabled);
+        ( comments.length == 0 ) && setShowComments(false)
 
     };
 
@@ -126,9 +123,7 @@ function Post(props) {
                         <div className="post-reposted-from">
                             <BiRepost />
                             <p>from: 
-                                <Link className="post-header-name" to={
-                                    post.hasReposted ? "/profile" : `/profile/${post.repostedFrom}`
-                                }>
+                                <Link className="post-header-name" to={`/profile/${post.repostedFrom}`}>
                                     {post.repostedFrom}
                                 </Link>
                             </p>
@@ -163,7 +158,12 @@ function Post(props) {
                         editState={editState}
                     />
 
-                    {/* TOdo: comments */}
+                    <ConmmentViewPostButton
+                        toggleComments={() => setShowComments(!showComments)}
+                        comments={comments}
+                        editState={editState}
+                        commentsEnabled={commentsEnabled}
+                    />
                 </div>
 
                 { isYours && (
@@ -200,147 +200,28 @@ function Post(props) {
                     </div>
                 )}
             </div>
-            <div className="post-comments">
-            </div>
+            {
+                (showComments && (
+                    <div className="post-comments">
+                        { comments.map((comment) => (
+                            <Comment
+                                key={comment._id}
+                                comment={comment}
+                                updatePost={setUpdateComments}
+                            />
+                        ))}
+
+                        { commentsEnabled && (
+                            <AddCommentToPost
+                                postId={post._id}
+                                UpdatePost={setUpdateComments}
+                            />
+                        )}
+                    </div>
+                ))
+            }
         </div>
     )
-    
-    // return editState ? (
-    //     <div key="edit mode">
-    //     <h2>{props.user}</h2>
-    //     <h3>{cleanDate}</h3>
-    //     <form onSubmit={handleEdit}>
-    //     <textarea
-    //     value={postMessage}
-    //     onChange={e => setPostMessage(e.target.value)}
-    //     rows="5"
-    //     cols="40"
-    //     style={{
-    //         width: "60%",
-    //         height: "80px",
-    //         resize: "vertical",
-    //     }}
-    //     />
-    //     <div>
-    //     <button type="submit">Confirm Edit</button>
-    //     </div>
-    //     </form>
-    //     <CancelEditButton setUpdatePost = {props.setUpdatePost} toggleEditState={toggleEditState}/>
-    //     <DeletePostId
-    //     isYours={props.isYours}
-    //     post_id={props.post._id}
-    //     DeletePostId={deletePostId}
-    //     UpdatePost={props.setUpdatePost}
-    //     />
-    //     </div>
-    // ) : (
-    //     <div key="view mode" style={{ margin: "30px" }}>
-    //     <div style={{ display: "flex", gap: "10px" }}>
-    //     <h2>
-    //     <Link to={isYours ? "/profile" : `/profile/${props.user}`}>
-    //     {props.user}
-    //     </Link>
-    //     </h2>
-    //     <h3>{cleanDate}</h3>
-    //     </div>
-    //     <article
-    //     style={{ border: "solid 1px", borderRadius: "10px", padding: "10px" }}
-    //     key={props._id}
-    //     >
-    //     {props.message}
-    //     </article>
-    //     <div
-    //     style={{
-    //         display: "flex",
-    //         justifyContent: "space-between",
-    //     }}
-    //     >
-    //     <RepostButton reposted={reposted} onRepost={handleRepost} />
-    //     {props.post.comments ? (
-    //         <div>
-    //         <AddCommentToPost
-    //         UpdatePost={setUpdateComments}
-    //         setCommentable={setCommentable}
-    //         commentable={commentable}
-    //         postId={props.post._id}
-    //         />
-    //         </div>
-    //     ) : ( 
-    //         "🚫 Comments have been disabled 🚫"
-    //     )}
-    //     <div>
-    //     </div>
-    //     <div>
-    //     <LikePostButton
-    //     liked={liked}
-    //     toggleLiked={toggleLiked}
-    //     beanNumber={props.beans.length}
-    //     />
-    //     </div>
-    //     {isYours && (
-    //         <div>
-    //             <DisableCommentsButton
-    //             commentsEnabled={commentsEnabled}
-    //             toggleCommentsEnabled={toggleCommentsEnabled}
-    //             setUpdatePost={props.setUpdatePost} 
-    //             />
-    //         <EditPostButton toggleEditState={toggleEditState} />
-    //         <DeletePostId
-    //         isYours={props.isYours}
-    //         post_id={props.post._id}
-    //         DeletePostId={deletePostId}
-    //         UpdatePost={props.setUpdatePost}
-    //         />
-    //         </div>
-    //     )}
-    //     <div className="comments" role="feed">
-        
-    //     {comments.length > 0 && props.post.comments && (
-    //         <Accordion
-    //         style={{
-    //             display: "flex",
-    //             flexDirection: "column",
-    //         }}
-    //         >
-    //         <AccordionSummary
-    //         expandIcon={<ArrowDownwardIcon />}
-    //         aria-controls="panel1-content"
-    //         id="panel1-header"
-    //         >
-    //         <Typography>Comments</Typography>
-    //         </AccordionSummary>
-    //         <AccordionDetails
-    //         style={{
-    //             display: "flex",
-    //             flexDirection: "column",
-    //             alignItems: "start",
-    //             gap: "10px",
-    //         }}
-    //         >
-    //         {comments.map((comment) => (
-    //             <div key={comment._id}>
-    //             <a href={`/profile/${comment.user}`}></a>
-    //             <Comment
-    //             id={comment._id}
-    //             post_id={comment.post_id}
-    //             user={comment.user}
-    //             message={comment.message}
-    //             timestamp={comment.timestamp}
-    //             isLiked={comment.hasLiked}
-    //             beans={comment.beans}
-    //             updatePost={setUpdateComments}
-    //             isYours={comment.isYours}
-    //             />
-    //             </div>
-    //         ))}
-    //         </AccordionDetails>
-    //         </Accordion>
-    //     )}
-        
-    //     </div>
-    //     </div>
-    //     </div>
-    // );
 }
 
 export default Post;
