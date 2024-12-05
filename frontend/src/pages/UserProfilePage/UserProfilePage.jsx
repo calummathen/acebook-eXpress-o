@@ -11,6 +11,7 @@ import { sendFriendRequest } from "../../services/friends";
 import { getAnotherUserInfo } from "../../services/users";
 import { useBeanScene } from "../../context/BeanSceneContext";
 
+
 import "../Profile/ProfilePage.css";
 
 export const loader = async ({ params }) => params.username
@@ -29,6 +30,7 @@ export function UserProfilePage() {
     const [ requests, setRequests ] = useState([]);
     const [ loadedFriendsAndRequests, setLoadedFriendsAndRequests ] = useState(false);
     const [ friendRequestStatus, setFriendRequestStatus ] = useState(0);
+    const [profileImage, setProfileImage] = useState();
     
     const navigate = useNavigate();
     
@@ -61,7 +63,10 @@ export function UserProfilePage() {
         if (token) {
 
             getAnotherUserInfo(token, username)
-                .then(data => setName(data.UserInfo.username))
+            .then((data) => {
+                setName(data.UserInfo.username);
+                setProfileImage(data.UserInfo.profileImage);
+              })  
                 .catch((err) => {
                     console.log(err);
                     navigate("/");
@@ -73,7 +78,7 @@ export function UserProfilePage() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
-    
+
     useEffect(() => {
 
         const fetchFriends = async () => {
@@ -156,6 +161,8 @@ export function UserProfilePage() {
         setUpdatePost(Math.random())
     }
 
+    console.log(profileImage)
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
     return (
         <div className={`wrapper-profile ${theme === "light" ? "wrapper-profile-light" : "wrapper-profile-dark"}`}>
     
@@ -164,6 +171,7 @@ export function UserProfilePage() {
             <div className="sidebar-profile">
 
                 <h1>{name}</h1>
+<img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
 
                 <AddFriendButton
                     friendRequestStatus={friendRequestStatus}

@@ -76,9 +76,6 @@ async function getUserInfo(req, res) {
         username: user.username,
         profileImage: user.profileImage,
         birthday: user.birthday,
-        location: user.location,
-        work_place: user.work_place,
-        telephone_number: user.telephone_number,
       },
     });
   } catch (err) {
@@ -103,9 +100,7 @@ async function getAnotherUserInfo(req, res) {
         email: user.email,
         username: user.username,
         birthday: user.birthday,
-        location: user.location,
-        work_place: user.work_place,
-        telephone_number: user.telephone_number,
+        profileImage: user.profileImage,
       },
     });
   } catch (err) {

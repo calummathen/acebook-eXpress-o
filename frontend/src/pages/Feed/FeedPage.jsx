@@ -99,9 +99,17 @@ export function FeedPage() {
           <>
           {posts.map((post) => (
             <Post
-              key={post._id}
               post={post}
+              key={post._id}
+              user={post.user}
+              message={post.message}
+              timestamp={post.timestamp}
+              isLiked={post.hasLiked}
+              beans={post.beans}
+              updatePost={UpdatePost}
               setUpdatePost={setUpdatePost}
+              isYours={post.isYours}
+              hasReposted={post.hasReposted}
             />
           ))}
         </>
