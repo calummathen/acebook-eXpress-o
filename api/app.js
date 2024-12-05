@@ -1,5 +1,5 @@
 const express = require("express");
-const { connectToDatabase } = require("./db/db.js");
+const { connectToDatabase } = require("./db/gfs");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -11,17 +11,6 @@ const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
 const fileRoutes = require("./routes/files");
 const app = express();
-
-// Initialize Database Connection
-// (async () => {
-//   try {
-//     await connectToDatabase();
-//     console.log("Database connected successfully");
-//   } catch (error) {
-//     console.error("Failed to connect to database:", error);
-//     process.exit(1); // Exit the process if database connection fails
-//   }
-// })();
 
 // Middleware
 // Allow requests from any client
@@ -40,6 +29,7 @@ app.use("/tokens", authenticationRouter);
 app.use("/friends", tokenChecker, friendsRouter);
 app.use("/files", fileRoutes);
 app.use(express.static("public"));
+app.use(fileRoutes);
 
 // 404 Handler
 app.use((_req, res) => {
