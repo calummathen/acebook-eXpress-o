@@ -162,7 +162,6 @@ export function UserProfilePage() {
         setUpdatePost(Math.random())
     }
 
-    console.log(profileImage)
       const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
     return (
         <div className={`wrapper-profile ${theme === "light" ? "wrapper-profile-light" : "wrapper-profile-dark"}`}>
