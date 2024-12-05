@@ -1,8 +1,10 @@
+import { useConfirm } from "material-ui-confirm";
 import { deleteFriend } from "../services/friends";
 
 const DenyFriendRequestButton = ({ friendRequestId, setUpdatePost}) => {
     const token = localStorage.getItem("token");
-    
+    const confirm = useConfirm()
+
     const handleDeny = async () => {
 
         try {
@@ -18,7 +20,18 @@ const DenyFriendRequestButton = ({ friendRequestId, setUpdatePost}) => {
     };
     
     return (
-        <button onClick={handleDeny}>Deny</button>
+        <button 
+        onClick={() => {
+
+            confirm({ description: "Friendship request will be denied!" })
+                .then(() => {
+                    handleDeny()
+                })
+                .catch(() => {
+                    console.log("Friendship deny cancelled")
+                })
+            }}>Deny
+        </button>
     );
 };
 

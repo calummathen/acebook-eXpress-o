@@ -1,5 +1,8 @@
+import { useConfirm } from "material-ui-confirm";
+
 const AddFriendButton = ({ friendRequestStatus, sendFriendRequest, deleteFriend }) => {
-    
+    const confirm = useConfirm()
+
     console.log(friendRequestStatus)
     if (friendRequestStatus == 1) {
         return (
@@ -11,7 +14,16 @@ const AddFriendButton = ({ friendRequestStatus, sendFriendRequest, deleteFriend 
         )
     } else if (friendRequestStatus == 3) {
         return (
-            <button className="add-friend-button" onClick={deleteFriend}>Remove Coffee Mate</button>
+            <button className="add-friend-button" onClick={() => {
+
+                confirm({ description: "Post will be permanently deleted!" })
+                    .then(() => {
+                        deleteFriend()
+                    })
+                    .catch(() => {
+                        console.log("Post delete cancelled")
+                    })
+                }}>Remove Coffee Mate</button>
         )
     } else if (friendRequestStatus == 4) {
         return (
