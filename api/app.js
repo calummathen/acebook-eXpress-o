@@ -28,6 +28,8 @@ app.use("/tokens", authenticationRouter);
 app.use("/friends", tokenChecker, friendsRouter);
 // app.use("/files", filesRouter);
 
+app.use(express.static("public"));
+
 // 404 Handler
 app.use((_req, res) => {
   res.status(404).json({ err: "Error 404: Not Found" });

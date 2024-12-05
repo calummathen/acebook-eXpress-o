@@ -74,6 +74,7 @@ async function getUserInfo(req, res) {
         name: user.name,
         email: user.email,
         username: user.username,
+        profileImage: user.profileImage,
         birthday: user.birthday,
         location: user.location,
         work_place: user.work_place,
