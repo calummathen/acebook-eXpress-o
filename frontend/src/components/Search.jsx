@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { getUserInfo, getUsers } from "../services/users";
 
@@ -88,7 +88,7 @@ export const Search = () => {
                 
                 {filteredUsers.map(el => (
 
-                    <Link key={el.username} to={`/profile/${el.username}`}>{el.username}</Link>
+                    <a key={el.username} href={`/profile/${el.username}`}>{el.username}</a>
 
                 ))}
             </div>
