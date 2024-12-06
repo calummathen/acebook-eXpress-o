@@ -56,10 +56,10 @@
     }
 }
 
-form.login {
+.login-form {
     display: grid;
-    grid-template-columns: min-content 1fr;
-    grid-template-rows: 1fr 1fr auto;
+    grid-template-columns: 1fr 1fr 0.5fr;
+    grid-template-rows: 1fr 1fr;
     gap: 8px;
 
     input[type="text"],
@@ -108,9 +108,13 @@ form.login {
         grid-row: 2
     }
 
+}
+
+.login-buttons {
+    display: flex;
+    justify-content: space-evenly;
+
     #signup {
-        grid-column: 1;
-        grid-row: 3;
         margin-top: 32px;
         font-size: 14pt;
         text-decoration: underline;
@@ -120,15 +124,13 @@ form.login {
         cursor: pointer;
         justify-self: center;
         align-self: center;
-
+    
         &:hover {
             color: #AB886D;
         }
     }
 
     #submit {
-        grid-column: 2;
-        grid-row: 3;
         width: min-content;
         margin-top: 32px;
         padding: 8px 16px;

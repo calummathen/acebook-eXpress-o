@@ -29,7 +29,7 @@ const NewPostForm = ({token, setUpdatePost}) => {
             rows={4}
             cols={40}
           />
-      <button type="submit">Post</button>
+      <button type="submit" disabled={postMessage == ""}>Post</button>
     </form>
   )
 }

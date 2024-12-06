@@ -199,8 +199,8 @@ export function ProfilePage() {
             <NavBar />
         
             <div className="sidebar-profile">
+                <img className="sidebar-profile-picture" src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture" />
                 <h1>{name}</h1>
-                <img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
                 <MyCoffeeMates
                     setUpdatePost={setUpdatePost}
                     unapprovedFriendRequests={requests}

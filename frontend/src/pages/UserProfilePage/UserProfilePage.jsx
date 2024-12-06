@@ -170,8 +170,8 @@ export function UserProfilePage() {
 
             <div className="sidebar-profile">
 
+                <img className="sidebar-profile-picture" src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture" />
                 <h1>{name}</h1>
-<img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
 
                 <AddFriendButton
                     friendRequestStatus={friendRequestStatus}
@@ -189,13 +189,17 @@ export function UserProfilePage() {
 
             <div className="posts-profile">
 
-            {posts.map((post) => (
-                <Post
-                    key={post._id}
-                    post={post}
-                    setUpdatePost={setUpdatePost}
-                />
-            ))}
+            {posts.length > 0 ? 
+                  (posts.map((post) => (
+                      <Post
+                          key={post._id}
+                          post={post}
+                          setUpdatePost={setUpdatePost}
+                      />
+                  ))) : (
+                    <h3>{name} has made no posts!</h3>
+                )
+            }
         </div>
     </div>
     )

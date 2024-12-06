@@ -28,7 +28,7 @@ export const ThemeToggle = () => {
     >
       <PiCoffeeFill
         size={30}
-        style={{ paddingRight: "10px", color: enabled ? "black" : "white" }}
+        style={{ paddingRight: "10px", color: enabled ? "#493628" : "#FAF7F0" }}
       />
       <Switch
         //   our default theme is dark (ie, no milk!) so if the toggle is checked theme = light (ie, add milk!)
@@ -40,8 +40,10 @@ export const ThemeToggle = () => {
           width: "3rem",
           alignItems: "center",
           borderRadius: "9999px",
-          backgroundColor: enabled ? "#333333" : "#FFFFFF",
+          borderColor: enabled ? "#493628" : "#FAF7F0",
+          backgroundColor: enabled ? "#493628" : "#FAF7F0",
           transition: "background-color 0.2s ease-in-out",
+          cursor: "pointer",
         }}
       >
         <span
