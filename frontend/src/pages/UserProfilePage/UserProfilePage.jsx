@@ -172,6 +172,7 @@ export function UserProfilePage() {
 
                 <img className="sidebar-profile-picture" src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture" />
                 <h1>{name}</h1>
+<img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
 
                 <AddFriendButton
                     friendRequestStatus={friendRequestStatus}

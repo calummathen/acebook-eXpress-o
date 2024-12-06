@@ -1,4 +1,5 @@
 const express = require("express");
+const { connectToDatabase } = require("./db/gfs");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -8,10 +9,10 @@ const friendsRouter = require("./routes/friends");
 const commentsRouter = require("./routes/comments");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
-// const filesRouter = require("./routes/files");
-
+const fileRoutes = require("./routes/files");
 const app = express();
 
+// Middleware
 // Allow requests from any client
 // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 // docs: https://expressjs.com/en/resources/middleware/cors.html
@@ -26,9 +27,9 @@ app.use("/posts", tokenChecker, postsRouter);
 app.use("/comments", tokenChecker, commentsRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/friends", tokenChecker, friendsRouter);
-// app.use("/files", filesRouter);
-
+app.use("/files", fileRoutes);
 app.use(express.static("public"));
+app.use(fileRoutes);
 
 // 404 Handler
 app.use((_req, res) => {
