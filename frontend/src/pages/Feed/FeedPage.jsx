@@ -71,7 +71,7 @@ export function FeedPage() {
 
         <div className="sidebar-newpost">
           <NewPostForm token={token} setUpdatePost={setUpdatePost} />
-          <div>
+          <div className="sidebar-newpost-video">
             <iframe
               width="650"
               height="366"
@@ -80,7 +80,7 @@ export function FeedPage() {
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-            ></iframe>
+            />
           </div>
         </div>
         <div className="posts-feedpage">

@@ -24,7 +24,7 @@ const AddCommentToPost = ({ UpdatePost, postId }) => {
                 value={commentMessage}
                 onChange={e => setCommentMessage(e.target.value)}
             />
-            <button type="submit"><MdOutlineAddComment /></button>
+            <button type="submit" disabled={commentMessage == ""}><MdOutlineAddComment /></button>
         </form>
     )
 };

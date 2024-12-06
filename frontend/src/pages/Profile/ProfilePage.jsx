@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import Post from "../../components/Post";
 import MyCoffeeMates from "../../components/MyCoffeeMates";
-
 import { getFriendsForUser, getUnapprovedFriendsForUser } from "../../services/friends";
 import { getYourPosts } from "../../services/posts";
 import { getUserInfo, getUserByUsername } from "../../services/users";
@@ -200,8 +199,8 @@ export function ProfilePage() {
             <NavBar />
         
             <div className="sidebar-profile">
+                <img className="sidebar-profile-picture" src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture" />
                 <h1>{name}</h1>
-                <img  src={`${BACKEND_URL}/${profileImage}`} alt="Profile Picture"></img>
                 <MyCoffeeMates
                     setUpdatePost={setUpdatePost}
                     unapprovedFriendRequests={requests}

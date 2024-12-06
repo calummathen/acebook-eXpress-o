@@ -29,7 +29,8 @@ const NewPostForm = ({token, setUpdatePost}) => {
             rows={4}
             cols={40}
           />
-      <button type="submit">Post</button>
+      </label>
+      <button type="submit">Submit</button>
     </form>
   )
 }
